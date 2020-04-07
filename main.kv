@@ -1,0 +1,255 @@
+WindowManager:
+    HomeWindow:
+    SignupWindow:
+    
+   
+
+<HomeWindow>:
+    name: "home"
+    rows: 3
+    cols: 1
+    spacing: '20dp'
+
+    RelativeLayout:
+        canvas.before:
+            Color:
+                rgba : 0, 1, 0, 1
+
+        Button:
+            text: "Login"
+            font_size: "20sp"
+            background_color: (1, 0.5, 0.6, 1)
+            color: (1, 1, 1, 1)
+            size_hint: (0.20, 0.1)
+            pos_hint: {"top": 1 , "left" : 1}
+            
+
+        Button:
+            text: "Sign Up"
+            font_size: "20sp"
+            background_color: (1, 0.8, 1, 1)
+            color: (1, 1, 1, 1)
+            size_hint: (0.2, 0.1)
+            pos_hint: {"top" : 1, "right" : 1}
+            on_press:  app.root.current = "signup"
+            
+
+        Label:
+            text : "Email: "
+            pos: (-220, 160)
+
+        TextInput:
+            text: "Email"
+            on_touch_down: self.text = ''
+            multiline: False
+            font_size: "20sp"
+            background_color: (1, 1, 1, 0.5)
+            color: (1, 1, 1, 1)
+            size_hint: (0.50, 0.05)
+            pos: (200, 450)
+
+        Label:
+            text : "Password: "
+            pos: (-235, 125)
+
+        TextInput:
+            text: "Password"
+            on_touch_down: self.text = ''
+            multiline: False
+            font_size: "20sp"
+            background_color: (1, 1, 1, 0.5)
+            color: (1, 1, 1, 1)
+            size_hint: (0.50, 0.05)
+            pos: (200, 420)
+
+    FloatLayout:
+        Label:
+            text : "Top Projects "
+            pos: (0, 100)
+
+        Label:
+            text: "Project Name"
+            pos: (-250, 80)
+
+        Label:
+            text: "Description desc desc desc desc \n desc desc desc desc desc desc desc"
+            halign: 'left'
+            pos: (0, 55)
+
+        Label:
+            text: "Group Name"
+            pos: (200, 25)
+
+
+
+        Label:
+            text: "Project Name"
+            pos: (-250,0)
+
+        Label:
+            text: "Description desc desc desc desc \n desc desc desc desc desc desc desc"
+            halign: 'left'
+            pos: (0, -30)
+
+        Label:
+            text: "Group Name"
+            pos: (200, -50)
+
+        Label:
+            text : "Top Users "
+            pos: (0, -150)
+
+    BoxLayout:
+        Button:
+            text: "User4"
+            background_color: (1, 0.5, 0.6, 1)
+            size_hint: (0.20, 0.2)
+        Button:
+            text: "User1"
+            background_color: (1, 0.5, 0.6, 1)
+            size_hint: (0.20, 0.2)
+        Button:
+            text: "User2"
+            background_color: (1, 0.5, 0.6, 1)
+            size_hint: (0.20, 0.2)
+        Button:
+            text: "User3"
+            background_color: (1, 0.5, 0.6, 1)
+            size_hint: (0.20, 0.2)
+
+
+
+
+
+<SignupWindow>:
+    name: "signup"
+    canvas.before:
+        Color:
+            rgba : 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
+    RelativeLayout:
+
+        Label:
+            text: "Sign Up:\n"
+            color: 1, 1, 1, 1
+            font_size: "40sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.21, "center_y": 0.8}
+            
+        Label:
+            text: "Fill out the application and click submit at the bottom of the page. If your request is \napproved, you will receive an email. with your login credentials. If not, you will have one \nmore chance to sign up."
+            pos_hint: {"center_x": 0.50, "center_y": 0.7}
+            canvas.before:
+                Color:
+                    rgba : 1, 0.5, 0.6, 0.5
+                Rectangle:
+                    pos: (90, 180)
+                    size: (630, 100)
+
+
+        Label:
+            text : "Email: "
+            color: 1, 1, 1, 1   
+            pos_hint: {"center_x": 0.14, "center_y": 0.48}
+
+        TextInput:
+            hint_text: "Email"
+            hint_text_color: (1, 0.5, 0.6, 1)
+            multiline: False
+            font_size: "20sp"
+            background_color: (1, 1, 1, 0.5)
+            color: (1, 1, 1, 1)
+            size_hint: (0.60, 0.14)
+            pos_hint: {"center_x": 0.60, "center_y": 0.48}
+
+        Label:
+            text : "Password: "
+            color: 1, 1, 1, 1 
+            pos_hint: {"center_x": 0.157, "center_y": 0.34}
+
+        TextInput:
+            hint_text: "Password"
+            hint_text_color: (1, 0.5, 0.6, 1)
+            multiline: False
+            font_size: "20sp"
+            background_color: (1, 1, 1, 0.5)
+            color: (1, 1, 1, 1)
+            size_hint: (0.60, 0.14)
+            pos_hint: {"center_x": 0.60, "center_y": 0.34}
+
+        Label:
+            text : "Birthday: "
+            color: 1, 1, 1, 1    
+            pos_hint: {"center_x": 0.152, "center_y": 0.20}
+
+        TextInput:
+            hint_text: "MM/DD/YY"
+            hint_text_color: (1, 0.5, 0.6, 1)
+            multiline: False
+            font_size: "20sp"
+            background_color: (1, 1, 1, 0.5)
+            color: (1, 1, 1, 1)
+            size_hint: (0.60, 0.14)
+            pos_hint: {"center_x": 0.60, "center_y": 0.20}
+
+
+        Label:
+            text : "Interests: "
+            color: 1, 1, 1, 1    
+            pos_hint: {"center_x": 0.156, "center_y": -0.065}
+
+        TextInput:
+            hint_text: "Tell us about your interests"
+            hint_text_color: (1, 0.5, 0.6, 1)
+            multiline: True
+            font_size: "20sp"
+            background_color: (1, 1, 1, 0.5)
+            color: (1, 1, 1, 1)
+            size_hint: (0.60, 0.39)
+            pos_hint: {"center_x": 0.60, "center_y": -0.064}
+
+        Label:
+            text : "Previous Projects: "
+            color: 1, 1, 1, 1    
+            pos_hint: {"center_x": 0.1965, "center_y": -0.45}
+
+        TextInput:
+            hint_text: "Briefly describe previous projects"
+            hint_text_color: (1, 0.5, 0.6, 1)
+            multiline: True
+            font_size: "20sp"
+            background_color: (1, 1, 1, 0.5)
+            color: (1, 1, 1, 1)
+            size_hint: (0.60, 0.36)
+            pos_hint: {"center_x": 0.60, "center_y": -0.44}
+
+        Label:
+            text : "Attach Resume: "
+            color: 1, 1, 1, 1   
+            pos_hint: {"center_x": 0.19, "center_y": -0.70}
+
+        Button:
+            text: "Upload File"
+            background_color: (1, 0.5, 0.6, 1)
+            size_hint: (0.2, 0.1)
+            pos_hint: {"center_x": 0.4, "center_y": -0.70}
+        
+        Button:
+            text: "Choose from files"
+            background_color: (1, 0.5, 0.6, 1)
+            size_hint: (0.2, 0.1)
+            pos_hint: {"center_x": 0.61, "center_y": -0.70}
+
+    BoxLayout:
+        Button:
+            text: "Cancel"
+            background_color: (1, 0.5, 0.6, 1)
+            size_hint: (0.20, 0.2)
+        Button:
+            text: "Submit"
+            background_color: (1, 0.5, 0.6, 1)
+            size_hint: (0.20, 0.2)
