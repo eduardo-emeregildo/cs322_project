@@ -1,7 +1,7 @@
 #:kivy 1.0.7
 
 <ProfileWindow>:
-    name: "profile"
+    name: "profilepage"
 
     Button:
         text: "Pic"
@@ -20,6 +20,12 @@
         text: "Groups"
         font_size: "21sp"
         pos_hint: {"x": -.36, "y": .23}
+
+    Button:
+        text: "+ Create Group"
+        background_color: (.1, .6, .3, 1)
+        size_hint: (0.15, 0.05)
+        pos_hint: {"x": .75, "y": .71}
 
     BoxLayout:
         spacing: 10
