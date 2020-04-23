@@ -1,0 +1,90 @@
+#:kivy 1.0.7
+
+<GroupWindow>:
+    rows: 3
+    cols: 1
+    name: "grouppage"
+
+    spacing: '20dp'
+
+    RelativeLayout:
+
+        Label:
+            text: "Group Name"
+            text_size: cm(20), cm(10)
+            color: .2, .5, .4, 1
+            font_size: "20sp"
+            pos_hint: {"top": .10, "x": 0.025}
+
+        TextInput:
+            hint_text: "Write Something..."
+            multiline: True
+            size_hint: (0.60, 0.14)
+            pos_hint: {"top": .95, "x": 0.025}
+
+        Button:
+            text: "Post"
+            font_size: "11sp"
+            size_hint: (0.05, 0.01)
+            pos_hint: {"top": .78, "x": 0.575}
+
+        Label:
+            text: "Please vote for a time to meet up: \n(3/4 members have voted) "
+            halign: 'left'
+            pos_hint: {"y": .18, "x": -.315}
+            canvas.before:
+                Color:
+                    rgba: .2, .5, .4, 1
+                Rectangle:
+                    pos: (20, 290)
+                    size: (500, 150)
+
+        Label:
+            text: "Post 2"
+            halign: 'left'
+            pos_hint: {"y": -.09, "x": -.43}
+            canvas.before:
+                Color:
+                    rgba: .2, .5, .4, 1
+                Rectangle:
+                    pos: (20, 190)
+                    size: (500, 80)
+
+        Label:
+            text: "Group Information: \ngroup description about main \ngoal and main interests "
+            halign: 'left'
+            pos_hint: {"y": .39, "x": .315}
+            canvas.before:
+                Color:
+                    rgba: .30, .5, .45, 1
+                Rectangle:
+                    pos: (540, 270)
+                    size: (230, 300)
+
+            BoxLayout:
+                pos: (550, 280)
+                size: (210, 110)
+                Button:
+                    text: "1"
+                    background_color: (.2, .5, .4, 1)
+                    size_hint: (0.30, 0.3)
+                Button:
+                    text: "2"
+                    background_color: (.2, .5, .4, 1)
+                    size_hint: (0.30, 0.3)
+                Button:
+                    text: "3"
+                    background_color: (.2, .5, .4, 1)
+                    size_hint: (0.30, 0.3)
+                Button:
+                    text: "4"
+                    background_color: (.2, .5, .4, 1)
+                    size_hint: (0.30, 0.3)
+                Button:
+                    text: "5"
+                    background_color: (.2, .5, .4, 1)
+                    size_hint: (0.30, 0.3)
+                Button:
+                    text: "6"
+                    background_color: (.2, .5, .4, 1)
+                    size_hint: (0.30, 0.3)
