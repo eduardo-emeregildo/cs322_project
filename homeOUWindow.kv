@@ -1,7 +1,6 @@
 #:kivy 1.0.7
 
 <HomeOUWindow>:
-
     name: "homeOU"
     rows: 3
     cols: 1
@@ -29,21 +28,25 @@
             size_hint: (0.8, 0.3)
 
             Button:
-                text: "Link 1"
+                text: "HOME"
                 background_color: (1, 0.5, 0.6, 1)
                 size_hint: (0.08, 0.2)
+                on_press:  app.root.current = "homeOU"
             Button:
-                text: "Link 2"
+                text: "PROFILE"
                 background_color: (1, 0.5, 0.6, 1)
                 size_hint: (0.08, 0.2)
+                on_press:  app.root.current = "profile"
             Button:
-                text: "Link 3"
+                text: "GROUPS"
                 background_color: (1, 0.5, 0.6, 1)
                 size_hint: (0.08, 0.2)
+                on_press:  app.root.current = "profile"
             Button:
-                text: "Link 4"
+                text: "WARNINGS"
                 background_color: (1, 0.5, 0.6, 1)
                 size_hint: (0.08, 0.2)
+                on_press:  app.root.current = "profile"
 
     FloatLayout:
         Label:
