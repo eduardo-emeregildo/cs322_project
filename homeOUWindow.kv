@@ -1,65 +1,52 @@
 #:kivy 1.0.7
 
-<HomeWindow>:
-    
-    name: "home"
+<HomeOUWindow>:
+    name: "homeOU"
     rows: 3
     cols: 1
+
     spacing: '20dp'
 
-
     RelativeLayout:
-        canvas.before:
-            Color:
-                rgba : 0, 1, 0, 1
-
         Button:
-            text: "Login"
-            font_size: "20sp"
-            background_color: (1, 0.5, 0.6, 1)
-            color: (1, 1, 1, 1)
-            size_hint: (0.20, 0.1)
-            pos_hint: {"top": 1 , "left" : 1}
-            on_press:  app.root.current = "homeOU"
-            
-
-        Button:
-            text: "Sign Up"
-            font_size: "20sp"
-            background_color: (1, 0.8, 1, 1)
-            color: (1, 1, 1, 1)
-            size_hint: (0.2, 0.1)
-            pos_hint: {"top" : 1, "right" : 1}
-            on_press:  app.root.current = "signup"
-            
+            text: "Pic"
+            size_hint: (0.1, 0.1)
+            pos_hint: {"y": .85, "x": .3}
 
         Label:
-            text : "Email:"
-            pos_hint: {"y": .315, "x": -.28}
-
-        TextInput:
-            text: "Email"
-            on_touch_down: self.text = ''
-            multiline: False
-            font_size: "20sp"
-            background_color: (1, 1, 1, 0.5)
-            color: (1, 1, 1, 1)
-            size_hint: (0.50, 0.05)
-            pos_hint: {"y": .79, "x": .25}
+            text : "USERNAME"
+            pos_hint: {"y": .415, "x": .0}
 
         Label:
-            text : "Password:"
-            pos_hint: {"y": .255, "x": -.3}
+            text : "OU // +19 points"
+            pos_hint: {"y": .385, "x": .0}
 
-        TextInput:
-            text: "Password"
-            on_touch_down: self.text = ''
-            multiline: False
-            font_size: "20sp"
-            background_color: (1, 1, 1, 0.5)
-            color: (1, 1, 1, 1)
-            size_hint: (0.50, 0.05)
-            pos_hint: {"y": .73, "x": .25}
+        BoxLayout:
+            padding: [50, 10, 50, 10]
+            spacing: 10
+            pos_hint: {"y": .75, "x": .1}
+            size_hint: (0.8, 0.3)
+
+            Button:
+                text: "HOME"
+                background_color: (1, 0.5, 0.6, 1)
+                size_hint: (0.08, 0.2)
+                on_press:  app.root.current = "homeOU"
+            Button:
+                text: "PROFILE"
+                background_color: (1, 0.5, 0.6, 1)
+                size_hint: (0.08, 0.2)
+                on_press:  app.root.current = "profile"
+            Button:
+                text: "GROUPS"
+                background_color: (1, 0.5, 0.6, 1)
+                size_hint: (0.08, 0.2)
+                on_press:  app.root.current = "profile"
+            Button:
+                text: "WARNINGS"
+                background_color: (1, 0.5, 0.6, 1)
+                size_hint: (0.08, 0.2)
+                on_press:  app.root.current = "profile"
 
     FloatLayout:
         Label:
