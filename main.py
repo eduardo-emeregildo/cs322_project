@@ -5,8 +5,9 @@ from kivy.uix.button import Button
 from kivy.graphics.context_instructions import Color
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
-import pyrebase
+#import pyrebase
 import requests
+
 
 #to connect to firebase
 config = {					
@@ -55,6 +56,8 @@ class SignupWindow(Screen):
     		self.prev_projects.text = ""
     	except requests.exceptions.HTTPError: # can do a popup here
     		print("Invalid email or password.(Passwords must be at least 6 characters long)")
+
+
 class GroupWindow(Screen):
 	pass
 
@@ -63,6 +66,21 @@ class HomeOUWindow(Screen):
 
 class ProfileWindow(Screen):
 	pass
+
+class NotificationPage(Screen):
+    pass
+
+class DescriptionWindow(Screen):
+    pass
+
+class ComplimentPage(Screen):
+    pass
+
+class WarningPage(Screen):
+    pass
+
+class GroupNotificationSU(Screen):
+    pass
 
 kv = Builder.load_file("main.kv")
 
@@ -75,18 +93,3 @@ if __name__ == "__main__":
 
 
 
-
-
-#----------------------------------------------------------------------------------------
-
-#class main_kv(GridLayout):
- #   pass
-
-
-
-#class MainApp(App):
-#   def build(self):
-#        return main_kv()
-
-
-#MainApp().run()

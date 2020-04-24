@@ -1,19 +1,30 @@
 #:kivy 1.0.7
 #:include homeWindow.kv
-#:include signUpWindow.kv
+#:include signupWindow.kv
+
 #:include groupWindow.kv
 #:include homeOUWindow.kv
 #:include profileWindow.kv
 
+#:include notificationsSU.kv
+#:include requestDescriptionSU.kv
+#:include complimentNotificationSU.kv
+#:include warningNotificationSU.kv
+#:include groupNotificationSU.kv
+
 ScreenManager:
+
     HomeWindow:
     HomeOUWindow:
     SignupWindow:
     ProfileWindow:
     GroupWindow:
-    
-    
-    
+    GroupNotificationSU:
+    ComplimentPage:
+    SignupWindow:
+    WarningPage:
+    NotificationPage:
+    DescriptionWindow:
 
 
    

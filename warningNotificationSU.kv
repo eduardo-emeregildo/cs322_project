@@ -1,0 +1,270 @@
+#:kivy 1.0.7
+
+<WarningPage>:
+
+# this page will show information about new join requests
+
+    rows: 2
+    cols: 1
+    name: "warnings"
+
+    canvas.before:
+        Color:
+            rgba : 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+# join
+
+    RelativeLayout:
+
+        Label:
+            text: "Notifications\n"
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "30sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.2, "center_y": 0.9}
+
+# new request, compliments and warnings           
+
+        BoxLayout:
+            orientation: 'horizontal'
+            pos_hint: {'center_x': 0.5, 'center_y': 1.3}
+
+            Button:
+                id: b1
+                text: "New Requests"
+                background_color: (0.2, 0.5, 0.4, 0.5)
+                size_hint: (0.20, 0.07)
+                on_press:  app.root.current = "requests"
+            Button:
+                text: "Compliments"
+                background_color: (0.2, 0.5, 0.4, 0.5)
+                size_hint: (0.20, 0.07)
+                on_press:  app.root.current = "compliments"
+
+            Button:
+                text: "Warnings"
+                background_color: (0.2, 0.5, 0.4, 1)
+                size_hint: (0.20, 0.07)
+
+            Button:
+                text: "Group Notifications"
+                background_color: (0.2, 0.5, 0.4, 0.5)
+                size_hint: (0.20, 0.07)
+                on_press:  app.root.current = "GroupNotificationsSU"
+
+
+# need a function to connect the description window with the user number with all related info
+
+# Warnings
+
+# Compliments
+                
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Label:
+                text: "Someone got a warning"
+                color: 0.2, 0.5, 0.4, 1
+                font_size: "20sp"
+                bold: False
+                font_name: "Arial"
+                pos_hint: {"center_x": 0.25, "center_y": 0.725}
+
+            BoxLayout:
+                pos_hint: {'center_x': 0.5, 'center_y': 1.15}
+                padding: 30
+                #spacing: 4
+
+                Button:
+                    text: "Decrease Score"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+                Button:
+                    text: "Dismiss"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+                
+
+
+# name and info 2
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Label:
+                text: "Someone is rude!"
+                color: 0.2, 0.5, 0.4, 1
+                font_size: "20sp"
+                bold: False
+                font_name: "Arial"
+                pos_hint: {"center_x": 0.25, "center_y": 0.625}
+
+            BoxLayout:
+                pos_hint: {'center_x': 0.5, 'center_y': 1.05}
+                padding: 30
+                #spacing: 4
+
+                Button:
+                    text: "Decrease Score"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+                Button:
+                    text: "Dismiss"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+
+# name and info 3
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Label:
+                text: "Someone is late for a meeting"
+                color: 0.2, 0.5, 0.4, 1
+                font_size: "20sp"
+                bold: False
+                font_name: "Arial"
+                pos_hint: {"center_x": 0.25, "center_y": 0.525}
+
+            BoxLayout:
+                pos_hint: {'center_x': 0.5, 'center_y': 0.95}
+                padding: 30
+                #spacing: 4
+
+                Button:
+                    text: "Decrease Score"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+                Button:
+                    text: "Dismiss"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+# name and info 4
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Label:
+                text: "Someone is rude"
+                color: 0.2, 0.5, 0.4, 1
+                font_size: "20sp"
+                bold: False
+                font_name: "Arial"
+                pos_hint: {"center_x": 0.25, "center_y": 0.425}
+
+            BoxLayout:
+                pos_hint: {'center_x': 0.5, 'center_y': 0.85}
+                padding: 30
+                #spacing: 4
+
+                Button:
+                    text: "Decrease Score"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+                Button:
+                    text: "Dismiss"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+# name and info 5
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Label:
+                text: "Someone is rude"
+                color: 0.2, 0.5, 0.4, 1
+                font_size: "20sp"
+                bold: False
+                font_name: "Arial"
+                pos_hint: {"center_x": 0.25, "center_y": 0.325}
+
+            BoxLayout:
+                pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+                padding: 30
+                #spacing: 4
+
+                Button:
+                    text: "Decrease Score"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+                Button:
+                    text: "Dismiss"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+# name and info 6
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Label:
+                text: "Someone is rude"
+                color: 0.2, 0.5, 0.4, 1
+                font_size: "20sp"
+                bold: False
+                font_name: "Arial"
+                pos_hint: {"center_x": 0.25, "center_y": 0.225}
+
+            BoxLayout:
+                pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+                padding: 30
+                #spacing: 4
+
+                Button:
+                    text: "Decrease Score"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+                Button:
+                    text: "Dismiss"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+# name and info 7
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Label:
+                text: "Someone got a warning"
+                color: 0.2, 0.5, 0.4, 1
+                font_size: "20sp"
+                bold: False
+                font_name: "Arial"
+                pos_hint: {"center_x": 0.25, "center_y": 0.125}
+
+            BoxLayout:
+                pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+                padding: 30
+                #spacing: 4
+
+                Button:
+                    text: "Decrease Score"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+
+                Button:
+                    text: "Dismiss"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)      
+# go back
+    BoxLayout:
+        Button:
+            text: "Cancel"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.20, 0.06)
+            on_press:  app.root.current = "requests"
+
+        

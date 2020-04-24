@@ -1,0 +1,95 @@
+#:kivy 1.0.7
+
+<DescriptionWindow>: 
+
+    name: "description"
+
+    RelativeLayout:
+
+        space: 4
+        padding: 4
+
+
+        
+        Label:
+            text: "Detailed Information\n"
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "30sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.25, "center_y": 0.9}
+
+        Label:
+            text: "Name: " + "Someone1"
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "20sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.2, "center_y": 0.8}
+
+        Label:
+            text: "Email: " + "someone@kivy.com"
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "20sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.25, "center_y": 0.75}
+
+        Label:
+            text: "Appeal Message: \nSay what you want to say\nPlease accept the request\nPlease don't delete" 
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "20sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.24, "center_y": 0.625}
+
+        Label:
+            text: "Birthday: 04/22/2020 0 year old"
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "20sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.275, "center_y": 0.5}
+
+        Label:
+            text: "Interests:" + "\n\tDancing" + "\n\tSleeping" + "\n\tDoing Nothing" 
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "20sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.19, "center_y": 0.38}
+
+        Label:
+            text: "Past Projects\n" 
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "20sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.175, "center_y": 0.2}
+        
+        Label:
+            text: "Referrals:" 
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "20sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.155, "center_y": 0.15}
+
+
+# go back
+    BoxLayout:
+        Button:
+            text: "Return"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.20, 0.06)
+            on_press:  app.root.current = "requests"
+        Button:
+            text: "Reject"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.20, 0.06)
+        Button:
+            text: "Approve"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.20, 0.06)
+
+ 

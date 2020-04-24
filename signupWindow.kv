@@ -1,0 +1,123 @@
+#:kivy 1.0.7
+
+<SignupWindow>:
+    rows: 3
+    cols: 1
+    name: "signup"
+
+    RelativeLayout:        
+        pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+        size_hint: 1, 0.45
+    
+        Label:
+            text: "Create Account\n"
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "35sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.2, "center_y": 0.95}
+            
+        Label:
+            text: "Fill out the application and click submit at the bottom of the page. If \nyour request is approved, you will receive an email. with your login \ncredentials. If not, you will have one more chance to sign up."
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "20sp"
+            pos_hint: {"center_x": 0.50, "center_y": 0.75}
+
+    RelativeLayout:
+        pos_hint: {'center_x': 0.5, 'center_y': 0.685}
+        size_hint: 1, 0.45
+        
+        Label:
+            text : "Email: "
+            halign: "right"
+            font_size: "20sp"
+            color: 0.2, 0.5, 0.4, 1   
+            pos_hint: {"center_x": 0.14, "center_y": 0.48}
+            
+        TextInput:
+            hint_text: "Email"
+            hint_text_color: (0.2, 0.5, 0.4, 1)
+            multiline: False
+            font_size: "20sp"
+            background_color: (1, 1, 1, 1)
+            color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.60, 0.14)
+            pos_hint: {"center_x": 0.60, "center_y": 0.48}
+
+        Label:
+            text : "Password: "
+            halign: "left"
+            font_size: "20sp"
+            color: 0.2, 0.5, 0.4, 1
+            pos_hint: {"center_x": 0.14, "center_y": 0.34}
+
+        TextInput:
+            hint_text: "Password"
+            hint_text_color: (0.2, 0.5, 0.4, 1)
+            multiline: False
+            font_size: "20sp"
+            background_color: (1, 1, 1, 1)
+            color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.60, 0.14)
+            pos_hint: {"center_x": 0.60, "center_y": 0.34}
+
+        Label:
+            text : "Birthday: "
+            color: 0.2, 0.5, 0.4, 1 
+            font_size: "20sp"   
+            halign: "left"
+            pos_hint: {"center_x": 0.14, "center_y": 0.20}
+
+        TextInput:
+            hint_text: "MM/DD/YY"
+            hint_text_color: (0.2, 0.5, 0.4, 1)
+            multiline: False
+            font_size: "20sp"
+            background_color: (1, 1, 1, 1)
+            color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.60, 0.14)
+            pos_hint: {"center_x": 0.60, "center_y": 0.20}
+
+        Label:
+            text : "Interests: "
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "20sp"   
+            halign: "left"
+            pos_hint: {"center_x": 0.14, "center_y": -0.065}
+
+        TextInput:
+            hint_text: "Tell us about your interests"
+            hint_text_color: (0.2, 0.5, 0.4, 1)
+            multiline: True
+            font_size: "20sp"
+            background_color: (1, 1, 1, 1)
+            color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.60, 0.39)
+            pos_hint: {"center_x": 0.60, "center_y": -0.064}
+
+        Label:
+            text : "Previous Projects: "
+            color: 0.2, 0.5, 0.4, 1 
+            font_size: "20sp"   
+            halign: "left"
+            pos_hint: {"center_x": 0.14, "center_y": -0.45}
+
+        TextInput:
+            hint_text: "Briefly describe previous projects"
+            hint_text_color: (0.2, 0.5, 0.4, 1)
+            multiline: True
+            font_size: "20sp"
+            background_color: (1, 1, 1, 1)
+            color: (1, 1, 1, 1)
+            size_hint: (0.60, 0.36)
+            pos_hint: {"center_x": 0.60, "center_y": -0.44}
+
+    BoxLayout:
+        Button:
+            text: "Cancel"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.20, 0.1)
+        Button:
+            text: "Submit"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.20, 0.1)
