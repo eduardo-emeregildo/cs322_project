@@ -5,7 +5,7 @@ from kivy.uix.button import Button
 from kivy.graphics.context_instructions import Color
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
-import pyrebase
+#import pyrebase
 import requests
 
 
@@ -59,6 +59,9 @@ class SignupWindow(Screen):
 
 
 class GroupWindow(Screen):
+	pass
+
+class CreateGroupWindow(Screen):
 	pass
 
 class HomeOUWindow(Screen):
