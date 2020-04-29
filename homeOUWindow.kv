@@ -28,25 +28,15 @@
             size_hint: (0.8, 0.3)
 
             Button:
-                text: "HOME"
-                background_color: (1, 0.5, 0.6, 1)
-                size_hint: (0.08, 0.2)
-                on_press:  app.root.current = "homeOU"
-            Button:
                 text: "PROFILE"
                 background_color: (1, 0.5, 0.6, 1)
                 size_hint: (0.08, 0.2)
                 on_press:  app.root.current = "profile"
             Button:
-                text: "GROUPS"
+                text: "NOTIFICATIONS"
                 background_color: (1, 0.5, 0.6, 1)
                 size_hint: (0.08, 0.2)
-                on_press:  app.root.current = "profile"
-            Button:
-                text: "WARNINGS"
-                background_color: (1, 0.5, 0.6, 1)
-                size_hint: (0.08, 0.2)
-                on_press:  app.root.current = "profile"
+                on_press:  app.root.current = "requests"
 
     FloatLayout:
         Label:

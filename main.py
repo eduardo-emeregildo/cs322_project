@@ -5,7 +5,7 @@ from kivy.uix.button import Button
 from kivy.graphics.context_instructions import Color
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
-import pyrebase
+#import pyrebase
 from kivy.uix.popup import Popup
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
