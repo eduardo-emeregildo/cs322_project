@@ -10,6 +10,10 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 import pyrebase
+from kivy.uix.popup import Popup
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.label import Label
+from kivy.uix.button import Button
 import requests
 import re
 
@@ -90,6 +94,9 @@ class SignupWindow(Screen):
 
         
 class GroupWindow(Screen):
+	pass
+
+class CreateGroupWindow(Screen):
 	pass
 
 class HomeOUWindow(Screen):

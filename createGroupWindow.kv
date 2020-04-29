@@ -1,0 +1,149 @@
+#:kivy 1.0.7
+
+<CreateGroupWindow>:
+    rows: 4
+    cols: 1
+    name: "creategroup"
+
+    RelativeLayout:
+        pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+        size_hint: 1, 0.45
+
+        Label:
+            text: "Create New Group\n"
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "35sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.2, "center_y": 0.95}
+
+    RelativeLayout:
+        pos_hint: {'center_x': 0.5, 'center_y': 0.685}
+        size_hint: 1, 0.45
+
+        Label:
+            text : "Group Name:"
+            halign: "right"
+            font_size: "20sp"
+            color: 0.2, 0.5, 0.4, 1
+            pos_hint: {"center_x": 0.22, "center_y": 0.79}
+
+        TextInput:
+            hint_text: "Group Name"
+            hint_text_color: (0.2, 0.5, 0.4, 1)
+            multiline: False
+            font_size: "20sp"
+            background_color: (1, 1, 1, 1)
+            color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.60, 0.14)
+            pos_hint: {"center_x": 0.60, "center_y": 0.78}
+
+        Label:
+            text : "Group Description: "
+            halign: "left"
+            font_size: "20sp"
+            color: 0.2, 0.5, 0.4, 1
+            pos_hint: {"center_x": 0.193, "center_y": 0.63}
+
+        TextInput:
+            hint_text: "Group Description"
+            hint_text_color: (0.2, 0.5, 0.4, 1)
+            multiline: True
+            font_size: "20sp"
+            background_color: (1, 1, 1, 1)
+            color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.60, 0.34)
+            pos_hint: {"center_x": 0.60, "center_y": 0.50}
+
+    Label:
+        text: "Add Users to Group:"
+        font_size: "20sp"
+        color: 0.2, 0.5, 0.4, 1
+        pos_hint: {"center_x": 0.179, "center_y": 0.57}
+        canvas.before:
+            Color:
+                rgba: .2, .5, .4, 1
+            Rectangle:
+                pos: (240,222)
+                size: (480, 130)
+
+    TextInput:
+        hint_text:'Enter email'
+        size_hint: (0.435, 0.05)
+        pos_hint: {"x": .31, "y": .52}
+
+    Button:
+        text: "+"
+        background_color: (.2, .5, .4, 1)
+        size_hint: (0.06, 0.05)
+        pos_hint: {"x": .755, "y": .52}
+
+    Button:
+        text: "-"
+        background_color: (.2, .5, .4, 1)
+        size_hint: (0.06, 0.05)
+        pos_hint: {"x": .825, "y": .52}
+
+    BoxLayout:
+        spacing: 10
+        pos_hint: {"x": .31, "y": .42}
+        size_hint: (0.58, 0.4)
+        Button:
+            text: "User1"
+            background_color: (.2, .5, .4, 1)
+            size_hint: (0.20, 0.2)
+        Button:
+            text: "User2"
+            background_color: (.2, .5, .4, 1)
+            size_hint: (0.20, 0.2)
+        Button:
+            text: "User3"
+            background_color: (.2, .5, .4, 1)
+            size_hint: (0.20, 0.2)
+        Button:
+            text: "User4"
+            background_color: (.2, .5, .4, 1)
+            size_hint: (0.20, 0.2)
+        Button:
+            text: "User5"
+            background_color: (.2, .5, .4, 1)
+            size_hint: (0.20, 0.2)
+        Button:
+            text: "User6"
+            background_color: (.2, .5, .4, 1)
+            size_hint: (0.20, 0.2)
+    Label:
+        text: "Username1"
+        font_size: "11sp"
+        pos_hint: {"center_x": 0.355, "center_y": 0.4}
+    Label:
+        text: "Username2"
+        font_size: "11sp"
+        pos_hint: {"center_x": 0.453, "center_y": 0.4}
+    Label:
+        text: "Username3"
+        font_size: "11sp"
+        pos_hint: {"center_x": 0.552, "center_y": 0.4}
+    Label:
+        text: "Username4"
+        font_size: "11sp"
+        pos_hint: {"center_x": 0.651, "center_y": 0.4}
+    Label:
+        text: "Username4"
+        font_size: "11sp"
+        pos_hint: {"center_x": 0.750, "center_y": 0.4}
+    Label:
+        text: "Username4"
+        font_size: "11sp"
+        pos_hint: {"center_x": 0.848, "center_y": 0.4}
+
+    BoxLayout:
+        Button:
+            text: "Cancel"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.20, 0.1)
+            on_press:  app.root.current = "profile"
+        Button:
+            text: "Submit"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.20, 0.1)
