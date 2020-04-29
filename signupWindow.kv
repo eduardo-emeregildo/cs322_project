@@ -1,6 +1,11 @@
 #:kivy 1.0.7
 
 <SignupWindow>:
+    email: email
+    password: password
+    dob: dob
+    interests: interests
+    prev_projects: prev_projects
     rows: 3
     cols: 1
     name: "signup"
@@ -43,6 +48,7 @@
             color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.60, 0.14)
             pos_hint: {"center_x": 0.60, "center_y": 0.48}
+            id:email
 
         Label:
             text : "Password: "
@@ -60,6 +66,7 @@
             color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.60, 0.14)
             pos_hint: {"center_x": 0.60, "center_y": 0.34}
+            id:password
 
         Label:
             text : "Birthday: "
@@ -77,6 +84,7 @@
             color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.60, 0.14)
             pos_hint: {"center_x": 0.60, "center_y": 0.20}
+            id:dob
 
         Label:
             text : "Interests: "
@@ -94,6 +102,7 @@
             color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.60, 0.39)
             pos_hint: {"center_x": 0.60, "center_y": -0.064}
+            id:interests
 
         Label:
             text : "Previous Projects: "
@@ -111,13 +120,16 @@
             color: (1, 1, 1, 1)
             size_hint: (0.60, 0.36)
             pos_hint: {"center_x": 0.60, "center_y": -0.44}
+            id:prev_projects
 
     BoxLayout:
         Button:
             text: "Cancel"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
+            on_press:  app.root.current = "home"
         Button:
             text: "Submit"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
+            on_press:root.sign_up()
