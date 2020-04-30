@@ -78,6 +78,7 @@
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.show_popup() 
 
                 Button:
                     text: "Dismiss"
@@ -109,6 +110,7 @@
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.show_popup() 
 
                 Button:
                     text: "Dismiss"
@@ -138,6 +140,7 @@
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.show_popup() 
 
                 Button:
                     text: "Dismiss"
@@ -166,6 +169,7 @@
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.show_popup() 
 
                 Button:
                     text: "Dismiss"
@@ -194,6 +198,7 @@
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.show_popup() 
 
                 Button:
                     text: "Dismiss"
@@ -222,6 +227,7 @@
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.show_popup() 
 
                 Button:
                     text: "Dismiss"
@@ -244,12 +250,12 @@
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.55}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.show_popup() 
 
                 Button:
                     text: "Dismiss"
@@ -263,5 +269,12 @@
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
             on_press:  app.root.current = "requests"
+        Button:
+            text: "Refresh"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.20, 0.06)
+
+
+
 
         

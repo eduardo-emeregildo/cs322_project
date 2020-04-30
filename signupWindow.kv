@@ -24,8 +24,8 @@
             
         Label:
             text: "Fill out the application and click submit at the bottom of the page. If \nyour request is approved, you will receive an email. with your login \ncredentials. If not, you will have one more chance to sign up."
-            color: 0.2, 0.5, 0.4, 1
-            font_size: "20sp"
+            color: 1, 1, 1, 1
+            font_size: "18sp"
             pos_hint: {"center_x": 0.50, "center_y": 0.75}
 
     RelativeLayout:
@@ -36,7 +36,7 @@
             text : "Email: "
             halign: "right"
             font_size: "20sp"
-            color: 0.2, 0.5, 0.4, 1   
+            color: 1, 1, 1, 1   
             pos_hint: {"center_x": 0.14, "center_y": 0.48}
             
         TextInput:
@@ -54,7 +54,7 @@
             text : "Password: "
             halign: "left"
             font_size: "20sp"
-            color: 0.2, 0.5, 0.4, 1
+            color: 1, 1, 1, 1 
             pos_hint: {"center_x": 0.14, "center_y": 0.34}
 
         TextInput:
@@ -70,7 +70,7 @@
 
         Label:
             text : "Birthday: "
-            color: 0.2, 0.5, 0.4, 1 
+            color: 1, 1, 1, 1  
             font_size: "20sp"   
             halign: "left"
             pos_hint: {"center_x": 0.14, "center_y": 0.20}
@@ -88,7 +88,7 @@
 
         Label:
             text : "Interests: "
-            color: 0.2, 0.5, 0.4, 1
+            color: 1, 1, 1, 1 
             font_size: "20sp"   
             halign: "left"
             pos_hint: {"center_x": 0.14, "center_y": -0.065}
@@ -106,7 +106,7 @@
 
         Label:
             text : "Previous Projects: "
-            color: 0.2, 0.5, 0.4, 1 
+            color: 1, 1, 1, 1  
             font_size: "20sp"   
             halign: "left"
             pos_hint: {"center_x": 0.14, "center_y": -0.45}
@@ -126,10 +126,10 @@
         Button:
             text: "Cancel"
             background_color: (0.2, 0.5, 0.4, 1)
-            size_hint: (0.20, 0.1)
+            size_hint: (0.20, 0.06)
             on_press:  app.root.current = "home"
         Button:
             text: "Submit"
             background_color: (0.2, 0.5, 0.4, 1)
-            size_hint: (0.20, 0.1)
+            size_hint: (0.20, 0.06)
             on_press:root.sign_up()

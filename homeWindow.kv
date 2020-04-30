@@ -3,7 +3,7 @@
 <HomeWindow>:
     
     name: "home"
-    rows: 3
+    rows: 4
     cols: 1
     spacing: '20dp'
 
@@ -13,53 +13,55 @@
             Color:
                 rgba : 0, 1, 0, 1
 
+
+        Label:
+            text : "Email:"
+            font_size: "18dp"
+            pos_hint: {"y": .4, "x": -.315}
+
+        TextInput:
+            hint_text: "Email"
+            multiline: False
+            background_color: (1, 1, 1, 1)
+            color: (1, 1, 1, 1)
+            size_hint: (0.55, 0.055)
+            pos_hint: {"y": .88, "x": .25}
+
+        Label:
+            text : "Password:"
+            font_size: "18dp" 
+            pos_hint: {"y": .35, "x": -.335}
+
+        TextInput:
+            hint_text: "Password"
+            multiline: False
+            background_color: (1, 1, 1, 1)
+            color: (1, 1, 1, 1)
+            size_hint: (0.55, 0.055)
+            pos_hint: {"y": .82, "x": .25}
+
+        
+    BoxLayout:
+
+        pos_hint: {"center_x" : 0.5 , "center_y" : 1.1}
+        padding : 80
+
         Button:
             text: "Login"
             font_size: "20sp"
-            background_color: (1, 0.5, 0.6, 1)
+            background_color: (0.2, 0.5, 0.4, 1)
             color: (1, 1, 1, 1)
-            size_hint: (0.20, 0.1)
-            pos_hint: {"top": 1 , "left" : 1}
+            size_hint: (0.20, 0.08)
             on_press:  app.root.current = "homeOU"
             
 
         Button:
             text: "Sign Up"
             font_size: "20sp"
-            background_color: (1, 0.8, 1, 1)
+            background_color: (0.2, 0.5, 0.4, 1)
             color: (1, 1, 1, 1)
-            size_hint: (0.2, 0.1)
-            pos_hint: {"top" : 1, "right" : 1}
+            size_hint: (0.2, 0.08)
             on_press:  app.root.current = "signup"
-            
-
-        Label:
-            text : "Email:"
-            pos_hint: {"y": .315, "x": -.28}
-
-        TextInput:
-            text: "Email"
-            on_touch_down: self.text = ''
-            multiline: False
-            font_size: "20sp"
-            background_color: (1, 1, 1, 0.5)
-            color: (1, 1, 1, 1)
-            size_hint: (0.50, 0.05)
-            pos_hint: {"y": .79, "x": .25}
-
-        Label:
-            text : "Password:"
-            pos_hint: {"y": .255, "x": -.3}
-
-        TextInput:
-            text: "Password"
-            on_touch_down: self.text = ''
-            multiline: False
-            font_size: "20sp"
-            background_color: (1, 1, 1, 0.5)
-            color: (1, 1, 1, 1)
-            size_hint: (0.50, 0.05)
-            pos_hint: {"y": .73, "x": .25}
 
     FloatLayout:
         Label:
@@ -96,25 +98,25 @@
 
         Button:
             text: "User1"
-            background_color: (1, 0.5, 0.6, 1)
+            background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
         Button:
             text: "User2"
-            background_color: (1, 0.5, 0.6, 1)
+            background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
         Button:
             text: "User3"
-            background_color: (1, 0.5, 0.6, 1)
+            background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
         Button:
             text: "User4"
-            background_color: (1, 0.5, 0.6, 1)
+            background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
         Button:
             text: "User5"
-            background_color: (1, 0.5, 0.6, 1)
+            background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
         Button:
             text: "User6"
-            background_color: (1, 0.5, 0.6, 1)
+            background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)

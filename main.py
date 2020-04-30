@@ -4,12 +4,13 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.graphics.context_instructions import Color
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.properties import ObjectProperty
-import pyrebase
 from kivy.uix.popup import Popup
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
-from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+from kivy.properties import ObjectProperty
+from kivy.uix.boxlayout import BoxLayout
+import pyrebase
 import requests
 import re
 
@@ -39,11 +40,12 @@ def show_popup(title_popup,text_label):
     layout = FloatLayout()
     label = Label(text =text_label,size_hint = (0.6,0.2),pos_hint = {"x":0.2,"top":1})
     layout.add_widget(label)
-    button = Button(text = "close",size_hint =(0.8,0.2),pos_hint = {"x":0.1,"y":0.1})
+    button = Button(text = "close",size_hint =(0.8,0.1),pos_hint = {"x":0.1,"y":0.1})
     layout.add_widget(button)
     popup = Popup(title=title_popup,content =layout,size_hint=(None,None),size=(400,400),auto_dismiss = False)
     button.bind(on_press=popup.dismiss)
     popup.open()
+
 
 
 class HomeWindow(Screen):
@@ -86,9 +88,38 @@ class SignupWindow(Screen):
         self.interests.text = ""
         self.prev_projects.text = ""
 
-        
 
-        
+
+class NotificationPage(Screen):
+    pass
+
+class DescriptionWindow(Screen):
+    pass
+
+class PopupWindow(Popup):
+    input_text = ObjectProperty()
+    def __init__(self, text='', **kwargs):
+        super(PopupWindow, self).__init__(**kwargs)
+        self.input_text.text = text
+        self.auto_dismiss = False
+    
+    def Cancel(self):
+        self.dismiss()
+
+class ComplimentPage(Screen):
+    def show_popup(self):
+        popup = PopupWindow(title= "Increase Reputation Score")
+        popup.open()
+
+
+class WarningPage(Screen):
+    def show_popup(self):
+        popup = PopupWindow(title= "Decrease Reputation Score")
+        popup.open()
+
+class GroupNotificationSU(Screen):
+    pass
+
 class GroupWindow(Screen):
 	pass
 
@@ -101,20 +132,7 @@ class HomeOUWindow(Screen):
 class ProfileWindow(Screen):
 	pass
 
-class NotificationPage(Screen):
-    pass
 
-class DescriptionWindow(Screen):
-    pass
-
-class ComplimentPage(Screen):
-    pass
-
-class WarningPage(Screen):
-    pass
-
-class GroupNotificationSU(Screen):
-    pass
 
 kv = Builder.load_file("main.kv")
 
