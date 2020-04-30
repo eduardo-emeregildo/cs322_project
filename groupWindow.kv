@@ -142,3 +142,9 @@
                     text: "x"
                     background_color: (.4, 1, .7, 1)
                     size_hint: (0.20, 0.20)
+        BoxLayout:
+            Button:
+                text: "Go Back"
+                background_color: (0.2, 0.5, 0.4, 1)
+                size_hint: (0.2, 0.06)
+                on_press:  app.root.current = "profile"
