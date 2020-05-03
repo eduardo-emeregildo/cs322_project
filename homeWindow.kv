@@ -1,7 +1,8 @@
 #:kivy 1.0.7
 
 <HomeWindow>:
-    
+    email:email
+    password:password
     name: "home"
     rows: 4
     cols: 1
@@ -26,6 +27,7 @@
             color: (1, 1, 1, 1)
             size_hint: (0.55, 0.055)
             pos_hint: {"y": .88, "x": .25}
+            id:email
 
         Label:
             text : "Password:"
@@ -39,6 +41,8 @@
             color: (1, 1, 1, 1)
             size_hint: (0.55, 0.055)
             pos_hint: {"y": .82, "x": .25}
+            id:password
+            password:True
 
         
     BoxLayout:
@@ -52,7 +56,7 @@
             background_color: (0.2, 0.5, 0.4, 1)
             color: (1, 1, 1, 1)
             size_hint: (0.20, 0.08)
-            on_press:  app.root.current = "homeOU"
+            on_press: root.log_in()
             
 
         Button:

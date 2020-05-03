@@ -27,7 +27,7 @@ config = {
 	"measurementId": "G-B97101DQ0C"
 	}
 
-
+#for when person is signing up
 def check_email_format(email):
     regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     if(re.search(regex,email)):
@@ -49,7 +49,25 @@ def show_popup(title_popup,text_label):
 
 
 class HomeWindow(Screen):
-	pass
+	email = ObjectProperty(None)
+	password = ObjectProperty(None)
+	def log_in(self):
+		
+		firebase = pyrebase.initialize_app(config)
+		auth = firebase.auth()
+		try:
+			auth.sign_in_with_email_and_password(self.email.text,self.password.text)
+			self.parent.current = "homeOU" #how you switch screens in python code
+			
+		except:
+			show_popup("Error","wrong combination of email and password")
+		self.email.text = ""
+		self.password.text = ""
+
+
+
+
+
 
 class SignupWindow(Screen):
     email = ObjectProperty(None)
@@ -70,15 +88,12 @@ class SignupWindow(Screen):
         }
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
-        #auth = firebase.auth()
-
-        #auth.create_user_with_email_and_password(self.email.text,self.password.text)
-        #print("data added to authentication")
-
+        
 
         if (check_email_format(self.email.text)==True) and (len(self.password.text) >=6): 
             db.child("pending_users").push(data)
             show_popup("Submit","Application received")
+            
         else:
             show_popup("Reject","An error occured")
 
