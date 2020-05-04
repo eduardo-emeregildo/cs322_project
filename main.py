@@ -103,15 +103,14 @@ class SignupWindow(Screen):
         if (check_email_format(self.email.text) == True) and (len(self.password.text) >= 6):
             db.child("pending_users").push(data)
             show_popup("Submit", "Application received")
+            self.email.text = ""
+            self.password.text = ""
+            self.dob.text = ""
+            self.interests.text = ""
+            self.prev_projects.text = ""
 
         else:
-            show_popup("Reject", "An error occured")
-
-        self.email.text = ""
-        self.password.text = ""
-        self.dob.text = ""
-        self.interests.text = ""
-        self.prev_projects.text = ""
+            show_popup("Reject", "An error occurred")
 
 
 class NotificationPage(Screen):
@@ -157,10 +156,10 @@ class GroupWindow(Screen):
 class CreateGroupWindow(Screen):
     def create_group(self):
         groupUsers = self.userList.text.replace(" ", "").split(',')
-        print(groupUsers)
 
-        data = { # change to +ref.generate_key()
+        data = {  # change to +ref.generate_key()
             "groupName": self.groupName.text,
+            "groupId": 0,
             "groupDesc": self.groupDesc.text,
             "groupUsers": {
                 "1": {
@@ -183,12 +182,19 @@ class CreateGroupWindow(Screen):
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
-        db.child("group").push(data)
-        show_popup("Submit", "Application received")
+        checkEmailCount = 0
+        for i in range(len(groupUsers)):
+            if check_email_format(groupUsers[i]) == True:
+                checkEmailCount += 1
 
-        self.groupName.text = ""
-        self.groupDesc.text = ""
-        self.userList.text = ""
+        if checkEmailCount == len(groupUsers):
+            db.child("group").push(data)
+            show_popup("Submit", "Application received")
+            self.groupName.text = ""
+            self.groupDesc.text = ""
+            self.userList.text = ""
+        else:
+            show_popup("Reject", "An error occurred")
 
 
 class HomeOUWindow(Screen):
@@ -200,7 +206,6 @@ class ProfileWindow(Screen):
 
 
 kv = Builder.load_file("main.kv")
-
 
 class MyMainApp(App):
     def build(self):
