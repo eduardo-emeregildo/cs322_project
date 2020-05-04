@@ -5,6 +5,9 @@
     cols: 1
     name: "grouppage"
 
+    postContent: postContent
+    postButton: postButton
+
     spacing: '20dp'
 
     RelativeLayout:
@@ -21,12 +24,23 @@
             multiline: True
             size_hint: (0.60, 0.14)
             pos_hint: {"top": .95, "x": 0.025}
+            id: postContent
 
         Button:
-            text: "Post"
+            text: "Post Task"
             font_size: "11sp"
-            size_hint: (0.05, 0.01)
-            pos_hint: {"top": .78, "x": 0.575}
+            size_hint: (0.08, 0.01)
+            pos_hint: {"top": .78, "x": 0.545}
+            id: postButton
+            on_press: root.create_post("Task")
+
+        Button:
+            text: "Post Poll"
+            font_size: "11sp"
+            size_hint: (0.08, 0.01)
+            pos_hint: {"top": .78, "x": 0.455}
+            id: postButton
+            on_press: root.create_post("Poll")
 
         Label:
             text: "Please vote for a time to meet up: \n(3/4 members have voted) "

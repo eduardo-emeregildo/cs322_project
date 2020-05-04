@@ -150,8 +150,40 @@ class GroupNotificationSU(Screen):
 
 
 class GroupWindow(Screen):
-    pass
+    def create_post(self, postType):
 
+        if self.postContent.text.replace(" ", "") == "":
+            show_popup("Group Post", "Cannot have empty post")
+            return
+
+        if postType == "Task":
+            data = {
+                "groupId": 999,
+                "postContent": self.postContent.text,
+                "postType": postType,
+                "claimBy": 999
+            }
+
+        if postType == "Poll":
+            popup = PopupWindow(title="Enter a deadline for the poll MM/DD/YYYY")
+            popup.open()
+            data = {
+                "groupId": 999,
+                "postContent": self.postContent.text,
+                "postType": postType,
+                "postDeadline": "05/14/2020",
+                "pollOptions": 3
+            }
+            #have pop up specify deadline AND the options
+
+        else:
+            firebase = pyrebase.initialize_app(config)
+            db = firebase.database()
+            db.child("posts").push(data)
+            show_popup("Group Post", "Posted!")
+            self.postContent.text = ""
+
+        #Shows post on page
 
 class CreateGroupWindow(Screen):
     def create_group(self):
