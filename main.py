@@ -185,6 +185,25 @@ class GroupWindow(Screen):
 
         #Shows post on page
 
+    def remove_group_user(self, email):
+        removeUser = email
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+        user = db.child("group").order_by_child("groupId").equal_to(4).get()
+        for emailed in user.each():
+            groupUsers = emailed.val()['groupUsers']
+        for i in range(1, len(groupUsers)):
+            if removeUser in groupUsers[i].values():
+                print("found in " + str(i))
+                userFound = i
+                db.child("group").child("-M6Z3RfMHFsTViPCpS4g").child("groupUsers").child(userFound).remove()
+                break
+
+        #findKey = db.child("group").order_by_child("groupId").equal_to(4).get()
+        #print(findKey.key())
+        print("________")
+
+
 class CreateGroupWindow(Screen):
     def create_group(self):
         groupUsers = self.userList.text.replace(" ", "").split(',')
