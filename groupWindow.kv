@@ -7,17 +7,16 @@
 
     postContent: postContent
     postButton: postButton
+    groupDesc: groupDesc
+    user1_info: user1_info
+    user2_info: user2_info
+    user3_info: user3_info
+    user4_info: user4_info
+    user5_info: user5_info
 
     spacing: '20dp'
 
     RelativeLayout:
-
-        Label:
-            text: "Group Name"
-            text_size: cm(20), cm(10)
-            color: .2, .5, .4, 1
-            font_size: "20sp"
-            pos_hint: {"top": .10, "x": 0.025}
 
         TextInput:
             hint_text: "Write Something..."
@@ -70,9 +69,10 @@
             pos_hint: {"x": .57, "y": .365}
 
         Label:
-            text: "Group Information: \ngroup description about main \ngoal and main interests "
+            text: "Group Name: groupName \nDescription: groupDesc"
             halign: 'left'
             pos_hint: {"y": .39, "x": .315}
+            id: groupDesc
             canvas.before:
                 Color:
                     rgba: .30, .5, .45, 1
@@ -120,18 +120,23 @@
                 Label:
                     text: "Assigned: 4 \nCompleted: 3"
                     font_size: "11sp"
+                    id: user1_info
                 Label:
                     text: "Assigned: 5 \nCompleted: 3"
                     font_size: "11sp"
+                    id: user2_info
                 Label:
                     text: "Assigned: 2 \nCompleted: 2"
                     font_size: "11sp"
+                    id: user3_info
                 Label:
                     text: "Assigned: 3 \nCompleted: 2"
                     font_size: "11sp"
+                    id: user4_info
                 Label:
                     text: "Assigned: 1 \nCompleted: 4"
                     font_size: "11sp"
+                    id: user5_info
             BoxLayout:
                 orientation: 'vertical'
                 spacing: '10dp'

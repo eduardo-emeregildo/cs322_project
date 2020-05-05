@@ -189,9 +189,9 @@ class GroupWindow(Screen):
         removeUser = email
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
-        user = db.child("group").order_by_child("groupId").equal_to(4).get()
-        for emailed in user.each():
-            groupUsers = emailed.val()['groupUsers']
+        groupDb = db.child("group").order_by_child("groupId").equal_to(4).get()
+        for sections in groupDb.each():
+            groupUsers = sections.val()['groupUsers']
         for i in range(1, len(groupUsers)):
             if removeUser in groupUsers[i].values():
                 print("found in " + str(i))
@@ -202,6 +202,35 @@ class GroupWindow(Screen):
         #findKey = db.child("group").order_by_child("groupId").equal_to(4).get()
         #print(findKey.key())
         print("________")
+
+    def show_info(self):
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+        #specify group to pull info from
+        info = db.child("group").order_by_child("groupId").equal_to(3).get()
+        for sections in info.each():
+            groupDesc = sections.val()['groupDesc']
+            groupName = sections.val()['groupName']
+            groupUsers = sections.val()['groupUsers']
+
+        self.groupDesc.text = "Group Name: " + groupName + "\nDescription: " + groupDesc
+
+        for i in range(1, len(groupUsers)):
+            userAs = groupUsers[i]['taskAssign']
+            userCo = groupUsers[i]['taskComplete']
+            if i == 1:
+                self.user1_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
+            elif i == 2:
+                self.user2_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
+            elif i == 3:
+                self.user3_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
+            elif i == 4:
+                self.user4_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
+            elif i == 5:
+                self.user5_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
+
+
+
 
 
 class CreateGroupWindow(Screen):
