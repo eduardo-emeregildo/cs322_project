@@ -8,7 +8,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
 import pyrebase
 import requests
@@ -150,6 +150,34 @@ class GroupNotificationSU(Screen):
 
 
 class GroupWindow(Screen):
+
+    def show_info(self, *args): #change to on_enter later
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+
+        #specify group to pull info from
+        info = db.child("group").order_by_child("groupId").equal_to(3).get()
+        for sections in info.each():
+            group_desc = sections.val()['groupDesc']
+            groupName = sections.val()['groupName']
+            groupUsers = sections.val()['groupUsers']
+
+        self.groupDesc.text = "Group Name: " + groupName + "\nDescription: " + group_desc
+
+        for i in range(1, len(groupUsers)):
+            userAs = groupUsers[i]['taskAssign']
+            userCo = groupUsers[i]['taskComplete']
+            if i == 1:
+                self.user1_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
+            elif i == 2:
+                self.user2_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
+            elif i == 3:
+                self.user3_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
+            elif i == 4:
+                self.user4_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
+            elif i == 5:
+                self.user5_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
+
     def create_post(self, postType):
 
         if self.postContent.text.replace(" ", "") == "":
@@ -201,33 +229,6 @@ class GroupWindow(Screen):
 
         #findKey = db.child("group").order_by_child("groupId").equal_to(4).get()
         #print(findKey.key())
-        print("________")
-
-    def show_info(self):
-        firebase = pyrebase.initialize_app(config)
-        db = firebase.database()
-        #specify group to pull info from
-        info = db.child("group").order_by_child("groupId").equal_to(3).get()
-        for sections in info.each():
-            groupDesc = sections.val()['groupDesc']
-            groupName = sections.val()['groupName']
-            groupUsers = sections.val()['groupUsers']
-
-        self.groupDesc.text = "Group Name: " + groupName + "\nDescription: " + groupDesc
-
-        for i in range(1, len(groupUsers)):
-            userAs = groupUsers[i]['taskAssign']
-            userCo = groupUsers[i]['taskComplete']
-            if i == 1:
-                self.user1_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
-            elif i == 2:
-                self.user2_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
-            elif i == 3:
-                self.user3_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
-            elif i == 4:
-                self.user4_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
-            elif i == 5:
-                self.user5_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
 
 
 
