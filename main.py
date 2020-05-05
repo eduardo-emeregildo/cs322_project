@@ -213,6 +213,15 @@ class GroupWindow(Screen):
 
         #Shows post on page
 
+    def remove_group(self):
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+        groupDb = db.child("group").order_by_child("groupId").equal_to(4).get()
+        for sect in groupDb.each():
+            groupKey = sect.key()
+
+        db.child("group").child(groupKey).remove()
+
     def remove_group_user(self, email):
         removeUser = email
         firebase = pyrebase.initialize_app(config)
