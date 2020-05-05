@@ -217,30 +217,40 @@ class GroupWindow(Screen):
         removeUser = email
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
-        groupDb = db.child("group").order_by_child("groupId").equal_to(4).get()
+        groupDb = db.child("group").order_by_child("groupId").equal_to(5).get()
+        for sect in groupDb.each():
+            groupKey = sect.key()
         for sections in groupDb.each():
             groupUsers = sections.val()['groupUsers']
         for i in range(1, len(groupUsers)):
             if removeUser in groupUsers[i].values():
                 print("found in " + str(i))
                 userFound = i
-                db.child("group").child("-M6Z3RfMHFsTViPCpS4g").child("groupUsers").child(userFound).remove()
+                db.child("group").child(groupKey).child("groupUsers").child(userFound).remove()
                 break
 
-        #findKey = db.child("group").order_by_child("groupId").equal_to(4).get()
-        #print(findKey.key())
-
-
-
-
+    def task_claim(self):
+        #when user clicks claim button send postContent to user's request page
+        #DB updates with post 'claimBy'
+        #DB also updates user's taskAssign
+        pass
 
 class CreateGroupWindow(Screen):
     def create_group(self):
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+
+        groupTotal = 1
+        groupDb = db.child("group").get()
+        for sect in groupDb.each():
+            if sect is not "":
+                groupTotal += 1
+
         groupUsers = self.userList.text.replace(" ", "").split(',')
 
         data = {  # change to +ref.generate_key()
             "groupName": self.groupName.text,
-            "groupId": 0,
+            "groupId": groupTotal,
             "groupDesc": self.groupDesc.text,
             "groupUsers": {
                 "1": {
@@ -260,8 +270,6 @@ class CreateGroupWindow(Screen):
                 }
             }
         }
-        firebase = pyrebase.initialize_app(config)
-        db = firebase.database()
 
         checkEmailCount = 0
         for i in range(len(groupUsers)):
