@@ -31,7 +31,7 @@
             size_hint: (0.08, 0.01)
             pos_hint: {"top": .78, "x": 0.545}
             id: postButton
-            on_press: root.create_post("Task")
+            on_press: root.create_post("Task", 1)
 
         Button:
             text: "Post Poll"
@@ -39,7 +39,7 @@
             size_hint: (0.08, 0.01)
             pos_hint: {"top": .78, "x": 0.455}
             id: postButton
-            on_press: root.create_post("Poll")
+            on_press: root.create_post("Poll", 1)
 
         Label:
             text: "Please vote for a time to meet up: \n(3/4 members have voted) "
@@ -166,6 +166,7 @@
                     text: "x"
                     background_color: (.4, 1, .7, 1)
                     size_hint: (0.20, 0.20)
+                    on_press: root.task_complete('chungha@aol.com', 1)
         BoxLayout:
             Button:
                 text: "Go Back"

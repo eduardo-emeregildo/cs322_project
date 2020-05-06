@@ -178,25 +178,36 @@ class GroupWindow(Screen):
             elif i == 5:
                 self.user5_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
 
-    def create_post(self, postType):
+    def create_post(self, postType, groupId):
 
         if self.postContent.text.replace(" ", "") == "":
             show_popup("Group Post", "Cannot have empty post")
             return
 
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+
+        taskIdList = []
+        postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
+        for sector in postDb.each():
+            postsInfo = sector.val()['taskId']
+            taskIdList.append(postsInfo)
+        taskId = max(taskIdList) + 1
+
         if postType == "Task":
             data = {
-                "groupId": 999,
+                "groupId": groupId,
                 "postContent": self.postContent.text,
                 "postType": postType,
-                "claimBy": 999
+                "claimBy": 999,
+                "taskId": taskId
             }
 
         if postType == "Poll":
             popup = PopupWindow(title="Enter a deadline for the poll MM/DD/YYYY")
             popup.open()
             data = {
-                "groupId": 999,
+                "groupId": groupId,
                 "postContent": self.postContent.text,
                 "postType": postType,
                 "postDeadline": "05/14/2020",
@@ -205,8 +216,6 @@ class GroupWindow(Screen):
             #have pop up specify deadline AND the options
 
         else:
-            firebase = pyrebase.initialize_app(config)
-            db = firebase.database()
             db.child("posts").push(data)
             show_popup("Group Post", "Posted!")
             self.postContent.text = ""
@@ -235,12 +244,14 @@ class GroupWindow(Screen):
                 db.child("group").child(groupKey).child("groupUsers").child(i).remove()
                 break
 
-    def task_claim(self, email):
+    def task_claim(self, email, groupId):
+        groupId = 1
+        #email = ""
         #when user clicks claim button send postContent to user's request page
-        #DB updates with post 'claimBy'
+
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
-        groupDb = db.child("group").order_by_child("groupId").equal_to(5).get()
+        groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
             groupKey = sect.key()
         for sections in groupDb.each():
@@ -251,8 +262,41 @@ class GroupWindow(Screen):
                 db.child("group").child(groupKey).child("groupUsers").child(i)\
                     .update({"taskAssign": taskFound})
 
-        #DB also updates user's taskAssign
+        postDb = db.child("posts").order_by_child("groupId").equal_to(5).get()
+        for sect in postDb.each():
+            if 999 == sect.val()['claimBy']:
+                postKey = sect.key()
+                db.child("posts").child(postKey).update({"claimBy": email})
 
+    def task_complete(self, email, taskId):
+        #when user clicks compelte from their request page
+
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+        groupDb = db.child("group").order_by_child("groupId").equal_to(5).get()
+        for sect in groupDb.each():
+            groupKey = sect.key()
+        for sections in groupDb.each():
+            groupUsers = sections.val()['groupUsers']
+        for i in range(1, len(groupUsers)):
+            if email in groupUsers[i].values():
+                taskFound = groupUsers[i]['taskAssign'] - 1
+                taskComplete = groupUsers[i]['taskComplete'] + 1
+
+                if taskFound < 0:
+                    taskFound = 0
+
+        postDb = db.child("posts").order_by_child("groupId").equal_to(5).get()
+
+        for sect in postDb.each():
+            if email == sect.val()['claimBy'] and taskId == sect.val()['taskId']:
+                postKey = sect.key()
+                print(postKey)
+                db.child("posts").child(postKey).remove()
+                db.child("group").child(groupKey).child("groupUsers").child(i) \
+                    .update({"taskAssign": taskFound, "taskComplete": taskComplete})
+            else:
+                print("No Post Found")
 
 class CreateGroupWindow(Screen):
     def create_group(self):
