@@ -65,14 +65,12 @@
             Button:
                 text: "Option 1"
                 background_color: (.2, .5, .4, 1)
-                opacity: 1
                 disabled: False
                 id: btnPoll1
                 on_press: root.poll_vote('chungha@aol.com', 5, 1, 1)
             Button:
                 text: "Option 2"
                 background_color: (.2, .5, .4, 1)
-                opacity: 1
                 disabled: False
                 id: btnPoll2
                 on_press: root.poll_vote('chungha@aol.com', 5, 1, 2)
@@ -91,7 +89,7 @@
             background_color: (.2, .5, .4, 1)
             size_hint: (0.07, 0.07)
             pos_hint: {"x": .57, "y": .365}
-            opacity: 1
+            disabled: False
             id: btnClaim
             on_press: root.task_claim('chungha@aol.com', 7)
 

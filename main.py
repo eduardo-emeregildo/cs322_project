@@ -266,7 +266,7 @@ class GroupWindow(Screen):
         #email = ""
         #when user clicks claim button send postContent to user's request page
 
-        self.btnClaim.opacity = '0'
+        self.btnClaim.disabled = 'True'
 
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
@@ -278,14 +278,14 @@ class GroupWindow(Screen):
         for i in range(1, len(groupUsers)):
             if email in groupUsers[i].values():
                 taskFound = groupUsers[i]['taskAssign'] + 1
-                #db.child("group").child(groupKey).child("groupUsers").child(i)\
-                    #.update({"taskAssign": taskFound})
+                db.child("group").child(groupKey).child("groupUsers").child(i)\
+                    .update({"taskAssign": taskFound})
 
         postDb = db.child("posts").order_by_child("groupId").equal_to(5).get()
         for sect in postDb.each():
             if 999 == sect.val()['claimBy']:
                 postKey = sect.key()
-                #db.child("posts").child(postKey).update({"claimBy": email})
+                db.child("posts").child(postKey).update({"claimBy": email})
 
     def task_complete(self, email, groupId, taskId):
         #when user clicks compelte from their request page
