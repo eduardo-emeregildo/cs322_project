@@ -223,7 +223,6 @@ class GroupWindow(Screen):
         db.child("group").child(groupKey).remove()
 
     def remove_group_user(self, email):
-        removeUser = email
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
         groupDb = db.child("group").order_by_child("groupId").equal_to(5).get()
@@ -232,17 +231,28 @@ class GroupWindow(Screen):
         for sections in groupDb.each():
             groupUsers = sections.val()['groupUsers']
         for i in range(1, len(groupUsers)):
-            if removeUser in groupUsers[i].values():
-                print("found in " + str(i))
-                userFound = i
-                db.child("group").child(groupKey).child("groupUsers").child(userFound).remove()
+            if email in groupUsers[i].values():
+                db.child("group").child(groupKey).child("groupUsers").child(i).remove()
                 break
 
-    def task_claim(self):
+    def task_claim(self, email):
         #when user clicks claim button send postContent to user's request page
         #DB updates with post 'claimBy'
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+        groupDb = db.child("group").order_by_child("groupId").equal_to(5).get()
+        for sect in groupDb.each():
+            groupKey = sect.key()
+        for sections in groupDb.each():
+            groupUsers = sections.val()['groupUsers']
+        for i in range(1, len(groupUsers)):
+            if email in groupUsers[i].values():
+                taskFound = groupUsers[i]['taskAssign'] + 1
+                db.child("group").child(groupKey).child("groupUsers").child(i)\
+                    .update({"taskAssign": taskFound})
+
         #DB also updates user's taskAssign
-        pass
+
 
 class CreateGroupWindow(Screen):
     def create_group(self):
@@ -287,12 +297,12 @@ class CreateGroupWindow(Screen):
 
         if checkEmailCount == len(groupUsers):
             db.child("group").push(data)
-            show_popup("Submit", "Application received")
+            show_popup("Submit", "Group Created!")
             self.groupName.text = ""
             self.groupDesc.text = ""
             self.userList.text = ""
         else:
-            show_popup("Reject", "An error occurred")
+            show_popup("Error", "An error occurred")
 
 
 class HomeOUWindow(Screen):
