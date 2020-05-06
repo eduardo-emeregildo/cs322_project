@@ -198,7 +198,6 @@ class GroupWindow(Screen):
             data = {
                 "groupId": groupId,
                 "postContent": self.postContent.text,
-                "postType": postType,
                 "claimBy": 999,
                 "taskId": taskId
             }
@@ -218,7 +217,6 @@ class GroupWindow(Screen):
             data = {
                 "groupId": groupId,
                 "postContent": self.postContent.text,
-                "postType": postType,
                 "postDeadline": "05/14/2020",
                 "pollId": pollId,
                 "postVoted": "",
@@ -323,14 +321,50 @@ class GroupWindow(Screen):
                 print("No Post Found")
 
     def poll_vote(self, email, groupId, pollId, optionNum):
-        email = 'chungha@aol.com'
-        groupId = 5
+        email = 'jihyo@aol.com'
+        groupId = 2
         pollId = 1
+
         #user clicks option
-        #postVote is updated with user who just voted
-        #option is updated with count
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+        postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
+        for sect in postDb.each():
+            if sect.val()['pollId'] == pollId:
+                postInfo = sect.val()
+                postKey = sect.key()
+                option1Count = sect.val()['option1']['vote'] + 1
+                option1Content = sect.val()['option1']['content']
+                option2Count = sect.val()['option2']['vote'] + 1
+                option2Content = sect.val()['option2']['content']
+        print(option1Count)
+
+        votedMems = postInfo['postVoted'] + ", " + email
+
+        if optionNum == 1:
+            data = {
+                "postVoted": votedMems,
+                "option1": {
+                    "vote": option1Count,
+                    "content": option1Content
+
+                }
+            }
+        else:
+            data = {
+                "postVoted": votedMems,
+                "option2": {
+                    "vote": option2Count,
+                    "content": option2Content
+
+                }
+            }
+
+        db.child("posts").child(postKey).update(data)
+        self.btnPoll1.disabled = 'True'
+        self.btnPoll2.disabled = 'True'
+
         #if everyone voted, delete post and send notifications to everyone
-        pass
 
 
 class CreateGroupWindow(Screen):
