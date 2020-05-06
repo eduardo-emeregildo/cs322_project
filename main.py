@@ -187,14 +187,14 @@ class GroupWindow(Screen):
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
-        taskIdList = []
-        postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
-        for sector in postDb.each():
-            postsInfo = sector.val()['taskId']
-            taskIdList.append(postsInfo)
-        taskId = max(taskIdList) + 1
-
         if postType == "Task":
+            taskIdList = []
+            postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
+            for sector in postDb.each():
+                postsInfo = sector.val()['taskId']
+                taskIdList.append(postsInfo)
+            taskId = max(taskIdList) + 1
+
             data = {
                 "groupId": groupId,
                 "postContent": self.postContent.text,
@@ -204,37 +204,56 @@ class GroupWindow(Screen):
             }
 
         if postType == "Poll":
+            pollIdList = []
+            postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
+            for sect in postDb.each():
+                pollInfo = sect.val()['postId']
+                pollIdList.append(pollInfo)
+            pollId = max(pollIdList) + 1
+
             popup = PopupWindow(title="Enter a deadline for the poll MM/DD/YYYY")
+            popup.open()
+            popup = PopupWindow(title="Enter two options for the poll, separated by a comma. EX: 12:45PM, 3:45PM")
             popup.open()
             data = {
                 "groupId": groupId,
                 "postContent": self.postContent.text,
                 "postType": postType,
                 "postDeadline": "05/14/2020",
-                "pollOptions": 3
+                "pollId": pollId,
+                "postVoted": "",
+                "option1": {
+                    "content": "text",
+                    "vote": 0
+                },
+                "option2": {
+                    "content": "text",
+                    "vote": 0
+                }
             }
             #have pop up specify deadline AND the options
 
-        else:
-            db.child("posts").push(data)
-            show_popup("Group Post", "Posted!")
-            self.postContent.text = ""
+        db.child("posts").push(data)
+        show_popup("Group Post", "Posted!")
+        self.postContent.text = ""
 
-        #Shows post on page
+    def remove_group(self, groupId):
+        groupId = 5
 
-    def remove_group(self):
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
-        groupDb = db.child("group").order_by_child("groupId").equal_to(4).get()
+        groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
             groupKey = sect.key()
 
         db.child("group").child(groupKey).remove()
 
-    def remove_group_user(self, email):
+    def remove_group_user(self, email, groupId):
+        groupId = 5
+
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
-        groupDb = db.child("group").order_by_child("groupId").equal_to(5).get()
+        groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
             groupKey = sect.key()
         for sections in groupDb.each():
@@ -245,9 +264,11 @@ class GroupWindow(Screen):
                 break
 
     def task_claim(self, email, groupId):
-        groupId = 1
+        groupId = 5
         #email = ""
         #when user clicks claim button send postContent to user's request page
+
+        self.btnClaim.opacity = '0'
 
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
@@ -259,21 +280,24 @@ class GroupWindow(Screen):
         for i in range(1, len(groupUsers)):
             if email in groupUsers[i].values():
                 taskFound = groupUsers[i]['taskAssign'] + 1
-                db.child("group").child(groupKey).child("groupUsers").child(i)\
-                    .update({"taskAssign": taskFound})
+                #db.child("group").child(groupKey).child("groupUsers").child(i)\
+                    #.update({"taskAssign": taskFound})
 
         postDb = db.child("posts").order_by_child("groupId").equal_to(5).get()
         for sect in postDb.each():
             if 999 == sect.val()['claimBy']:
                 postKey = sect.key()
-                db.child("posts").child(postKey).update({"claimBy": email})
+                #db.child("posts").child(postKey).update({"claimBy": email})
 
-    def task_complete(self, email, taskId):
+    def task_complete(self, email, groupId, taskId):
         #when user clicks compelte from their request page
+
+        taskId = 1
+        groupId = 5
 
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
-        groupDb = db.child("group").order_by_child("groupId").equal_to(5).get()
+        groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
             groupKey = sect.key()
         for sections in groupDb.each():
@@ -286,7 +310,7 @@ class GroupWindow(Screen):
                 if taskFound < 0:
                     taskFound = 0
 
-        postDb = db.child("posts").order_by_child("groupId").equal_to(5).get()
+        postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
 
         for sect in postDb.each():
             if email == sect.val()['claimBy'] and taskId == sect.val()['taskId']:
@@ -298,20 +322,33 @@ class GroupWindow(Screen):
             else:
                 print("No Post Found")
 
+    def poll_vote(self, email, groupId, pollId, optionNum):
+        email = 'chungha@aol.com'
+        groupId = 5
+        pollId = 1
+        #user clicks option
+        #postVote is updated with user who just voted
+        #option is updated with count
+        #if everyone voted, delete post and send notifications to everyone
+        pass
+
+
 class CreateGroupWindow(Screen):
+
     def create_group(self):
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
-        groupTotal = 1
+        groupList = []
         groupDb = db.child("group").get()
         for sect in groupDb.each():
-            if sect is not "":
-                groupTotal += 1
+            groupInfo = sect.val()['groupId']
+            groupList.append(groupInfo)
+        groupTotal = max(groupList) + 1
 
         groupUsers = self.userList.text.replace(" ", "").split(',')
 
-        data = {  # change to +ref.generate_key()
+        data = {
             "groupName": self.groupName.text,
             "groupId": groupTotal,
             "groupDesc": self.groupDesc.text,
@@ -328,6 +365,16 @@ class CreateGroupWindow(Screen):
                 },
                 "3": {
                     "email": groupUsers[2],
+                    "taskAssign": 0,
+                    "taskComplete": 0
+                },
+                "4": {
+                    "email": groupUsers[3],
+                    "taskAssign": 0,
+                    "taskComplete": 0
+                },
+                "5": {
+                    "email": groupUsers[4],
                     "taskAssign": 0,
                     "taskComplete": 0
                 }
