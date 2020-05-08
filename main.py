@@ -154,7 +154,7 @@ class GroupNotificationSU(Screen):
 
 class GroupWindow(Screen):
 
-    def show_info(self, *args): #change to on_enter later
+    def on_start(self, *args): #change to on_enter later
         email = 'jin@aol.com'
         groupId = 1
         pollId = 1
