@@ -14,12 +14,14 @@
             pos_hint: {"y": .85, "x": .3}
 
         Label:
-            text : "USERNAME"
+            text : "EMAIL"
             pos_hint: {"y": .415, "x": .0}
+            
 
         Label:
-            text : "OU // +19 points"
+            text : "priv" +  "// " + "points"
             pos_hint: {"y": .385, "x": .0}
+            id: priv_and_points_label
 
         BoxLayout:
             padding: [50, 10, 50, 10]
@@ -101,4 +103,5 @@
             text: "Log Out"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.2, 0.06)
+            on_press:root.log_out_btn()
             on_press:  app.root.current = "home"
