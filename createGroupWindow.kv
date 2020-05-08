@@ -5,6 +5,10 @@
     cols: 1
     name: "creategroup"
 
+    groupDesc: groupDesc
+    groupName: groupName
+    userList: userList
+
     RelativeLayout:
         pos_hint: {'center_x': 0.5, 'center_y': 0.7}
         size_hint: 1, 0.45
@@ -37,6 +41,7 @@
             color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.60, 0.14)
             pos_hint: {"center_x": 0.60, "center_y": 0.78}
+            id: groupName
 
         Label:
             text : "Group Description: "
@@ -54,88 +59,19 @@
             color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.60, 0.34)
             pos_hint: {"center_x": 0.60, "center_y": 0.50}
+            id: groupDesc
 
     Label:
         text: "Add Users to Group:"
         font_size: "20sp"
         color: 0.2, 0.5, 0.4, 1
         pos_hint: {"center_x": 0.179, "center_y": 0.57}
-        canvas.before:
-            Color:
-                rgba: .2, .5, .4, 1
-            Rectangle:
-                pos: (240,222)
-                size: (480, 130)
 
     TextInput:
-        hint_text:'Enter email'
-        size_hint: (0.435, 0.05)
-        pos_hint: {"x": .31, "y": .52}
-
-    Button:
-        text: "+"
-        background_color: (.2, .5, .4, 1)
-        size_hint: (0.06, 0.05)
-        pos_hint: {"x": .755, "y": .52}
-
-    Button:
-        text: "-"
-        background_color: (.2, .5, .4, 1)
-        size_hint: (0.06, 0.05)
-        pos_hint: {"x": .825, "y": .52}
-
-    BoxLayout:
-        spacing: 10
-        pos_hint: {"x": .31, "y": .42}
-        size_hint: (0.58, 0.4)
-        Button:
-            text: "User1"
-            background_color: (.2, .5, .4, 1)
-            size_hint: (0.20, 0.2)
-        Button:
-            text: "User2"
-            background_color: (.2, .5, .4, 1)
-            size_hint: (0.20, 0.2)
-        Button:
-            text: "User3"
-            background_color: (.2, .5, .4, 1)
-            size_hint: (0.20, 0.2)
-        Button:
-            text: "User4"
-            background_color: (.2, .5, .4, 1)
-            size_hint: (0.20, 0.2)
-        Button:
-            text: "User5"
-            background_color: (.2, .5, .4, 1)
-            size_hint: (0.20, 0.2)
-        Button:
-            text: "User6"
-            background_color: (.2, .5, .4, 1)
-            size_hint: (0.20, 0.2)
-    Label:
-        text: "Username1"
-        font_size: "11sp"
-        pos_hint: {"center_x": 0.355, "center_y": 0.4}
-    Label:
-        text: "Username2"
-        font_size: "11sp"
-        pos_hint: {"center_x": 0.453, "center_y": 0.4}
-    Label:
-        text: "Username3"
-        font_size: "11sp"
-        pos_hint: {"center_x": 0.552, "center_y": 0.4}
-    Label:
-        text: "Username4"
-        font_size: "11sp"
-        pos_hint: {"center_x": 0.651, "center_y": 0.4}
-    Label:
-        text: "Username4"
-        font_size: "11sp"
-        pos_hint: {"center_x": 0.750, "center_y": 0.4}
-    Label:
-        text: "Username4"
-        font_size: "11sp"
-        pos_hint: {"center_x": 0.848, "center_y": 0.4}
+        hint_text:'Enter at least 5 emails and separate emails with a comma'
+        size_hint: (0.6, 0.15)
+        pos_hint: {"center_x": 0.60, "center_y": 0.52}
+        id: userList
 
     BoxLayout:
         Button:
@@ -147,3 +83,4 @@
             text: "Submit"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.2, 0.06)
+            on_press: root.create_group()
