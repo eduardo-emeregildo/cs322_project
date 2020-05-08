@@ -431,7 +431,7 @@ class GroupNotificationSU(Screen):
 
 class GroupWindow(Screen):
 
-    def on_start(self, *args): #change to on_enter later
+    def on_pre_enter(self, *args):
         email = 'jin@aol.com'
         groupId = 1
         pollId = 1
@@ -472,7 +472,10 @@ class GroupWindow(Screen):
             if sect.val()['postType'] == 'Poll':
                 groupPostPolls.append(sect.val())
 
-        pollVoted1 = groupPostPolls[0]['postVoted'].split(',')
+        if groupPostPolls[0]['postVoted'] == "":
+            pollVoted1 = []
+        else:
+            pollVoted1 = groupPostPolls[0]['postVoted'].split(',')
 
         self.postTask1.text = "Function Name: " + groupPostTasks[0]['postContent'] + "\nDetails:                          "
         self.postPoll1.text = "Poll: " + groupPostPolls[0]['postContent']
@@ -546,16 +549,16 @@ class GroupWindow(Screen):
                     background_color = (.2, .5, .4, 1),
                     disabled = False,
                     size_hint=(0.295, 0.1),
-                    pos_hint={"top": .18, "x": 0.036}
-                    #on_press = root.poll_vote('chungha@aol.com', 5, 1, 1)
+                    pos_hint={"top": .18, "x": 0.036},
+                    on_press=lambda *args: self.poll_vote('chungha@aol.com', 5, 1, 1, 2)
                     )
         btnOpt2 = Button(
                     text= option2,
                     background_color=(.2, .5, .4, 1),
                     disabled=False,
                     size_hint=(0.295, 0.1),
-                    pos_hint={"top": .18, "x": 0.342}
-                    # on_press = root.poll_vote('chungha@aol.com', 5, 1, 1)
+                    pos_hint={"top": .18, "x": 0.342},
+                    on_press=lambda *args: self.poll_vote('chungha@aol.com', 5, 1, 2, 2)
                     )
 
         btnOpt1.bind(on_release=partial(self.foo, btnOpt1))
@@ -569,12 +572,16 @@ class GroupWindow(Screen):
     def foo(self, instance, *args):
         instance.disabled = True
 
-    #make sure to add pollType
     def create_post(self, postType, groupId):
 
         if self.postContent.text.replace(" ", "") == "":
             show_popup("Group Post", "Cannot have empty post")
             return
+        if postType == 'Poll':
+            popup = PopupWindow(title="Enter a deadline for the poll MM/DD/YYYY")
+            popup.open()
+            popup = PopupWindow(title="Enter two options for the poll, separated by a comma. EX: 12:45PM, 3:45PM")
+            popup.open()
 
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
@@ -602,14 +609,11 @@ class GroupWindow(Screen):
             pollIdList = []
             postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
             for sect in postDb.each():
-                pollInfo = sect.val()['postId']
-                pollIdList.append(pollInfo)
+                if 'Poll' == sect.val()['postType']:
+                    pollInfo = sect.val()['pollId']
+                    pollIdList.append(pollInfo)
             pollId = max(pollIdList) + 1
 
-            popup = PopupWindow(title="Enter a deadline for the poll MM/DD/YYYY")
-            popup.open()
-            popup = PopupWindow(title="Enter two options for the poll, separated by a comma. EX: 12:45PM, 3:45PM")
-            popup.open()
             data = {
                 "groupId": groupId,
                 "postContent": self.postContent.text,
@@ -719,48 +723,56 @@ class GroupWindow(Screen):
             else:
                 print("No Post Found")
 
-    def poll_vote(self, email, groupId, pollId, optionNum):
+    def poll_vote(self, email, groupId, pollId, optionNum, btnClaim):
         email = 'jihyo@aol.com'
-        groupId = 2
-        pollId = 1
+        groupId = 1
+        pollId = 2
+        postInfo, votedMems = "", ""
+        option1Count, option1Content, option2Count, option2Content = 0, 0, 0, 0
 
         #user clicks option
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
         postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
         for sect in postDb.each():
-            if sect.val()['pollId'] == pollId:
-                postInfo = sect.val()
-                postKey = sect.key()
-                option1Count = sect.val()['option1']['vote'] + 1
-                option1Content = sect.val()['option1']['content']
-                option2Count = sect.val()['option2']['vote'] + 1
-                option2Content = sect.val()['option2']['content']
+            if sect.val()['postType'] == 'Poll':
+                if sect.val()['pollId'] == pollId:
+                    postInfo = sect.val()
+                    postKey = sect.key()
+                    option1Count = sect.val()['option1']['vote'] + 1
+                    option1Content = sect.val()['option1']['content']
+                    option2Count = sect.val()['option2']['vote'] + 1
+                    option2Content = sect.val()['option2']['content']
+                    if postInfo['postVoted'] == "":
+                        votedMems = email
+                    else:
+                        votedMems = postInfo['postVoted'] + ", " + email
 
-        votedMems = postInfo['postVoted'] + ", " + email
+        if postInfo is not "":
+            if optionNum == 1:
+                data = {
+                    "postVoted": votedMems,
+                    "option1": {
+                        "vote": option1Count,
+                        "content": option1Content
 
-        if optionNum == 1:
-            data = {
-                "postVoted": votedMems,
-                "option1": {
-                    "vote": option1Count,
-                    "content": option1Content
-
+                    }
                 }
-            }
-        else:
-            data = {
-                "postVoted": votedMems,
-                "option2": {
-                    "vote": option2Count,
-                    "content": option2Content
+            else:
+                data = {
+                    "postVoted": votedMems,
+                    "option2": {
+                        "vote": option2Count,
+                        "content": option2Content
 
+                    }
                 }
-            }
 
-        db.child("posts").child(postKey).update(data)
-        self.btnPoll1.disabled = 'True'
-        self.btnPoll2.disabled = 'True'
+            db.child("posts").child(postKey).update(data)
+
+            if btnClaim == 1:
+                self.btnPoll1.disabled = 'True'
+                self.btnPoll2.disabled = 'True'
 
         #if everyone voted, delete post and send notifications to everyone
 
