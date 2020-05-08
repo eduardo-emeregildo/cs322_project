@@ -8,6 +8,9 @@
     postContent: postContent
     postButton: postButton
     groupDesc: groupDesc
+    postTask1: postTask1
+    postPoll1: postPoll1
+    postPollVote1: postPollVote1
     btnClaim: btnClaim
     btnPoll1: btnPoll1
     btnPoll2: btnPoll2
@@ -47,6 +50,7 @@
         Label:
             text: "Please vote for a time to meet up:"
             pos_hint: {"y": .20, "x": -.315}
+            id: postPoll1
             canvas.before:
                 Color:
                     rgba: .2, .5, .4, 1
@@ -55,6 +59,7 @@
                     size: (500, 150)
         Label:
             text: "[ 3/5 members have voted ] "
+            id: postPollVote1
             color: 0.5, 0.8, 0.6, 1
             pos_hint: {"y": .16, "x": -.340}
 
@@ -78,6 +83,7 @@
         Label:
             text: "Function Name: create_group()\nDetails: function create group in database"
             pos_hint: {"center_y": .4, "center_x": .215}
+            id: postTask1
             canvas.before:
                 Color:
                     rgba: .2, .5, .4, 1
@@ -88,10 +94,10 @@
             text: "Claim"
             background_color: (.2, .5, .4, 1)
             size_hint: (0.07, 0.07)
-            pos_hint: {"x": .57, "y": .365}
+            pos_hint: {"x": .57, "y": .35}
             disabled: False
             id: btnClaim
-            on_press: root.task_claim('chungha@aol.com', 7)
+            on_press: root.task_claim('chungha@aol.com', 7, 4, 1)
 
         Label:
             text: "Group Name: groupName \nDescription: groupDesc"
@@ -122,10 +128,12 @@
                     text: "1"
                     background_color: (.2, .5, .4, 1)
                     size_hint: (0.30, 0.3)
+                    on_press: root.show_info()
                 Button:
                     text: "2"
                     background_color: (.2, .5, .4, 1)
                     size_hint: (0.30, 0.3)
+                    on_press: root.create_post_poll("This is the Content", "Choice 1", "Choice 2", 5)
                 Button:
                     text: "3"
                     background_color: (.2, .5, .4, 1)
