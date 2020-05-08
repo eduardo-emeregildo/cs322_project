@@ -154,6 +154,11 @@ class HomeWindow(Screen):
             self.email.text=""
             self.password.text=""
             self.parent.current = "homeOU" #how you switch screens in python code
+        except:
+            show_popup("Error","wrong combination of email and password")
+            self.email.text = ""
+            self.password.text = ""
+        return True
 
     def check_user(self):
         firebase = pyrebase.initialize_app(config)
@@ -168,12 +173,6 @@ class HomeWindow(Screen):
         except Exception:
             print("User DNE")
             return False
-
-        except:
-            show_popup("Error","wrong combination of email and password")
-            self.email.text = ""
-            self.password.text = ""
-        return True
 
 class SignupWindow(Screen):
     email = ObjectProperty(None)
