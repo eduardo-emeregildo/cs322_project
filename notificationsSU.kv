@@ -1,4 +1,5 @@
 #:kivy 1.0.7
+#:include requestDescriptionSU.kv
 
 <NotificationPage>:
 
@@ -7,6 +8,7 @@
     rows: 2
     cols: 1
     name: "requests"
+
 
     canvas.before:
         Color:
@@ -64,7 +66,7 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Name: " + "Someone1"
+                text: root.person1
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -79,14 +81,17 @@
                     text: "Accept"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.accept_btns(root.person1)
+                    
 
                 Button:
                     text: "Details"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press:  app.root.current = "description"
+                    on_press: root.change_button(0,root.person1)
+                    on_press: root.show_details(0,root.person1)
+                    on_press:  if root.is_email_there(root.person1) == 1:  app.root.current = "description" 
 
-                
 
 
 # name and info 2
@@ -95,7 +100,7 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Name: " + "Someone2"
+                text: root.person2
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -111,12 +116,15 @@
                     text: "Accept"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.accept_btns(root.person2)
 
                 Button:
                     text: "Details"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press:  app.root.current = "description"
+                    on_press: root.change_button(1,root.person2)
+                    on_press: root.show_details(1,root.person2)
+                    on_press:  if root.is_email_there(root.person2) == 1:  app.root.current = "description" 
 
 
 
@@ -126,7 +134,7 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Name: " + "Someone3" 
+                text: root.person3
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -142,12 +150,15 @@
                     text: "Accept"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.accept_btns(root.person3)
 
                 Button:
                     text: "Details"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press:  app.root.current = "description"
+                    on_press: root.change_button(2,root.person3)
+                    on_press: root.show_details(2,root.person3)
+                    on_press:  if root.is_email_there(root.person3) == 1:  app.root.current = "description" 
                 
 
 # name and info 4
@@ -156,7 +167,7 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Name: " + "Someone4"
+                text: root.person4
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -172,12 +183,16 @@
                     text: "Accept"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    
+                    on_press: root.accept_btns(root.person4)
 
                 Button:
                     text: "Details"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press:  app.root.current = "description"
+                    on_press: root.change_button(3,root.person4)
+                    on_press: root.show_details(3,root.person4)
+                    on_press: if root.is_email_there(root.person4) == 1:  app.root.current = "description" 
 
 
 # name and info 5
@@ -186,7 +201,7 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Name: " + "Someone5" 
+                text: root.person5 
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -202,12 +217,15 @@
                     text: "Accept"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.accept_btns(root.person5)
 
                 Button:
                     text: "Details"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press:  app.root.current = "description"
+                    on_press: root.change_button(4,root.person5)
+                    on_press: root.show_details(4,root.person5)
+                    on_press:  if root.is_email_there(root.person5) == 1:  app.root.current = "description" 
                 
 
 # name and info 6
@@ -216,7 +234,7 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Name: " + "Someone6" 
+                text: root.person6 
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -232,12 +250,15 @@
                     text: "Accept"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.accept_btns(root.person6)
 
                 Button:
                     text: "Details"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press:  app.root.current = "description"
+                    on_press: root.change_button(5,root.person6)
+                    on_press: root.show_details(5,root.person6)
+                    on_press:  if root.is_email_there(root.person6) == 1:  app.root.current = "description" 
 
 
 # name and info 7
@@ -246,7 +267,7 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Name: " + "Someone7"
+                text: root.person7
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -262,12 +283,15 @@
                     text: "Accept"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.accept_btns(root.person7)
 
                 Button:
                     text: "Details"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press:  app.root.current = "description"
+                    on_press: root.change_button(6,root.person7)
+                    on_press: root.show_details(6,root.person7)
+                    on_press:  if root.is_email_there(root.person7) == 1:  app.root.current = "description" 
                 
     
 # go back
@@ -281,5 +305,6 @@
             text: "Refresh"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
+            on_press: root.show_new_requests()
 
         

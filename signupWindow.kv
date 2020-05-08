@@ -5,7 +5,7 @@
     password: password
     dob: dob
     interests: interests
-    prev_projects: prev_projects
+    reference: reference
     rows: 3
     cols: 1
     name: "signup"
@@ -105,14 +105,14 @@
             id:interests
 
         Label:
-            text : "Previous Projects: "
+            text : "Reference email: "
             color: 1, 1, 1, 1  
             font_size: "20sp"   
             halign: "left"
             pos_hint: {"center_x": 0.14, "center_y": -0.45}
 
         TextInput:
-            hint_text: "Briefly describe previous projects"
+            hint_text: "Write the email reference for this system"
             hint_text_color: (0.2, 0.5, 0.4, 1)
             multiline: True
             font_size: "20sp"
@@ -120,7 +120,7 @@
             color: (1, 1, 1, 1)
             size_hint: (0.60, 0.36)
             pos_hint: {"center_x": 0.60, "center_y": -0.44}
-            id:prev_projects
+            id:reference
 
     BoxLayout:
         Button:

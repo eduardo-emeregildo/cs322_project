@@ -3,6 +3,10 @@
 <DescriptionWindow>: 
 
     name: "description"
+    
+    
+
+
 
     RelativeLayout:
 
@@ -17,61 +21,56 @@
             font_name: "Arial"
             pos_hint: {"center_x": 0.25, "center_y": 0.9}
 
-        Label:
-            text: "Name: " + "Someone1"
-            color: 0.2, 0.5, 0.4, 1
-            font_size: "20sp"
-            bold: False
-            font_name: "Arial"
-            pos_hint: {"center_x": 0.2, "center_y": 0.8}
+        
 
         Label:
-            text: "Email: " + "someone@kivy.com"
+            text: "Email: " + root.desc_email
             color: 0.2, 0.5, 0.4, 1
             font_size: "20sp"
             bold: False
             font_name: "Arial"
             pos_hint: {"center_x": 0.25, "center_y": 0.75}
 
-        Label:
-            text: "Appeal Message: \nSay what you want to say\nPlease accept the request\nPlease don't delete" 
-            color: 0.2, 0.5, 0.4, 1
-            font_size: "20sp"
-            bold: False
-            font_name: "Arial"
-            pos_hint: {"center_x": 0.24, "center_y": 0.625}
 
         Label:
-            text: "Birthday: 04/22/2020 0 year old"
+            text: "Number of Appeals: " + root.desc_appeal 
             color: 0.2, 0.5, 0.4, 1
             font_size: "20sp"
             bold: False
             font_name: "Arial"
-            pos_hint: {"center_x": 0.275, "center_y": 0.5}
+            pos_hint: {"center_x": 0.25, "center_y": 0.65}
 
         Label:
-            text: "Interests:" + "\n\tDancing" + "\n\tSleeping" + "\n\tDoing Nothing" 
+            text: "Birthday: " + root.desc_birthday
             color: 0.2, 0.5, 0.4, 1
             font_size: "20sp"
             bold: False
             font_name: "Arial"
-            pos_hint: {"center_x": 0.19, "center_y": 0.38}
+            pos_hint: {"center_x": 0.25, "center_y": 0.55}
 
         Label:
-            text: "Past Projects\n" 
+            text: "Interests:" + root.desc_interest
             color: 0.2, 0.5, 0.4, 1
             font_size: "20sp"
             bold: False
             font_name: "Arial"
-            pos_hint: {"center_x": 0.175, "center_y": 0.2}
+            pos_hint: {"center_x": 0.25, "center_y": 0.45}
+
+        Label:
+            text: "Password: " + root.desc_password 
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "20sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.25, "center_y": 0.35}
         
         Label:
-            text: "Referrals:" 
+            text: "Referrals:" + root.desc_reference
             color: 0.2, 0.5, 0.4, 1
             font_size: "20sp"
             bold: False
             font_name: "Arial"
-            pos_hint: {"center_x": 0.155, "center_y": 0.15}
+            pos_hint: {"center_x": 0.25, "center_y": 0.25}
 
 
 # go back
@@ -80,14 +79,18 @@
             text: "Return"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
+            on_press:root.return_btn()
             on_press:  app.root.current = "requests"
         Button:
             text: "Reject"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
+            on_press:root.reject_btn()
         Button:
-            text: "Approve"
+            text: "Load info"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
+            on_press:root.update()
+
 
  
