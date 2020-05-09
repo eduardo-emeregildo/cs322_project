@@ -1,12 +1,16 @@
 #:kivy 1.0.7
 
-<HomeWindow>:
-    
-    name: "home"
+<HomeSUWindow>:
+    name: "homeSU"
     rows: 4
     cols: 1
+
     spacing: '20dp'
-    prev_screen: ""
+
+
+    pic: pic
+    username: username
+    points: points
 
     project1: project1
     project2: project2
@@ -22,85 +26,47 @@
     user5: user5
     user6: user6
 
-    email: email
-    password: password
-
     on_pre_enter: root.initialize_page()
 
-
     RelativeLayout:
-        canvas.before:
-            Color:
-                rgba : 0, 1, 0, 1
+        Button:
+            text: "Pic"
+            size_hint: (0.1, 0.1)
+            pos_hint: {"y": .85, "x": .3}
+            id: pic
+
+        Label:
+            text : "USERNAME"
+            pos_hint: {"y": .415, "x": .0}
+            id: username
+
+        Label:
+            text : "SU // +19 points"
+            pos_hint: {"y": .385, "x": .0}
+            id: points
 
 
         Label:
-            text : "Email:"
-            font_size: "18dp"
-            pos_hint: {"y": .4, "x": -.315}
+            text : "WELCOME TO THE SYSTEM"
+            pos_hint: {"y": .3, "x": .0}
+            font: '40dp'
+            bold: True
+            font_name: "Arial"
 
-        TextInput:
-            hint_text: "Email"
-            multiline: False
-            background_color: (1, 1, 1, 1)
-            color: (1, 1, 1, 1)
-            size_hint: (0.55, 0.055)
-            pos_hint: {"y": .88, "x": .25}
-            id: email
-
-        Label:
-            text : "Password:"
-            font_size: "18dp" 
-            pos_hint: {"y": .35, "x": -.335}
-
-        TextInput:
-            hint_text: "Password"
-            multiline: False
-            background_color: (1, 1, 1, 1)
-            color: (1, 1, 1, 1)
-            size_hint: (0.55, 0.055)
-            pos_hint: {"y": .82, "x": .25}
-            id: password
-
-
-        
-    BoxLayout:
-
-        pos_hint: {"center_x" : 0.5 , "center_y" : 1.1}
-        padding : 80
 
         Button:
-            text: "Login"
-            font_size: "20sp"
+            text: "NOTIFICATIONS"
             background_color: (0.2, 0.5, 0.4, 1)
-            color: (1, 1, 1, 1)
-            size_hint: (0.20, 0.08)
-            on_press:  root.log_in_auto()
-            
-
-        Button:
-            text: "Sign Up"
-            font_size: "20sp"
-            background_color: (0.2, 0.5, 0.4, 1)
-            color: (1, 1, 1, 1)
-            size_hint: (0.2, 0.08)
-            on_press:  app.root.current = "signup"
-
-        Button:
-            text: "SU Login"
-            font_size: "20sp"
-            background_color: (0.2, 0.5, 0.4, 1)
-            color: (1, 1, 1, 1)
-            size_hint: (0.2, 0.08)
-            on_press:  app.root.current = "homeSU"
-
-
+            size_hint: (0.2, 0.05)
+            pos_hint: {"x": .75, "y": .71}
+            on_press: app.root.current = "requests"
 
     FloatLayout:
+
         Label:
             text : "Top Projects"
             font_size: "21sp"
-            pos_hint: {"y": .18, "x": 0}
+            pos_hint: {"y": .18, "x": .0}
 
         Label:
             text: ""
@@ -112,90 +78,101 @@
         Label:
             text: ""
             halign: 'left'
-            pos_hint: {"y": 0.05, "x": -.20}
+            pos_hint: {"y": .06, "x": -.20}
             id: desc1
 
         Label:
             text: ""
-            pos_hint: {"y": -.03, "x": -.238}
+            pos_hint: {"y": 0, "x": -.238}
             color: 1, 1, 0, 1
             font: "20sp"
             id: project2
 
+
         Label:
             text: ""
-            halign: 'left'
-            pos_hint: {"y": -.1, "x": -.20}
+            pos_hint: {"y": -.06, "x": -.20}
             id: desc2
 
         Label:
             text: ""
-            pos_hint: {"y": -.17, "x": -.238}
+            pos_hint: {"y": -.12, "x": -.238}
             color: 1, 1, 0, 1
             font: "20sp"
             id: project3
 
-
         Label:
             text: ""
-            halign: 'left'
-            pos_hint: {"y": -.23, "x": -.20}
+            pos_hint: {"y": -.18, "x": -.20}
             id: desc3
 
         Label:
             text : "Top Users"
             font_size: "21sp"
-            pos: (0, -190)
+            pos: (0, -150)
 
     BoxLayout:
         spacing: '10dp'
-        pos_hint: {"y": .05, "x": .1}
+        pos_hint: {"y": .12, "x": .1}
         size_hint: (0.8, 0.9)
 
         Button:
             text: "User1"
             background_color: (0.2, 0.5, 0.4, 1)
-            size_hint: (0.20, 0.1)
-            on_press: root.switch_screen(self.text)
             color: 1, 1, 0, 1
+            size_hint: (0.20, 0.1)
+            #on_press: app.root.current = "VisitorView"
+            on_press: root.switch_screen(self.text)
             id: user1
 
         Button:
             text: "User2"
             background_color: (0.2, 0.5, 0.4, 1)
+            color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
+            #on_press: app.root.current = "VisitorView"
             on_press: root.switch_screen(self.text)
-            color: 1, 1, 1, 1
             id: user2
 
         Button:
             text: "User3"
             background_color: (0.2, 0.5, 0.4, 1)
+            color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
+            #on_press: app.root.current = "VisitorView"
             on_press: root.switch_screen(self.text)
-            color: 1, 1, 1, 1
             id: user3
 
         Button:
             text: "User4"
             background_color: (0.2, 0.5, 0.4, 1)
+            color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
+            #on_press: app.root.current = "VisitorView"
             on_press: root.switch_screen(self.text)
-            color: 1, 1, 1, 1
             id: user4
 
         Button:
             text: "User5"
             background_color: (0.2, 0.5, 0.4, 1)
+            color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
+            #on_press: app.root.current = "VisitorView"
             on_press: root.switch_screen(self.text)
-            color: 1, 1, 1, 1
             id: user5
 
         Button:
             text: "User6"
             background_color: (0.2, 0.5, 0.4, 1)
-            size_hint: (0.20, 0.1)
-            on_press: root.switch_screen(self.text)
             color: 1, 1, 0, 1
+            size_hint: (0.20, 0.1)
+            #on_press: app.root.current = "VisitorView"
+            on_press: root.switch_screen(self.text)
             id: user6
+
+    BoxLayout:
+        Button:
+            text: "Log Out"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.2, 0.06)
+            on_press:  app.root.current = "home"

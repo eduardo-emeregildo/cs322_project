@@ -8,6 +8,16 @@
     cols: 1
     name: "warnings"
 
+    w1: w1
+    w2: w2
+    w3: w3
+    w4: w4
+    w5: w5
+    w6: w6
+    w7: w7
+
+    on_pre_enter: root.update()
+
     canvas.before:
         Color:
             rgba : 0, 0, 0, 1
@@ -64,12 +74,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone got a warning"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.725}
+                id: w1
             
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.15}
@@ -80,12 +91,13 @@
                     text: "Decrease Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup()
+                    on_press: root.show_popup0()
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.w1.text = "" 
 
                 
 
@@ -96,12 +108,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is rude!"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.625}
+                id: w2
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.05}
@@ -112,12 +125,13 @@
                     text: "Decrease Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup()
+                    on_press: root.show_popup0()
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.w2.text = "" 
 
 
 # name and info 3
@@ -126,12 +140,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is late for a meeting"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.525}
+                id: w3
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.95}
@@ -142,12 +157,13 @@
                     text: "Decrease Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup()
+                    on_press: root.show_popup0()
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.w3.text = "" 
 
 # name and info 4
 
@@ -155,12 +171,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is rude"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.425}
+                id: w4
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.85}
@@ -171,12 +188,13 @@
                     text: "Decrease Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup()
+                    on_press: root.show_popup0()
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.w4.text = "" 
 
 # name and info 5
 
@@ -184,12 +202,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is rude"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.325}
+                id: w5
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.75}
@@ -200,12 +219,13 @@
                     text: "Decrease Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup()
+                    on_press: root.show_popup0()
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.w5.text = "" 
 
 # name and info 6
 
@@ -213,12 +233,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is rude"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.225}
+                id: w6
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.65}
@@ -229,12 +250,13 @@
                     text: "Decrease Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup()
+                    on_press: root.show_popup0()
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.w6.text = "" 
 
 # name and info 7
 
@@ -242,12 +264,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone got a warning"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.125}
+                id: w7
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.55}
@@ -257,12 +280,13 @@
                     text: "Decrease Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup()
+                    on_press: root.show_popup0()
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)      
+                    size_hint: (0.05, 0.05)
+                    on_press: root.w7.text = ""       
 # go back
     BoxLayout:
         Button:
@@ -275,5 +299,6 @@
             text: "Refresh"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
+            on_press: root.update()
             
         

@@ -15,22 +15,36 @@
 #:include groupNotificationSU.kv
 #:include popupWindow.kv
 
-
+#:include visitorViewProfile.kv
+#:include homeSUWindow.kv
+#:include groupNotificationOU.kv
+#:include warningNotificationOU.kv
+#:include welcomeScreen.kv
+#:include visitorViewLoggedIn.kv
 
 
 ScreenManager:
+    
+    WelcomeScreen:
+    HomeWindow: 
 
-    HomeWindow:
     HomeOUWindow:
+    HomeSUWindow:
+
+    VisitorViewLoggedIn:
+    
     SignupWindow:
     ProfileWindow:
     CreateGroupWindow:
     GroupWindow:
-    GroupNotificationSU:
+    groupNotificationSU:
     ComplimentPage:
     WarningPage:
-    NotificationPage:
+    WarningPageOU:
+    NotificationSU:
     DescriptionWindow:
+    VisitorView:
+    groupNotificationOU:
   
 
 

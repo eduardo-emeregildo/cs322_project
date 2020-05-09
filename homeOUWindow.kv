@@ -5,23 +5,45 @@
     rows: 4
     cols: 1
 
+    pic: pic
+    username: username
+    points: points
+
+    project1: project1
+    project2: project2
+    project3: project3
+    desc1 : desc1
+    desc2 : desc2
+    desc3 : desc3
+
+    user1: user1
+    user2: user2
+    user3: user3
+    user4: user4
+    user5: user5
+    user6: user6
+
+
     spacing: '20dp'
+
+    on_pre_enter: root.initialize_page()
 
     RelativeLayout:
         Button:
             text: "Pic"
             size_hint: (0.1, 0.1)
             pos_hint: {"y": .85, "x": .3}
+            id: pic
 
         Label:
-            text : "EMAIL"
+            text : "Someone" + " OU"
             pos_hint: {"y": .415, "x": .0}
-            
+            id: username
 
         Label:
-            text : "priv" +  "// " + "points"
+            text : "20"
             pos_hint: {"y": .385, "x": .0}
-            id: priv_and_points_label
+            id: points
 
         BoxLayout:
             padding: [50, 10, 50, 10]
@@ -38,7 +60,7 @@
                 text: "NOTIFICATIONS"
                 background_color: (0.2, 0.5, 0.4, 1)
                 size_hint: (0.08, 0.2)
-                on_press:  app.root.current = "requests"
+                on_press:  app.root.current = "WarningsOU"
 
     FloatLayout:
         Label:
@@ -47,21 +69,42 @@
             pos_hint: {"y": .18, "x": .0}
 
         Label:
-            text: "Project Name // Group Name"
+            text: ""
             pos_hint: {"y": .12, "x": -.25}
+            color: 1, 1, 0, 1
+            font: "20sp"
+            id: project1
 
         Label:
-            text: "Description desc desc desc desc \ndesc desc desc desc desc desc desc"
+            text: ""
             halign: 'left'
             pos_hint: {"y": .06, "x": -.20}
+            id: desc1
 
         Label:
-            text: "Project Name 2 // Group Name 2"
-            pos_hint: {"y": -.05, "x": -.238}
+            text: ""
+            pos_hint: {"y": 0, "x": -.238}
+            color: 1, 1, 0, 1
+            font: "20sp"
+            id: project2
+
 
         Label:
-            text: "Description desc desc desc desc \ndesc desc desc desc desc desc desc"
-            pos_hint: {"y": -.11, "x": -.20}
+            text: ""
+            pos_hint: {"y": -.06, "x": -.20}
+            id: desc2
+
+        Label:
+            text: ""
+            pos_hint: {"y": -.12, "x": -.238}
+            color: 1, 1, 0, 1
+            font: "20sp"
+            id: project3
+
+        Label:
+            text: ""
+            pos_hint: {"y": -.18, "x": -.20}
+            id: desc3
 
         Label:
             text : "Top Users"
@@ -76,27 +119,50 @@
         Button:
             text: "User1"
             background_color: (0.2, 0.5, 0.4, 1)
+            color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
+            on_press: app.root.current = "VisitorViewLoggedIn"
+            id: user1
+
         Button:
             text: "User2"
             background_color: (0.2, 0.5, 0.4, 1)
+            color: 1, 1, 1, 1
             size_hint: (0.20, 0.1)
+            on_press: app.root.current = "VisitorViewLoggedIn"
+            id: user2
+
         Button:
             text: "User3"
             background_color: (0.2, 0.5, 0.4, 1)
+            color: 1, 1, 1, 1
             size_hint: (0.20, 0.1)
+            on_press: app.root.current = "VisitorViewLoggedIn"
+            id: user3
+
         Button:
             text: "User4"
             background_color: (0.2, 0.5, 0.4, 1)
+            color: 1, 1, 1, 1
             size_hint: (0.20, 0.1)
+            on_press: app.root.current = "VisitorViewLoggedIn"
+            id: user4
+
         Button:
             text: "User5"
             background_color: (0.2, 0.5, 0.4, 1)
+            color: 1, 1, 1, 1
             size_hint: (0.20, 0.1)
+            on_press: app.root.current = "VisitorViewLoggedIn"
+            id: user5
+
         Button:
             text: "User6"
             background_color: (0.2, 0.5, 0.4, 1)
+            color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
+            on_press: app.root.current = "VisitorViewLoggedIn"
+            id: user6
 
     BoxLayout:
         Button:
@@ -105,3 +171,4 @@
             size_hint: (0.2, 0.06)
             on_press:root.log_out_btn()
             on_press:  app.root.current = "home"
+            
