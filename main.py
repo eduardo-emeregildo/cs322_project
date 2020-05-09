@@ -1,11 +1,6 @@
 from groupPageFunctions import *
 
 
-firebase = pyrebase.initialize_app(config)
-db = firebase.database()
-
-
-
 class HomeWindow(Screen):
 
     email = ObjectProperty(None)

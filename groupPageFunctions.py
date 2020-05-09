@@ -12,8 +12,6 @@ class GroupWindow(Screen):
         pollId = 1
         taskId = 4
 
-        firebase = pyrebase.initialize_app(config)
-        db = firebase.database()
 
         #specify group to pull info from
         info = db.child("group").order_by_child("groupId").equal_to(groupId).get()
@@ -151,9 +149,6 @@ class GroupWindow(Screen):
             show_popup("Group Post", "Cannot have empty post")
             return
 
-        firebase = pyrebase.initialize_app(config)
-        db = firebase.database()
-
         if postType == "Task":
             taskIdList = []
             postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
@@ -221,8 +216,6 @@ class GroupWindow(Screen):
     def remove_group_user(self, email, groupId):
         groupId = 5
 
-        firebase = pyrebase.initialize_app(config)
-        db = firebase.database()
         groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
             groupKey = sect.key()
@@ -241,8 +234,6 @@ class GroupWindow(Screen):
         if btnClaimNum == 1:
             self.btnClaim.disabled = 'True'
 
-        firebase = pyrebase.initialize_app(config)
-        db = firebase.database()
         groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
             groupKey = sect.key()
@@ -267,8 +258,6 @@ class GroupWindow(Screen):
         taskId = 1
         groupId = 5
 
-        firebase = pyrebase.initialize_app(config)
-        db = firebase.database()
         groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
             groupKey = sect.key()
@@ -343,8 +332,6 @@ class GroupWindow(Screen):
 class CreateGroupWindow(Screen):
 
     def create_group(self):
-        firebase = pyrebase.initialize_app(config)
-        db = firebase.database()
 
         groupList = []
         groupDb = db.child("group").get()

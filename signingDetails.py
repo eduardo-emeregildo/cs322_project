@@ -20,7 +20,7 @@ def check_email_format(email):
 
 #returns dictionary of person in the pending users table given their email
 def get_info_pending(email):
-	db = firebase.database()
+
 	all_users = db.child("pending_users").get()
 	for users in all_users.each():
 		a = users.val()
@@ -28,7 +28,7 @@ def get_info_pending(email):
 			return a
 	return None
 def get_info_users(email):
-    db = firebase.database()
+
     all_users = db.child("users").get()
     for users in all_users.each():
         a = users.val()
@@ -37,7 +37,7 @@ def get_info_users(email):
     return None
 
 def get_key_appeal(email):
-    db = firebase.database()
+
     all_users = db.child("possible_appeals").get()
     for users in all_users.each():
         a = users.val()
@@ -49,7 +49,6 @@ def get_key_appeal(email):
 #returns key in db given the existing email of pending user in the system
 def get_key_pending(email): 
     
-    db = firebase.database()
     all_users = db.child("pending_users").get() 
     for users in all_users.each():
         a=users.val()
@@ -59,7 +58,7 @@ def get_key_pending(email):
     return None
 
 def is_in_blacklist(email):
-    db = firebase.database()
+
     all_users = db.child("blacklist").get()
     for users in all_users.each():
         a = users.val()
@@ -68,7 +67,7 @@ def is_in_blacklist(email):
     return False
 
 def is_in_appeal(email):
-    db = firebase.database()
+
     all_users = db.child("possible_appeals").get()
     for users in all_users.each():
         a = users.val()
@@ -78,7 +77,7 @@ def is_in_appeal(email):
 
 
 def is_in_users(email):
-    db = firebase.database()
+
     all_users = db.child("users").get()
     for users in all_users.each():
         a = users.val()
@@ -126,7 +125,6 @@ class SignupWindow(Screen):
         "interests":self.interests.text,
         "reference email":self.reference.text
         }
-        db = firebase.database()
 
         if (check_email_format(self.email.text)==True) and (len(self.password.text) >=6): 
             if is_in_blacklist(self.email.text) == True:
@@ -173,7 +171,7 @@ class NotificationSU(Screen):
     reference = StringProperty()
     #refresh button
     def show_new_requests(self):
-        db = firebase.database()
+
         email_requests = ["","","","","","",""]
 
         all_users = db.child("pending_users").get()
@@ -236,7 +234,6 @@ class NotificationSU(Screen):
             show_popup("Error","No details to load.(Try refreshing)")
         else:
 
-            db = firebase.database()
             email_requests = ["","","","","","",""]
             
 
@@ -293,7 +290,6 @@ class DescriptionWindow(Screen):
 
         
         else:
-            db = firebase.database()
             person = get_info_pending(self.desc_email)
             person_key = get_key_pending(self.desc_email)
             if person['appeal'] ==0:
