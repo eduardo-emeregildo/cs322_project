@@ -1,11 +1,21 @@
 #:kivy 1.0.7
 
-<GroupNotificationSU>:
-
+<groupNotificationSU>:
 
     rows: 2
     cols: 1
     name: "GroupNotificationsSU"
+
+    g1: g1
+    g2: g2
+    g3: g3
+    g4: g4
+    g5: g5
+    g6: g6
+    g7: g7
+ 
+
+    on_pre_enter: root.update_notification()
 
     canvas.before:
         Color:
@@ -67,12 +77,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.725}
+                id: g1
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.15}
@@ -88,17 +99,19 @@
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.g1.text = ""
             
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.625}
+                id: g2
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.05}
@@ -114,18 +127,20 @@
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.g2.text = ""
 
         
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.525}
+                id: g3
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': .95}
@@ -141,18 +156,20 @@
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.g3.text = ""
         
         
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.425}
+                id: g4
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.85}
@@ -167,19 +184,21 @@
                 Button:
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)   
+                    size_hint: (0.05, 0.05)
+                    on_press: root.g4.text = ""   
 
         
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.325}
+                id: g5
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.75}
@@ -194,19 +213,21 @@
                 Button:
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)     
+                    size_hint: (0.05, 0.05) 
+                    on_press: root.g5.text = ""    
     
         
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.225}
+                id: g6
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.65}
@@ -222,6 +243,40 @@
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.g6.text = ""
+
+# name and info 7
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Label:
+                text: ""
+                color: 0.2, 0.5, 0.4, 1
+                font_size: "20sp"
+                #color: 1, 1, 0, 1
+                bold: False
+                font_name: "Arial"
+                pos_hint: {"center_x": 0.25, "center_y": 0.125}
+                id: g7
+
+            BoxLayout:
+                pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+                padding: 30
+
+                Button:
+                    text: "Assign VIP"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)    
+                    on_press: root.g7.text = ""
+                
+                Button:
+                    text: "Close"
+                    background_color: (0.2, 0.5, 0.4, 1)
+                    size_hint: (0.05, 0.05)
+                    on_press: root.g7.text = ""
+
+
 # go back
     BoxLayout:
         Button:
@@ -233,4 +288,5 @@
             text: "Refresh"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
+            on_press: root.update_notification()
 
