@@ -55,7 +55,7 @@
                 text: "PROFILE"
                 background_color: (0.2, 0.5, 0.4, 1)
                 size_hint: (0.08, 0.2)
-                on_press:  app.root.current = "profile"
+                on_press:  root.go_to_profile()
             Button:
                 text: "NOTIFICATIONS"
                 background_color: (0.2, 0.5, 0.4, 1)
@@ -121,7 +121,7 @@
             background_color: (0.2, 0.5, 0.4, 1)
             color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
-            on_press: app.root.current = "VisitorViewLoggedIn"
+            on_press: root.switch_screen(self.text)
             id: user1
 
         Button:
@@ -129,7 +129,7 @@
             background_color: (0.2, 0.5, 0.4, 1)
             color: 1, 1, 1, 1
             size_hint: (0.20, 0.1)
-            on_press: app.root.current = "VisitorViewLoggedIn"
+            on_press: root.switch_screen(self.text)
             id: user2
 
         Button:
@@ -137,7 +137,7 @@
             background_color: (0.2, 0.5, 0.4, 1)
             color: 1, 1, 1, 1
             size_hint: (0.20, 0.1)
-            on_press: app.root.current = "VisitorViewLoggedIn"
+            on_press: root.switch_screen(self.text)
             id: user3
 
         Button:
@@ -145,7 +145,7 @@
             background_color: (0.2, 0.5, 0.4, 1)
             color: 1, 1, 1, 1
             size_hint: (0.20, 0.1)
-            on_press: app.root.current = "VisitorViewLoggedIn"
+            on_press: root.switch_screen(self.text)
             id: user4
 
         Button:
@@ -153,7 +153,7 @@
             background_color: (0.2, 0.5, 0.4, 1)
             color: 1, 1, 1, 1
             size_hint: (0.20, 0.1)
-            on_press: app.root.current = "VisitorViewLoggedIn"
+            on_press: root.switch_screen(self.text)
             id: user5
 
         Button:
@@ -161,7 +161,7 @@
             background_color: (0.2, 0.5, 0.4, 1)
             color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
-            on_press: app.root.current = "VisitorViewLoggedIn"
+            on_press: root.switch_screen(self.text)
             id: user6
 
     BoxLayout:

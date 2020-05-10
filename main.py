@@ -9,25 +9,23 @@ class HomeWindow(Screen):
 
     def initialize_page(self):
         get_top_projects(self, "score", "", 1, db)
-        get_top_users(self, "name", db)
+        get_top_users(self, "name", db) 
 
     def log_in_auto(self):               
         userinfo = db.child("new_users").order_by_child("name").equal_to(self.email.text).limit_to_first(1).get()
 
         for info in userinfo.each():
-            self.manager.screens[2].ids.points.text = str(info.val()["score"])
+            if info.val()["score"] > 30:
+                rank = "VIP"
+            else:
+                rank = "OU"
+            self.manager.screens[2].ids.points.text = rank
 
         self.manager.screens[2].ids.username.text = self.email.text
         self.manager.current = "homeOU"
 
     def switch_screen(self, username):
-
-        userinfo = db.child("new_users").order_by_child("name").equal_to(username).limit_to_first(1).get()
-        for info in userinfo.each():
-            self.manager.screens[15].ids.priv.text = str(info.val()["privilege"])
-
-        self.manager.screens[15].ids.username.text = username
-        self.manager.current = "VisitorView"
+        standing_update(self, username, 16)
 
 
 # Actual login function

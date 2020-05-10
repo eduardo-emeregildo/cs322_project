@@ -16,7 +16,7 @@
     desc2 : desc2
     desc3 : desc3
 
-    on_pre_enter: root.initialize_page("Chris")
+    on_pre_enter: root.initialize_page()
 
     RelativeLayout:
         Button:
@@ -53,8 +53,15 @@
             text: "Complain"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.1, 0.06)
-            pos_hint: {"x": .75, "y": .71}
+            pos_hint: {"x": .55, "y": .71}
             on_press:  root.show_popup0()
+
+        Button:
+            text: "Rate a Project"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.1, 0.06)
+            pos_hint: { "x": .75, "y": .71 }
+            on_press:  root.show_popup2()
 
 
     FloatLayout:
@@ -75,12 +82,6 @@
             pos_hint: {"y": .06, "x": -.20}
             id: desc1
 
-        Button:
-            text: "Rate the Project"
-            background_color: (0.2, 0.5, 0.4, 1)
-            size_hint: (0.15, 0.06)
-            pos_hint: { "x": .75, "y": .55 }
-            on_press:  root.show_popup2()
 
         
         Label:
@@ -93,12 +94,6 @@
             pos_hint: {"y": -.11, "x": -.20}
             id: desc2
 
-        Button:
-            text: "Rate the Project"
-            background_color: (0.2, 0.5, 0.4, 1)
-            size_hint: (0.15, 0.06)
-            pos_hint: { "x": .75, "y": .4 }
-            on_press:  root.show_popup2()
 
         Label:
             text: "Project Name 3 // Group Name 3"
@@ -109,13 +104,6 @@
             text: "Description desc desc desc desc \ndesc desc desc desc desc desc desc"
             pos_hint: {"y": -.28, "x": -.20}
             id: desc3
-
-        Button:
-            text: "Rate the Project"
-            background_color: (0.2, 0.5, 0.4, 1)
-            size_hint: (0.15, 0.06)
-            pos_hint: { "x": .75, "y": .22 }
-            on_press:  root.show_popup2()
 
     BoxLayout:
         Button:

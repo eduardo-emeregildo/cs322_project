@@ -8,6 +8,16 @@
     cols: 1
     name: "compliments"
 
+    c1: c1
+    c2: c2
+    c3: c3
+    c4: c4
+    c5: c5
+    c6: c6
+    c7: c7
+
+    on_pre_enter: root.update()
+
     canvas.before:
         Color:
             rgba : 0, 0, 0, 1
@@ -62,12 +72,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone got a compliment"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.725}
+                id: c1
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.15}
@@ -84,6 +95,7 @@
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c1.text = "" 
 
                 
 
@@ -94,12 +106,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is nice!"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.625}
+                id: c2
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.05}
@@ -116,6 +129,7 @@
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c2.text = ""
 
 
 # name and info 3
@@ -124,12 +138,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is very hardworking"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.525}
+                id: c3
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.95}
@@ -146,6 +161,7 @@
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c3.text = ""
 
 # name and info 4
 
@@ -153,12 +169,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is nice"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.425}
+                id: c4
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.85}
@@ -175,6 +192,7 @@
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c4.text = ""
 
 # name and info 5
 
@@ -182,12 +200,13 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is nice"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.325}
+                id: c5
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.75}
@@ -204,6 +223,7 @@
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c5.text = ""
 
 # name and info 6
 
@@ -217,6 +237,7 @@
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.225}
+                id: c6
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.65}
@@ -233,6 +254,7 @@
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c6.text = ""
 
 # name and info 7
 
@@ -246,6 +268,7 @@
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.125}
+                id: c7
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.55}
@@ -260,7 +283,8 @@
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)      
+                    size_hint: (0.05, 0.05)  
+                    on_press: root.c7.text = ""    
     
 # go back
     BoxLayout:
@@ -273,6 +297,7 @@
             text: "Refresh"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
+            on_press: root.update()
 
 
 

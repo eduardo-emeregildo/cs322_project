@@ -1,12 +1,12 @@
 #:kivy 1.0.7
 
-<groupNotificationOU>:
+<ReferenceOU>:
 
 # this page will show information about new join requests
 
     rows: 2
     cols: 1
-    name: "NotificationOU"
+    name: "ReferenceOU"
 
     g1: g1
     g2: g2
@@ -50,15 +50,15 @@
 
             Button:
                 text: "Group Notifications"
-                background_color: (0.2, 0.5, 0.4, 1)
+                background_color: (0.2, 0.5, 0.4, 0.5)
                 size_hint: (0.20, 0.08)
-                
+                on_press:  app.root.current = "NotificationOU"
             
             Button:
                 text: "Reference Notification"
-                background_color: (0.2, 0.5, 0.4, 0.5)
+                background_color: (0.2, 0.5, 0.4, 1)
                 size_hint: (0.20, 0.08)
-                on_press:  app.root.current = "ReferenceOU"
+                
 
 # need a function to connect the description window with the user number with all related info
 
@@ -82,10 +82,10 @@
                 padding: 30
 
                 Button:
-                    text: "Dismiss"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.g1.text = ""
+                    on_press: root.show_popup2()
 
                 
 
@@ -110,10 +110,10 @@
                 padding: 30
 
                 Button:
-                    text: "Dismiss"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.g2.text = ""
+                    on_press: root.show_popup2()
 
 
 # name and info 3
@@ -136,10 +136,10 @@
                 padding: 30
 
                 Button:
-                    text: "Dismiss"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.g3.text = ""
+                    on_press: root.show_popup2()
 
 # name and info 4
 
@@ -161,10 +161,10 @@
                 padding: 30
 
                 Button:
-                    text: "Dismiss"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.g4.text = ""
+                    on_press: root.show_popup2()
 
 # name and info 5
 
@@ -186,10 +186,10 @@
                 padding: 30
 
                 Button:
-                    text: "Dismiss"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.g5.text = ""
+                    on_press: root.show_popup2()
 
 # name and info 6
 
@@ -211,10 +211,10 @@
                 padding: 30
 
                 Button:
-                    text: "Dismiss"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.g6.text = ""
+                    on_press: root.show_popup2()
 
 # name and info 7
 
@@ -236,10 +236,10 @@
                 padding: 30
 
                 Button:
-                    text: "Dismiss"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)    
-                    on_press: root.g7.text = ""  
+                    on_press: root.show_popup2()  
 # go back
     BoxLayout:
         Button:

@@ -391,6 +391,7 @@ class CreateGroupWindow(Screen):
 
 
 
+
 # popup function
 
     def validate(self):
@@ -406,3 +407,5 @@ class CreateGroupWindow(Screen):
         
         else:
             self.create_group()
+
+

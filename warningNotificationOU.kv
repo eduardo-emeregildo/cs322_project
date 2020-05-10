@@ -46,13 +46,19 @@
             Button:
                 text: "Warnings"
                 background_color: (0.2, 0.5, 0.4, 1)
-                size_hint: (0.20, 0.07)
+                size_hint: (0.20, 0.08)
 
             Button:
                 text: "Group Notifications"
                 background_color: (0.2, 0.5, 0.4, 0.5)
-                size_hint: (0.20, 0.07)
+                size_hint: (0.20, 0.08)
                 on_press:  app.root.current = "NotificationOU"
+
+            Button:
+                text: "Reference Notification"
+                background_color: (0.2, 0.5, 0.4, 0.5)
+                size_hint: (0.20, 0.08)
+                on_press:  app.root.current = "ReferenceOU"
 
 
 # need a function to connect the description window with the user number with all related info
