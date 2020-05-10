@@ -36,6 +36,9 @@ OU group notification page. Only the groups they are part of will appear here
 ## WarningPageOU: (warningNotificationOU.kv)
 all warnings for the OU will appear here
 
+## ReferenceOU: (referenceNotificationOU.kv)
+If an OU or VIP is listed as a reference for a signup, it will appear here
+
 ## SignupWindow: (signupWindow.kv)
 a visitor can signup here
 
