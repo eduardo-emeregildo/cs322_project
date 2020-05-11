@@ -307,9 +307,9 @@ class KickNotifications(Screen):
         if data['kickType'] == 'Member':
             if data['votes'] == data['accept']:
                 remove_group_user(data['groupUser'], data['groupId'])
-                db.child('groupKick').child(groupKickKey).remove
+                db.child('groupKick').child(groupKickKey).remove()
             elif data['votes'] == data['accept'] + data['reject']:
-                db.child('groupKick').child(groupKickKey).remove
+                db.child('groupKick').child(groupKickKey).remove()
             else:
                 return
 
@@ -480,13 +480,28 @@ class VipNotifications(Screen):
         email = "jin@aol.com"
         db = firebase.database()
 
-        groupNameList, groupKeyList = [], []
+        groupKeyList = []
 
         # finds all assignVIP for email, only looks at where ticket = 0
         groupReqDb = db.child('assignVIP').order_by_child('email').equal_to(email).get()
         for sector in groupReqDb:
             if sector.val()['ticket'] == 0:
-                groupNameList.append(sector.val()['groupname assigned'])
+                groupKeyList.append(sector.key())
 
+        if btnNum == 1:
+            self.btnAce1.disabled = True
+            scoreAssigned = self.inpScore1.text
 
+        if btnNum == 2:
+            self.btnAce2.disabled = True
+            scoreAssigned = self.inpScore2.text
 
+        if btnNum == 3:
+            self.btnAce3.disabled = True
+            scoreAssigned = self.inpScore3.text
+
+        if btnNum > len(groupKeyList):
+            show_popup("Error", "No Request Found")
+            return
+
+        db.child('assignVIP').child(groupKeyList[btnNum - 1]).update({"ticket": 1, "point": int(scoreAssigned)})
