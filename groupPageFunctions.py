@@ -31,14 +31,12 @@ def remove_group_user(self, email, groupId):
 
 class GroupWindow(Screen):
 
-    def on_start(self, *args): #change to on_enter later
-        email = 'jin@aol.com'
+    def on_pre_enter(self, *args):
         groupId = 1
-        pollId = 1
-        taskId = 4
 
+        db = firebase.database()
 
-        #specify group to pull info from
+        # specify group to pull info from
         info = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sections in info.each():
             group_desc = sections.val()['groupDesc']
@@ -56,7 +54,7 @@ class GroupWindow(Screen):
                 self.user2_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
             elif i == 3:
                 self.user3_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
-            elif i == 4 :
+            elif i == 4:
                 self.user4_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
             elif i == 5:
                 self.user5_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
@@ -70,13 +68,32 @@ class GroupWindow(Screen):
             if sect.val()['postType'] == 'Poll':
                 groupPostPolls.append(sect.val())
 
-        pollVoted1 = groupPostPolls[0]['postVoted'].split(',')
+        if groupPostPolls[0]['postVoted'] == "":
+            pollVoted1 = []
+        else:
+            pollVoted1 = groupPostPolls[0]['postVoted'].split(',')
 
-        self.postTask1.text = "Function Name: " + groupPostTasks[0]['postContent'] + "\nDetails:                          "
+        self.postTask1.text = "Function Name: " + groupPostTasks[0][
+            'postContent'] + "\nDetails:                          "
         self.postPoll1.text = "Poll: " + groupPostPolls[0]['postContent']
         self.postPollVote1.text = "[ " + str(len(pollVoted1)) + "/5 members have voted ] "
         self.btnPoll1.text = groupPostPolls[0]['option1']['content']
         self.btnPoll2.text = groupPostPolls[0]['option2']['content']
+
+    def req_kick(self, btnNum, kickType):
+        groupId = 1
+
+        db = firebase.database()
+
+        if kickType == 'Member':
+            info = db.child("group").order_by_child("groupId").equal_to(groupId).get()
+            for sections in info.each():
+                groupUsers = sections.val()['groupUsers']
+
+            kick_vote_table(groupId, kickType, groupUsers[btnNum]['email'])
+
+        elif kickType == 'Group':
+            kick_vote_table(groupId, kickType, "")
 
     def create_post_task(self, postContent, taskId):
         email = 'jin@aol.com'
@@ -86,75 +103,74 @@ class GroupWindow(Screen):
         with self.canvas:
             Color(.2, .5, .4, 1)  # set the colour
             # Seting the size and position of canvas
-            self.rect = Rectangle(pos = (20, lastPostX-100),
-                                  size = (500, 80))
+            self.rect = Rectangle(pos=(20, lastPostX - 100),
+                                  size=(500, 80))
 
         self.add_widget(
             Label(
-                text = "Task: " + postContent,
-                size_hint = (.5, .5),
-                pos_hint = {"center_y": .24, "center_x": .215},
-                id ='postTask2'
+                text="Task: " + postContent,
+                size_hint=(.5, .5),
+                pos_hint={"center_y": .24, "center_x": .215},
+                id='postTask2'
             )
         )
 
         btnClaim2 = Button(
-                text = "Claim",
-                size_hint =(0.07, 0.07),
-                pos_hint ={"x": .57, "y": .18},
-                background_color = (.2, .5, .4, 1),
-                disabled = False,
-                id ='btnClaim2',
-                on_press = lambda *args: self.task_claim(email, groupId, taskId, 2)
+            text="Claim",
+            size_hint=(0.07, 0.07),
+            pos_hint={"x": .57, "y": .18},
+            background_color=(.2, .5, .4, 1),
+            disabled=False,
+            id='btnClaim2',
+            on_press=lambda *args: self.task_claim(groupId, taskId, 2)
         )
         btnClaim2.bind(on_release=partial(self.foo, btnClaim2))
         self.add_widget(btnClaim2)
 
     def create_post_poll(self, postContent, option1, option2, pollId):
-        email = 'jin@aol.com'
         groupId = 1
         lastPostX = 190
 
         with self.canvas:
             Color(.2, .5, .4, 1)  # set the colour
             # Seting the size and position of canvas
-            self.rect = Rectangle(pos = (20, lastPostX-150),
-                                  size = (500, 130))
+            self.rect = Rectangle(pos=(20, lastPostX - 150),
+                                  size=(500, 130))
 
         self.add_widget(
             Label(
-                text = "Task: " + postContent,
-                size_hint = (.5, .5),
-                pos_hint = {"center_y": .25, "center_x": .215},
-                id ='postTask2'
+                text="Poll: " + postContent,
+                size_hint=(.5, .5),
+                pos_hint={"center_y": .25, "center_x": .215},
+                id='postTask2'
             )
         )
 
         self.add_widget(
             Label(
                 text="[ 0/5 members have voted ]",
-                color= (0.5, 0.8, 0.6, 1),
+                color=(0.5, 0.8, 0.6, 1),
                 pos_hint={"center_y": .22, "center_x": .215},
                 id='postTask2'
             )
         )
 
         btnOpt1 = Button(
-                    text = option1,
-                    background_color = (.2, .5, .4, 1),
-                    disabled = False,
-                    size_hint=(0.295, 0.1),
-                    pos_hint={"top": .18, "x": 0.036}
-                    #on_press = root.poll_vote('chungha@aol.com', 5, 1, 1)
-                    )
+            text=option1,
+            background_color=(.2, .5, .4, 1),
+            disabled=False,
+            size_hint=(0.295, 0.1),
+            pos_hint={"top": .18, "x": 0.036},
+            on_press=lambda *args: self.poll_vote(groupId, pollId, 1, 2)
+        )
         btnOpt2 = Button(
-                    text= option2,
-                    background_color=(.2, .5, .4, 1),
-                    disabled=False,
-                    size_hint=(0.295, 0.1),
-                    pos_hint={"top": .18, "x": 0.342}
-                    # on_press = root.poll_vote('chungha@aol.com', 5, 1, 1)
-                    )
+            text=option2,
+            background_color=(.2, .5, .4, 1),
+            disabled=False,
+            size_hint=(0.295, 0.1),
+            pos_hint={"top": .18, "x": 0.342},
+            on_press=lambda *args: self.poll_vote(groupId, pollId, 2, 2)
+        )
 
         btnOpt1.bind(on_release=partial(self.foo, btnOpt1))
         btnOpt1.bind(on_release=partial(self.foo, btnOpt2))
@@ -167,14 +183,18 @@ class GroupWindow(Screen):
     def foo(self, instance, *args):
         instance.disabled = True
 
-    #make sure to add pollType
     def create_post(self, postType, groupId):
 
-        if self.postContent.text.replace(" ", "") == "":
+        if self.taskInDetail.text.replace(" ", "") == "" or self.taskInTitle.text.replace(" ", "") == "":
             show_popup("Group Post", "Cannot have empty post")
             return
 
+        db = firebase.database()
+
         if postType == "Task":
+
+            taskContent = self.taskInTitle.text + ": \n" + self.taskInDetail.text
+
             taskIdList = []
             postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
             for sector in postDb.each():
@@ -185,56 +205,59 @@ class GroupWindow(Screen):
 
             data = {
                 "groupId": groupId,
-                "postContent": self.postContent.text,
+                "postContent": taskContent,
                 "claimBy": 999,
                 "taskId": taskId,
                 "postType": postType
             }
 
-            self.create_post_task(self.postContent.text, taskId)
+            self.create_post_task(taskContent, taskId)
 
         if postType == "Poll":
+
+            pollOptions = self.taskInDetail.text.split(',')
+
             pollIdList = []
             postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
             for sect in postDb.each():
-                pollInfo = sect.val()['postId']
-                pollIdList.append(pollInfo)
+                if 'Poll' == sect.val()['postType']:
+                    pollInfo = sect.val()['pollId']
+                    pollIdList.append(pollInfo)
             pollId = max(pollIdList) + 1
 
-            popup = PopupWindow(title="Enter a deadline for the poll MM/DD/YYYY")
-            popup.open()
-            popup = PopupWindow(title="Enter two options for the poll, separated by a comma. EX: 12:45PM, 3:45PM")
-            popup.open()
             data = {
                 "groupId": groupId,
-                "postContent": self.postContent.text,
-                "postDeadline": "05/14/2020",
+                "postContent": self.taskInTitle.text,
+                "postDeadline": "05/13/20",
                 "pollId": pollId,
                 "postVoted": "",
                 "postType": postType,
                 "option1": {
-                    "content": "text",
+                    "content": pollOptions[0],
                     "vote": 0
                 },
                 "option2": {
-                    "content": "text",
+                    "content": pollOptions[1],
                     "vote": 0
                 }
             }
-            #have pop up specify deadline AND the options
+
+            self.create_post_poll(self.taskInTitle.text, pollOptions[0], pollOptions[1], pollId)
 
         db.child("posts").push(data)
         show_popup("Group Post", "Posted!")
-        self.postContent.text = ""
+        self.taskInDetail.text = ""
+        self.taskInTitle.text = ""
 
-    def task_claim(self, email, groupId, taskId, btnClaimNum):
+    def task_claim(self, groupId, taskId, btnClaimNum):
         groupId = 1
-        #email = ""
-        #when user clicks claim button send postContent to user's request page
+        email = Store.email
+        # when user clicks claim button send postContent to user's request page
 
         if btnClaimNum == 1:
             self.btnClaim.disabled = 'True'
 
+        db = firebase.database()
         groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
             groupKey = sect.key()
@@ -243,7 +266,7 @@ class GroupWindow(Screen):
         for i in range(1, len(groupUsers)):
             if email in groupUsers[i].values():
                 taskFound = groupUsers[i]['taskAssign'] + 1
-                db.child("group").child(groupKey).child("groupUsers").child(i)\
+                db.child("group").child(groupKey).child("groupUsers").child(i) \
                     .update({"taskAssign": taskFound})
 
         postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
@@ -253,50 +276,98 @@ class GroupWindow(Screen):
                     postKey = sect.key()
                     db.child("posts").child(postKey).update({"claimBy": email})
 
-    def poll_vote(self, email, groupId, pollId, optionNum):
-        email = 'jihyo@aol.com'
-        groupId = 2
-        pollId = 1
+    def poll_vote(self, groupId, pollId, optionNum, btnClaim):
+        email = Store.email
+        groupId = 1
+        pollId = 2
+        postInfo, votedMems = "", ""
+        option1Count, option1Content, option2Count, option2Content = 0, 0, 0, 0
 
-        #user clicks option
-        firebase = pyrebase.initialize_app(config)
+        # user clicks option
         db = firebase.database()
         postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
         for sect in postDb.each():
-            if sect.val()['pollId'] == pollId:
-                postInfo = sect.val()
-                postKey = sect.key()
-                option1Count = sect.val()['option1']['vote'] + 1
-                option1Content = sect.val()['option1']['content']
-                option2Count = sect.val()['option2']['vote'] + 1
-                option2Content = sect.val()['option2']['content']
+            if sect.val()['postType'] == 'Poll':
+                if sect.val()['pollId'] == pollId:
+                    postInfo = sect.val()
+                    postKey = sect.key()
+                    option1Count = sect.val()['option1']['vote'] + 1
+                    option1Content = sect.val()['option1']['content']
+                    option2Count = sect.val()['option2']['vote'] + 1
+                    option2Content = sect.val()['option2']['content']
+                    if postInfo['postVoted'] == "":
+                        votedMems = email
+                    else:
+                        votedMems = postInfo['postVoted'] + ", " + email
 
-        votedMems = postInfo['postVoted'] + ", " + email
-
-        if optionNum == 1:
-            data = {
-                "postVoted": votedMems,
-                "option1": {
-                    "vote": option1Count,
-                    "content": option1Content
-
+        if postInfo is not "":
+            if optionNum == 1:
+                data = {
+                    "postVoted": votedMems,
+                    "option1": {
+                        "vote": option1Count,
+                        "content": option1Content
+                    }
                 }
-            }
-        else:
-            data = {
-                "postVoted": votedMems,
-                "option2": {
-                    "vote": option2Count,
-                    "content": option2Content
-
+            else:
+                data = {
+                    "postVoted": votedMems,
+                    "option2": {
+                        "vote": option2Count,
+                        "content": option2Content
+                    }
                 }
-            }
 
-        db.child("posts").child(postKey).update(data)
-        self.btnPoll1.disabled = 'True'
-        self.btnPoll2.disabled = 'True'
+            db.child("posts").child(postKey).update(data)
 
-        #if everyone voted, delete post and send notifications to everyone
+            if btnClaim == 1:
+                self.btnPoll1.disabled = 'True'
+                self.btnPoll2.disabled = 'True'
+
+        # if everyone voted, delete post and send notifications to everyone
+
+    def show_inputs(self, postType):
+        if postType == 'Poll':
+            self.btnChooseInputs.opacity = 1
+            self.btnCreatePoll.opacity = 1
+
+            self.taskInTitle.disabled = False
+            self.taskInDetail.disabled = False
+
+            self.taskInTitle.hint_text = "Poll Description"
+            self.taskInDetail.hint_text = "Write two options separated by comma EX: 12:30, 5:00"
+
+            self.btnPollInputs.disabled = True
+            self.btnTaskInputs.disabled = True
+
+        elif postType == 'Task':
+            self.btnChooseInputs.opacity = 1
+            self.btnCreateTask.opacity = 1
+
+            self.taskInTitle.disabled = False
+            self.taskInDetail.disabled = False
+
+            self.taskInTitle.hint_text = "Task Title"
+            self.taskInDetail.hint_text = "Task Description"
+
+            self.btnPollInputs.disabled = True
+            self.btnTaskInputs.disabled = True
+
+        elif postType == 'Back':
+            self.inputsChoose.opacity = 1
+            self.btnChooseInputs.opacity = 0
+            self.btnCreatePoll.opacity = 0
+            self.btnCreateTask.opacity = 0
+
+            self.taskInTitle.disabled = True
+            self.taskInDetail.disabled = True
+
+            self.taskInTitle.hint_text = "Choose Poll to create a poll post"
+            self.taskInDetail.hint_text = "Choose Task to create a task post"
+
+            self.btnPollInputs.disabled = False
+            self.btnTaskInputs.disabled = False
+
 
 
 class CreateGroupWindow(Screen):

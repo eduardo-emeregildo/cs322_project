@@ -269,7 +269,6 @@ class ProfileWindow(Screen):
             db.child("whitebox_blackbox").push(data)
             self.update()
 
-            
         def update_whitebox(self):
             newList = []            
             boxedUser = db.child("whitebox_blackbox").order_by_key().get()

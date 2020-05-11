@@ -425,3 +425,7 @@ class TasksNotifications(Screen):
                         .update({"taskAssign": taskFound, "taskComplete": taskComplete})
                 else:
                     show_popup("Error", "No Task Found")
+
+
+class VipNotifications(Screen):
+    pass
