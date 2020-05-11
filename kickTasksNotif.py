@@ -489,16 +489,19 @@ class VipNotifications(Screen):
                 groupKeyList.append(sector.key())
 
         if btnNum == 1:
-            self.btnAce1.disabled = True
             scoreAssigned = self.inpScore1.text
+            self.btnAce1.disabled = True
+            self.inpScore1.disabled = True
 
         if btnNum == 2:
-            self.btnAce2.disabled = True
             scoreAssigned = self.inpScore2.text
+            self.btnAce2.disabled = True
+            self.inpScore2.disabled = True
 
         if btnNum == 3:
-            self.btnAce3.disabled = True
             scoreAssigned = self.inpScore3.text
+            self.btnAce3.disabled = True
+            self.inpScore3.disabled = True
 
         if btnNum > len(groupKeyList):
             show_popup("Error", "No Request Found")
