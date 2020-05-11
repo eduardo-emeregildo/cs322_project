@@ -428,4 +428,65 @@ class TasksNotifications(Screen):
 
 
 class VipNotifications(Screen):
-    pass
+    def on_pre_enter(self, *args):
+        email = "jin@aol.com"
+        db = firebase.database()
+
+        groupNameList, groupUserList = [], []
+
+        #finds all assignVIP for email, only looks at where ticket = 0
+        groupReqDb = db.child('assignVIP').order_by_child('email').equal_to(email).get()
+        for sector in groupReqDb:
+            if sector.val()['ticket'] == 0:
+                groupNameList.append(sector.val()['groupname assigned'])
+
+        # gets info for all the groups assigned above
+        for i in range(len(groupNameList)):
+            groupDb = db.child('group').order_by_child('groupName').equal_to(groupNameList[i]).get()
+            for section in groupDb:
+                groupUserList.append(section.val()['groupUsers'])
+
+        #creates member list
+        memList1, memList2, memList3= "", "", ""
+        for i in range(len(groupUserList)):
+            for j in range(1, len(groupUserList[i])):
+                if i == 0:
+                    memList1 += "[ " + groupUserList[i][j]['email'] + " ]     Assigned: " + \
+                                str(groupUserList[i][j]['taskAssign']) + " // Completed: " + \
+                                str(groupUserList[i][j]['taskComplete']) + "\n"
+                elif i == 1:
+                    memList2 += "[ " + groupUserList[i][j]['email'] + " ]     Assigned: " + \
+                                str(groupUserList[i][j]['taskAssign']) + " // Completed: " + \
+                                str(groupUserList[i][j]['taskComplete']) + "\n"
+                elif i == 2:
+                    memList3 += "[ " + groupUserList[i][j]['email'] + " ]     Assigned: " + \
+                                str(groupUserList[i][j]['taskAssign']) + " // Completed: " + \
+                                str(groupUserList[i][j]['taskComplete']) + "\n"
+
+        # Update Labels
+        if len(groupNameList) >= 1:
+            self.titleLabel1.text = "Assign Score to Group: " + groupNameList[0]
+            self.detailLbl1.text = memList1
+
+        if len(groupNameList) >= 2:
+            self.titleLabel2.text = "Assign Score to Group: " + groupNameList[1]
+            self.detailLbl2.text = memList2
+
+        if len(groupNameList) >= 3:
+            self.titleLabel3.text = "Assign Score to Group: " + groupNameList[2]
+            self.detailLbl3.text = memList3
+
+    def assign_score(self, btnNum):
+        email = "jin@aol.com"
+        db = firebase.database()
+
+        groupNameList, groupKeyList = [], []
+
+        # finds all assignVIP for email, only looks at where ticket = 0
+        groupReqDb = db.child('assignVIP').order_by_child('email').equal_to(email).get()
+        for sector in groupReqDb:
+            if sector.val()['ticket'] == 0:
+                groupNameList.append(sector.val()['groupname assigned'])
+
+
+
