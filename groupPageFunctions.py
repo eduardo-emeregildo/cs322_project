@@ -28,6 +28,102 @@ def remove_group_user(self, email, groupId):
             db.child("group").child(groupKey).child("groupUsers").child(i).remove()
             break
 
+# specifcally groupKick DB
+def kick_vote_table(groupId, kickType, kickUser):
+    #groupId = 2
+    #groupUser = "iu@aol.com"
+    #kickType = "Member"
+
+    db = firebase.database()
+    groupKickKey = ""
+
+    # checks if kick request is already in DB
+    groupKick = db.child('groupKick').order_by_child('groupId').equal_to(groupId).get()
+    for section in groupKick:
+        if kickType == 'Group':
+            if section.val()['kickType'] == 'Group':
+                print("Request already exists")
+                return
+        elif kickType == 'Member':
+            if section.val()['groupUser'] == kickUser:
+                print("Request already exists")
+                return
+
+    groupDb = db.child('group').order_by_child('groupId').equal_to(groupId).get()
+    for sect in groupDb:
+        groupUsers = sect.val()['groupUsers']
+
+    kickVotes = len(groupUsers) - 2
+
+    data = {
+        "groupId": groupId,
+        "groupUser": kickUser,
+        "kickType": kickType,
+        "accept": 0,
+        "reject": 0,
+        "votes": kickVotes
+    }
+
+    db.child('groupKick').push(data)
+
+    # sends request to every user in group
+    for i in range(1, len(groupUsers)):
+        if kickType == 'Group':
+            kick_req(groupUsers[i]['email'], groupId, kickType, "")
+        elif kickType == 'Member':
+            if groupUsers[i]['email'] is not kickUser:
+                kick_req(groupUsers[i]['email'], groupId, kickType, kickUser)
+
+
+# connect requests to group page
+# specifically groupRequest DB
+def kick_req(email, groupId, notifType, notifUser):
+    db = firebase.database()
+    #notifType = "Join"
+    groupReqKey = ""
+
+    # checks if user already has groupRequest table
+    while (groupReqKey == ""):
+        groupRequests = db.child('groupRequests').order_by_child('email').equal_to(email).get()
+        for section in groupRequests:
+            if section.val()['email'] == email:
+                groupReqKey = section.key()
+                break
+
+        # if no, makes new one
+        if (groupReqKey) == "":
+            data = {
+                "email": email,
+                "notifications": ""
+            }
+            db.child('groupRequests').push(data)
+
+    # pushes data accordingly
+    if notifType == 'Member':
+        notifData = {
+            "groupId": groupId,
+            "notifType": "Member",
+            "notifUser": notifUser
+        }
+
+    elif notifType == 'Group':
+        notifData = {
+            "groupId": groupId,
+            "notifType": "Group"
+        }
+
+    elif notifType == 'Join':
+        notifData = {
+            "groupId": groupId,
+            "notifType": "Join"
+        }
+    else:
+        return
+
+    if groupReqKey.replace(" ", "") is not "":
+        db.child('groupRequests').child(groupReqKey).child('notifications').push(notifData)
+        print(notifData)
+
 
 class GroupWindow(Screen):
 
