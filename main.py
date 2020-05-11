@@ -1,5 +1,4 @@
-from groupPageFunctions import *
-
+from kickTasksNotif import *
 
 class HomeWindow(Screen):
 

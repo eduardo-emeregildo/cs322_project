@@ -23,6 +23,9 @@
 #:include welcomeScreen.kv
 #:include visitorViewLoggedIn.kv
 
+#:include TasksNotifications.kv
+#:include kickNotifications.kv
+
 
 ##### don't change the order of the screens. add only at the bottom, index starts at 0
 
@@ -54,6 +57,9 @@ ScreenManager:
     
     VisitorView:
     VisitorViewLoggedIn:
+
+    TasksNotifications:
+    KickNotifications:
     
   
 

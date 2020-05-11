@@ -3,6 +3,31 @@ from otherWindows import *
 from kivy.graphics.vertex_instructions import Rectangle
 
 
+def remove_group(self, groupId):
+    groupId = 5
+
+    firebase = pyrebase.initialize_app(config)
+    db = firebase.database()
+    groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
+    for sect in groupDb.each():
+        groupKey = sect.key()
+
+    db.child("group").child(groupKey).remove()
+
+
+def remove_group_user(self, email, groupId):
+    groupId = 5
+
+    groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
+    for sect in groupDb.each():
+        groupKey = sect.key()
+    for sections in groupDb.each():
+        groupUsers = sections.val()['groupUsers']
+    for i in range(1, len(groupUsers)):
+        if email in groupUsers[i].values():
+            db.child("group").child(groupKey).child("groupUsers").child(i).remove()
+            break
+
 
 class GroupWindow(Screen):
 
@@ -202,30 +227,6 @@ class GroupWindow(Screen):
         show_popup("Group Post", "Posted!")
         self.postContent.text = ""
 
-    def remove_group(self, groupId):
-        groupId = 5
-
-        firebase = pyrebase.initialize_app(config)
-        db = firebase.database()
-        groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
-        for sect in groupDb.each():
-            groupKey = sect.key()
-
-        db.child("group").child(groupKey).remove()
-
-    def remove_group_user(self, email, groupId):
-        groupId = 5
-
-        groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
-        for sect in groupDb.each():
-            groupKey = sect.key()
-        for sections in groupDb.each():
-            groupUsers = sections.val()['groupUsers']
-        for i in range(1, len(groupUsers)):
-            if email in groupUsers[i].values():
-                db.child("group").child(groupKey).child("groupUsers").child(i).remove()
-                break
-
     def task_claim(self, email, groupId, taskId, btnClaimNum):
         groupId = 1
         #email = ""
@@ -251,37 +252,6 @@ class GroupWindow(Screen):
                 if 999 == sect.val()['claimBy'] and taskId == sect.val()['taskId']:
                     postKey = sect.key()
                     db.child("posts").child(postKey).update({"claimBy": email})
-
-    def task_complete(self, email, groupId, taskId):
-        #when user clicks compelte from their request page
-
-        taskId = 1
-        groupId = 5
-
-        groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
-        for sect in groupDb.each():
-            groupKey = sect.key()
-        for sections in groupDb.each():
-            groupUsers = sections.val()['groupUsers']
-        for i in range(1, len(groupUsers)):
-            if email in groupUsers[i].values():
-                taskFound = groupUsers[i]['taskAssign'] - 1
-                taskComplete = groupUsers[i]['taskComplete'] + 1
-
-                if taskFound < 0:
-                    taskFound = 0
-
-        postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
-
-        for sect in postDb.each():
-            if email == sect.val()['claimBy'] and taskId == sect.val()['taskId']:
-                postKey = sect.key()
-                print(postKey)
-                db.child("posts").child(postKey).remove()
-                db.child("group").child(groupKey).child("groupUsers").child(i) \
-                    .update({"taskAssign": taskFound, "taskComplete": taskComplete})
-            else:
-                print("No Post Found")
 
     def poll_vote(self, email, groupId, pollId, optionNum):
         email = 'jihyo@aol.com'
@@ -332,6 +302,13 @@ class GroupWindow(Screen):
 class CreateGroupWindow(Screen):
 
     def create_group(self):
+        db = firebase.database()
+
+        if self.userList.text.replace(" ", "") == "" or self.groupName.text.replace(" ",
+                                                                                    "") == "" or self.groupDesc.text.replace(
+                " ", "") == "" or self.projName.text.replace(" ", "") == "":
+            show_popup("Error", "Fields cannot be empty")
+            return
 
         groupList = []
         groupDb = db.child("group").get()
@@ -348,7 +325,43 @@ class CreateGroupWindow(Screen):
             "groupDesc": self.groupDesc.text,
             "groupUsers": {
                 "1": {
-                    "email": groupUsers[0],
+                    "email": Store.email,
+                    "taskAssign": 0,
+                    "taskComplete": 0
+                },
+                "2": {
+                    "email": groupUsers[1],
+                    "taskAssign": -1,
+                    "taskComplete": -1
+                },
+                "3": {
+                    "email": groupUsers[2],
+                    "taskAssign": -1,
+                    "taskComplete": -1
+                },
+                "4": {
+                    "email": groupUsers[3],
+                    "taskAssign": -1,
+                    "taskComplete": -1
+                },
+                "5": {
+                    "email": groupUsers[4],
+                    "taskAssign": -1,
+                    "taskComplete": -1
+                }
+            }
+        }
+
+        db.child("group").push(data)
+
+        projdata = {
+            "group": self.groupName.text,
+            "name": self.projName.text,
+            "desc": self.groupDesc.text,
+            "score": 0,
+            "users": {
+                "1": {
+                    "email": Store.email,
                     "taskAssign": 0,
                     "taskComplete": 0
                 },
@@ -375,21 +388,16 @@ class CreateGroupWindow(Screen):
             }
         }
 
-        checkEmailCount = 0
+        db.child("projects").push(projdata)
+
         for i in range(len(groupUsers)):
-            if check_email_format(groupUsers[i]) == True:
-                checkEmailCount += 1
+            kick_req(groupUsers[i], groupTotal, 'Join', "")
 
-        if checkEmailCount == len(groupUsers):
-            db.child("group").push(data)
-            show_popup("Submit", "Group Created!")
-            self.groupName.text = ""
-            self.groupDesc.text = ""
-            self.userList.text = ""
-        else:
-            show_popup("Error", "An error occurred")
-
-
+        show_popup("Submit", "Group Created!")
+        self.groupName.text = ""
+        self.groupDesc.text = ""
+        self.userList.text = ""
+        self.projName.text = ""
 
 
 # popup function
