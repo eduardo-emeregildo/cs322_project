@@ -1,22 +1,22 @@
 #:kivy 1.0.7
 
-<WarningPage>:
+<ReferenceOU>:
 
-# this page will display complaints about the OUs
+# this page will display all reference requests
 
     rows: 2
     cols: 1
-    name: "warnings"
+    name: "ReferenceOU"
 
-    w1: w1
-    w2: w2
-    w3: w3
-    w4: w4
-    w5: w5
-    w6: w6
-    w7: w7
+    g1: g1
+    g2: g2
+    g3: g3
+    g4: g4
+    g5: g5
+    g6: g6
+    g7: g7
 
-    on_pre_enter: root.update()
+    on_pre_enter: root.update_notification()
 
     canvas.before:
         Color:
@@ -25,6 +25,7 @@
             pos: self.pos
             size: self.size
 
+# title
 
     RelativeLayout:
 
@@ -36,37 +37,27 @@
             font_name: "Arial"
             pos_hint: {"center_x": 0.2, "center_y": 0.9}
 
-# new request, compliments, complaints and group notification           
+# references          
 
         BoxLayout:
             orientation: 'horizontal'
             pos_hint: {'center_x': 0.5, 'center_y': 1.3}
 
             Button:
-                id: b1
-                text: "New Requests"
-                background_color: (0.2, 0.5, 0.4, 0.5)
-                size_hint: (0.20, 0.07)
-                on_press:  app.root.current = "requests"
-            Button:
-                text: "Compliments"
-                background_color: (0.2, 0.5, 0.4, 0.5)
-                size_hint: (0.20, 0.07)
-                on_press:  app.root.current = "compliments"
-
-            Button:
-                text: "Complaints"
+                text: "Reference Notification"
                 background_color: (0.2, 0.5, 0.4, 1)
-                size_hint: (0.20, 0.07)
+                size_hint: (0.20, 0.08)
 
             Button:
-                text: "Group Notifications"
+                text: "VIP Notifications"
                 background_color: (0.2, 0.5, 0.4, 0.5)
-                size_hint: (0.20, 0.07)
-                on_press:  app.root.current = "GroupNotificationsSU"
+                size_hint: (0.20, 0.08)
+                #on_press:  app.root.current = "NotificationOU"
+            
 
+            
 
-# complaint1
+# Reference1
                 
         BoxLayout:
             orientation: 'horizontal'
@@ -74,31 +65,25 @@
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
-                bold: False
+                font_size: "15sp"
                 halign: 'center'
+                bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.725}
-                id: w1
+                id: g1
             
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.15}
                 padding: 30
 
                 Button:
-                    text: "Decrease Score"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup0()
+                    on_press: root.show_popup2()
 
-                Button:
-                    text: "Dismiss"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.w1.text = "" 
-
-
-# complaint2
+                
+# Reference2
 
         BoxLayout:
             orientation: 'horizontal'
@@ -106,31 +91,24 @@
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
-                bold: False
+                font_size: "15sp"
                 halign: 'center'
+                bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.625}
-                id: w2
+                id: g2
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.05}
                 padding: 30
 
                 Button:
-                    text: "Decrease Score"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup0()
+                    on_press: root.show_popup2()
 
-                Button:
-                    text: "Dismiss"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.w2.text = "" 
-
-
-# complaint3
+# Reference3
 
         BoxLayout:
             orientation: 'horizontal'
@@ -138,30 +116,24 @@
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
-                bold: False
+                font_size: "15sp"
                 halign: 'center'
+                bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.525}
-                id: w3
+                id: g3
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.95}
                 padding: 30
 
                 Button:
-                    text: "Decrease Score"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup0()
+                    on_press: root.show_popup2()
 
-                Button:
-                    text: "Dismiss"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.w3.text = "" 
-
-# complaint4
+# Reference4
 
         BoxLayout:
             orientation: 'horizontal'
@@ -169,30 +141,24 @@
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
+                font_size: "15sp"
                 bold: False
                 halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.425}
-                id: w4
+                id: g4
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.85}
                 padding: 30
 
                 Button:
-                    text: "Decrease Score"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup0()
+                    on_press: root.show_popup2()
 
-                Button:
-                    text: "Dismiss"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.w4.text = "" 
-
-# complaint5
+# Reference5
 
         BoxLayout:
             orientation: 'horizontal'
@@ -200,30 +166,24 @@
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
+                font_size: "15sp"
                 bold: False
                 halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.325}
-                id: w5
+                id: g5
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.75}
                 padding: 30
 
                 Button:
-                    text: "Decrease Score"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup0()
+                    on_press: root.show_popup2()
 
-                Button:
-                    text: "Dismiss"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.w5.text = "" 
-
-# complaints6
+# Reference6
 
         BoxLayout:
             orientation: 'horizontal'
@@ -231,30 +191,24 @@
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
+                font_size: "15sp"
                 bold: False
                 halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.225}
-                id: w6
+                id: g6
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.65}
                 padding: 30
 
                 Button:
-                    text: "Decrease Score"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup0()
+                    on_press: root.show_popup2()
 
-                Button:
-                    text: "Dismiss"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.w6.text = "" 
-
-# complaint7
+# Reference7
 
         BoxLayout:
             orientation: 'horizontal'
@@ -262,40 +216,32 @@
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
+                font_size: "15sp"
                 bold: False
                 halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.125}
-                id: w7
+                id: g7
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.55}
                 padding: 30
 
                 Button:
-                    text: "Decrease Score"
+                    text: "Rate"
                     background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.show_popup0()
-
-                Button:
-                    text: "Dismiss"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.w7.text = ""       
+                    size_hint: (0.05, 0.05)    
+                    on_press: root.show_popup2()  
 # go back
     BoxLayout:
         Button:
             text: "Cancel"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
-            on_press:  app.root.current = "requests"
+            on_press:  app.root.current = "homeOU"
         
         Button:
             text: "Refresh"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
-            on_press: root.update()
-            
-        
+            on_press: root.update_notification()

@@ -8,6 +8,7 @@
     groupDesc: groupDesc
     groupName: groupName
     userList: userList
+    projName: projName
 
     RelativeLayout:
         pos_hint: {'center_x': 0.5, 'center_y': 0.7}
@@ -68,10 +69,24 @@
         pos_hint: {"center_x": 0.179, "center_y": 0.57}
 
     TextInput:
-        hint_text:'Enter at least 5 emails and separate emails with a comma'
+        hint_text:'Enter 4 emails and separate emails with a comma'
         size_hint: (0.6, 0.15)
         pos_hint: {"center_x": 0.60, "center_y": 0.52}
         id: userList
+
+    Label:
+        text: "Project Name: "
+        font_size: "20sp"
+        color: 0.2, 0.5, 0.4, 1
+        pos_hint: {"center_x": 0.211, "center_y": 0.405}
+
+    TextInput:
+        hint_text:'Project Name'
+        hint_text_color: (0.2, 0.5, 0.4, 1)
+        size_hint: (0.60, 0.06)
+        font_size: "20sp"
+        pos_hint: {"center_x": 0.60, "center_y": 0.402}
+        id: projName
 
     BoxLayout:
         Button:
@@ -83,4 +98,4 @@
             text: "Submit"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.2, 0.06)
-            on_press: root.create_group()
+            on_press: root.validate()

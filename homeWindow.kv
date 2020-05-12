@@ -1,12 +1,31 @@
 #:kivy 1.0.7
 
 <HomeWindow>:
-    email:email
-    password:password
+    
     name: "home"
     rows: 4
     cols: 1
     spacing: '20dp'
+    prev_screen: ""
+
+    project1: project1
+    project2: project2
+    project3: project3
+    desc1 : desc1
+    desc2 : desc2
+    desc3 : desc3
+
+    user1: user1
+    user2: user2
+    user3: user3
+    user4: user4
+    user5: user5
+    user6: user6
+
+    email: email
+    password: password
+
+    on_pre_enter: root.initialize_page()
 
 
     RelativeLayout:
@@ -27,7 +46,7 @@
             color: (1, 1, 1, 1)
             size_hint: (0.55, 0.055)
             pos_hint: {"y": .88, "x": .25}
-            id:email
+            id: email
 
         Label:
             text : "Password:"
@@ -41,8 +60,8 @@
             color: (1, 1, 1, 1)
             size_hint: (0.55, 0.055)
             pos_hint: {"y": .82, "x": .25}
-            id:password
-            password:True
+            id: password
+
 
         
     BoxLayout:
@@ -56,7 +75,7 @@
             background_color: (0.2, 0.5, 0.4, 1)
             color: (1, 1, 1, 1)
             size_hint: (0.20, 0.08)
-            on_press: root.log_in()
+            on_press:  root.log_in_auto()
             
 
         Button:
@@ -67,61 +86,116 @@
             size_hint: (0.2, 0.08)
             on_press:  app.root.current = "signup"
 
+        Button:
+            text: "SU Login"
+            font_size: "20sp"
+            background_color: (0.2, 0.5, 0.4, 1)
+            color: (1, 1, 1, 1)
+            size_hint: (0.2, 0.08)
+            on_press:  app.root.current = "homeSU"
+
+
+
     FloatLayout:
         Label:
             text : "Top Projects"
             font_size: "21sp"
-            pos_hint: {"y": .18, "x": .0}
+            pos_hint: {"y": .18, "x": 0}
 
         Label:
-            text: "Project Name // Group Name"
+            text: ""
             pos_hint: {"y": .12, "x": -.25}
+            color: 1, 1, 0, 1
+            font: "20sp"
+            id: project1
 
         Label:
-            text: "Description desc desc desc desc \ndesc desc desc desc desc desc desc"
+            text: ""
             halign: 'left'
-            pos_hint: {"y": .06, "x": -.20}
+            pos_hint: {"y": 0.05, "x": -.20}
+            id: desc1
 
         Label:
-            text: "Project Name 2 // Group Name 2"
-            pos_hint: {"y": -.05, "x": -.238}
+            text: ""
+            pos_hint: {"y": -.03, "x": -.238}
+            color: 1, 1, 0, 1
+            font: "20sp"
+            id: project2
 
         Label:
-            text: "Description desc desc desc desc \ndesc desc desc desc desc desc desc"
-            pos_hint: {"y": -.11, "x": -.20}
+            text: ""
+            halign: 'left'
+            pos_hint: {"y": -.1, "x": -.20}
+            id: desc2
+
+        Label:
+            text: ""
+            pos_hint: {"y": -.17, "x": -.238}
+            color: 1, 1, 0, 1
+            font: "20sp"
+            id: project3
+
+
+        Label:
+            text: ""
+            halign: 'left'
+            pos_hint: {"y": -.23, "x": -.20}
+            id: desc3
 
         Label:
             text : "Top Users"
             font_size: "21sp"
-            pos: (0, -150)
+            pos: (0, -190)
 
     BoxLayout:
         spacing: '10dp'
-        pos_hint: {"y": .1, "x": .1}
+        pos_hint: {"y": .05, "x": .1}
         size_hint: (0.8, 0.9)
 
         Button:
             text: "User1"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
-            on_release: app.root.current = "grouppage"
+            on_release: root.switch_screen(self.text)
+            color: 1, 1, 0, 1
+            id: user1
+
         Button:
             text: "User2"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
+            on_release: root.switch_screen(self.text)
+            color: 1, 1, 1, 1
+            id: user2
+
         Button:
             text: "User3"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
+            on_release: root.switch_screen(self.text)
+            color: 1, 1, 1, 1
+            id: user3
+
         Button:
             text: "User4"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
+            on_press: root.switch_screen(self.text)
+            color: 1, 1, 1, 1
+            id: user4
+
         Button:
             text: "User5"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
+            on_press: root.switch_screen(self.text)
+            color: 1, 1, 1, 1
+            id: user5
+
         Button:
             text: "User6"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
+            on_press: root.switch_screen(self.text)
+            color: 1, 1, 0, 1
+            id: user6
