@@ -3,15 +3,15 @@ from kickTasksNotif import *
 
 
 def get_key_group_notifs(email): 
-    
-    db = firebase.database()
-    all_users = db.child("groupNotification").get() 
-    for users in all_users.each():
-        a=users.val()
-        
-        if a['user'] == email:
-            return users.key()
-    return None
+
+	db = firebase.database()
+	all_users = db.child("groupNotification").get() 
+	for users in all_users.each():
+		a=users.val()
+
+		if a['user'] == email:
+		    return users.key()
+	return None
 
 
 class HomeWindow(Screen):
