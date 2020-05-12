@@ -17,7 +17,7 @@ import smtplib #emails
 import pyrebase
 import requests
 import re #regex
-
+import smtplib
 #inside are the details of person thats logged in. Useful for loading data to the pages
 class Store:
     button = 40
@@ -47,6 +47,18 @@ def check_email_format(email):
     else:
         return False
 
+def send_rejection_email(email):
+    with smtplib.SMTP('smtp.gmail.com',587) as smtp:
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.ehlo()
+        smtp.login("cs322projectd@gmail.com","cs322s20mw")
+        subject = "Rejected from teaming system"
+        body = """You have been rejected from the system. If you wish to try again, you can sign
+        up again. The second attempt will be your appeal."""
+        msg = f'Subject: {subject}\n\n{body}'
+        smtp.sendmail("cs322projectd@gmail.com",email,msg)
+    
 #for getting username from the email
 def extract_user_from_email(email):
     count = 0
@@ -409,7 +421,7 @@ class DescriptionWindow(Screen):
                 person['appeal'] = 1
                 db.child("possible_appeals").push(person)
                 db.child("pending_users").child(person_key).remove()
-                #send email here
+                #send_rejection_email(self.desc_email) UNCOMMENT FOR THE DEMO
                 self.desc_email =""
                 self.desc_password =""
                 self.desc_birthday =""
