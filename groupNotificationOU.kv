@@ -1,12 +1,12 @@
 #:kivy 1.0.7
 
-<ReferenceOU>:
+<groupNotificationOU>:
 
-# this page will display all reference requests
+# this page will show information about new join requests
 
     rows: 2
     cols: 1
-    name: "ReferenceOU"
+    name: "NotificationOU"
 
     g1: g1
     g2: g2
@@ -24,8 +24,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-
-# title
+# join
 
     RelativeLayout:
 
@@ -36,36 +35,43 @@
             bold: False
             font_name: "Arial"
             pos_hint: {"center_x": 0.2, "center_y": 0.9}
-            
-# references          
+
+# new request, compliments and warnings           
 
         BoxLayout:
             orientation: 'horizontal'
             pos_hint: {'center_x': 0.5, 'center_y': 1.3}
 
             Button:
-                text: "Reference Notification"
-                background_color: (0.2, 0.5, 0.4, 1)
-                size_hint: (0.20, 0.08)
-
-            Button:
-                text: "VIP Notifications"
+                text: "Warnings"
                 background_color: (0.2, 0.5, 0.4, 0.5)
                 size_hint: (0.20, 0.08)
-                #on_press:  app.root.current = "NotificationOU"
-            
+                on_press:  app.root.current = "WarningsOU"
 
+            Button:
+                text: "Group Notifications"
+                background_color: (0.2, 0.5, 0.4, 1)
+                size_hint: (0.20, 0.08)
+                
             
+            Button:
+                text: "Reference Notification"
+                background_color: (0.2, 0.5, 0.4, 0.5)
+                size_hint: (0.20, 0.08)
+                on_press:  app.root.current = "ReferenceOU"
 
-# Reference1              
+# need a function to connect the description window with the user number with all related info
+
+# Warnings
+                
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
-                halign: 'center'
+                font_size: "20sp"
+                #color: 1, 1, 0, 1
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.725}
@@ -76,20 +82,24 @@
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
-                    
-# Reference2
+                    on_press: root.g1.text = ""
+
+                
+
+
+# name and info 2
+
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
-                halign: 'center'
+                font_size: "20sp"
+                #color: 1, 1, 0, 1
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.625}
@@ -100,12 +110,13 @@
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
-                    
-# Reference3
+                    on_press: root.g2.text = ""
+
+
+# name and info 3
 
         BoxLayout:
             orientation: 'horizontal'
@@ -113,8 +124,8 @@
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
-                halign: 'center'
+                font_size: "20sp"
+                #color: 1, 1, 0, 1
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.525}
@@ -125,21 +136,22 @@
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
+                    on_press: root.g3.text = ""
 
-# Reference4
+# name and info 4
+
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
+                font_size: "20sp"
                 bold: False
-                halign: 'center'
+                #color: 1, 1, 0, 1
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.425}
                 id: g4
@@ -149,20 +161,22 @@
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
-# Reference5
+                    on_press: root.g4.text = ""
+
+# name and info 5
+
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
+                font_size: "20sp"
                 bold: False
-                halign: 'center'
+                #color: 1, 1, 0, 1
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.325}
                 id: g5
@@ -172,21 +186,22 @@
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
+                    on_press: root.g5.text = ""
 
-# Reference6
+# name and info 6
+
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
+                font_size: "20sp"
                 bold: False
-                halign: 'center'
+                #color: 1, 1, 0, 1
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.225}
                 id: g6
@@ -196,11 +211,12 @@
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
-# Reference7
+                    on_press: root.g6.text = ""
+
+# name and info 7
 
         BoxLayout:
             orientation: 'horizontal'
@@ -208,9 +224,9 @@
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
+                font_size: "20sp"
+                #color: 1, 1, 0, 1
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.125}
                 id: g7
@@ -220,17 +236,17 @@
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)    
-                    on_press: root.show_popup2()  
+                    on_press: root.g7.text = ""  
 # go back
     BoxLayout:
         Button:
             text: "Cancel"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
-            on_press:  app.root.current = "homeOU"
+            on_press:  app.root.current = "WarningsOU"
         
         Button:
             text: "Refresh"

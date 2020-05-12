@@ -14,7 +14,6 @@
     input_text: input_text
     text_input2: text_input2
 
-
     priv: priv
     username: username
     pic: pic
@@ -72,6 +71,7 @@
                 size_hint: (0.20, 0.2)
                 id: g1
                 on_press:  if self.text != "" : root.get_groupname(self.text)
+
             Button:
                 text: "Group2"
                 background_color: (.2, .5, .4, 1)
@@ -96,6 +96,7 @@
                 size_hint: (0.20, 0.2)
                 id: g5
                 on_press:  if self.text != "" : app.root.current = "grouppage"
+
 
         Label:
             text: "Group1Name"

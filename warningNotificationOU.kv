@@ -1,22 +1,22 @@
 #:kivy 1.0.7
 
-<ReferenceOU>:
+<WarningPageOU>:
 
-# this page will display all reference requests
+# this page will show information about new join requests
 
     rows: 2
     cols: 1
-    name: "ReferenceOU"
+    name: "WarningsOU"
 
-    g1: g1
-    g2: g2
-    g3: g3
-    g4: g4
-    g5: g5
-    g6: g6
-    g7: g7
+    w1: warning1
+    w2: warning2
+    w3: warning3
+    w4: warning4
+    w5: warning5
+    w6: warning6
+    w7: warning7
 
-    on_pre_enter: root.update_notification()
+    on_pre_enter: root.update()
 
     canvas.before:
         Color:
@@ -24,8 +24,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-
-# title
+# join
 
     RelativeLayout:
 
@@ -36,194 +35,205 @@
             bold: False
             font_name: "Arial"
             pos_hint: {"center_x": 0.2, "center_y": 0.9}
-            
-# references          
+
+# new request, compliments and warnings           
 
         BoxLayout:
             orientation: 'horizontal'
             pos_hint: {'center_x': 0.5, 'center_y': 1.3}
 
+
             Button:
-                text: "Reference Notification"
+                text: "Warnings"
                 background_color: (0.2, 0.5, 0.4, 1)
                 size_hint: (0.20, 0.08)
 
             Button:
-                text: "VIP Notifications"
+                text: "Group Notifications"
                 background_color: (0.2, 0.5, 0.4, 0.5)
                 size_hint: (0.20, 0.08)
-                #on_press:  app.root.current = "NotificationOU"
-            
+                on_press:  app.root.current = "NotificationOU"
 
-            
+            Button:
+                text: "Reference Notification"
+                background_color: (0.2, 0.5, 0.4, 0.5)
+                size_hint: (0.20, 0.08)
+                on_press:  app.root.current = "ReferenceOU"
 
-# Reference1              
+
+# need a function to connect the description window with the user number with all related info
+
+# Warnings
+                
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
-                halign: 'center'
+                font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.725}
-                id: g1
+                id: warning1
             
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.15}
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
-                    
-# Reference2
+                    on_press: root.w1.text = ""
+
+                
+
+
+# name and info 2
+
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: ""
+                text: "Someone is rude!"
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
-                halign: 'center'
+                font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.625}
-                id: g2
+                id: warning2
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.05}
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
-                    
-# Reference3
+                    on_press: root.w2.text = ""
+
+
+# name and info 3
 
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: ""
+                text: "Someone is late for a meeting"
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
-                halign: 'center'
+                font_size: "20sp"
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.525}
-                id: g3
+                id: warning3
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.95}
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
+                    on_press: root.w3.text = ""
 
-# Reference4
+# name and info 4
+
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: ""
+                text: "Someone is rude"
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
+                font_size: "20sp"
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.425}
-                id: g4
+                id: warning4
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.85}
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
-# Reference5
+                    on_press: root.w4.text = ""
+
+# name and info 5
+
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: ""
+                text: "Someone is rude"
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
+                font_size: "20sp"
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.325}
-                id: g5
+                id: warning5
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.75}
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
+                    on_press: root.w5.text = ""
 
-# Reference6
+# name and info 6
+
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: ""
+                text: "Someone is rude"
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
+                font_size: "20sp"
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.225}
-                id: g6
+                id: warning6
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.65}
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup2()
-# Reference7
+                    on_press: root.w6.text = ""
+
+# name and info 7
 
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: ""
+                text: "Someone got a warning"
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "15sp"
+                font_size: "20sp"
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.125}
-                id: g7
+                id: warning7
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.55}
                 padding: 30
 
                 Button:
-                    text: "Rate"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)    
-                    on_press: root.show_popup2()  
+                    size_hint: (0.05, 0.05)
+                    on_press: root.w7.text = ""      
 # go back
     BoxLayout:
         Button:
@@ -236,4 +246,6 @@
             text: "Refresh"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
-            on_press: root.update_notification()
+            on_press: root.update()
+            
+        

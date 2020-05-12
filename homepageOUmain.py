@@ -80,7 +80,6 @@ def get_top_users(self, name, database):
         userList.append("")
         cnt +=1
 
-
     self.user2.text = userList[0]
     self.user3.text = userList[1]
     self.user4.text = userList[2]
@@ -88,8 +87,6 @@ def get_top_users(self, name, database):
     
     self.user1.text = userList[4]
     self.user6.text = userList[5]
-
-
 
 # to get reference notification 
 
@@ -122,7 +119,6 @@ def get_reference_notifications(self, db, name):
 # get all information of a user to display 
 
 def standing_update(self, username, index):
-
         userinfo = db.child("users").order_by_child("name").equal_to(username).limit_to_first(1).get()
         standing = ""
 
@@ -153,7 +149,6 @@ def get_compliments(self, database):
 
     complimentList = []
     userName = []
-
     users = database.child("users").get()
 
     compliment_cnt = []
@@ -176,8 +171,6 @@ def get_compliments(self, database):
         
     while len(compliment_cnt) < 7:
         compliment_cnt.append("")
-
-                
     compliments = database.child("compliments").order_by_key().limit_to_last(7).get()    
     
     cnt = 0
@@ -213,7 +206,6 @@ def get_groups(self, username):
     groups = db.child("projects").order_by_child("user").equal_to(username).get()  
     
     cnt = 0
-
     try:
         if groups.val() != None:
             for group in groups.each():
@@ -232,6 +224,7 @@ def get_groups(self, username):
     self.g3.text = groupList[2]
     self.g4.text = groupList[3]
     self.g5.text = groupList[4]
+
 
 
 # to get all warnings from the databse for OU and SU
@@ -369,10 +362,9 @@ def get_complaints(self, database, tok, name, callerId):
         self.w1.text = "1. " + t1 + "\n2. " + t2 + "\n3. " + t3
 
 
-
-
 #########################################################################################
 # add project information for each user in projects table
+
 
 def add_projects(groupName, projectName, groupDesc, groupUsers):
     for groupUser in groupUsers:

@@ -307,9 +307,9 @@ class KickNotifications(Screen):
         if data['kickType'] == 'Member':
             if data['votes'] == data['accept']:
                 remove_group_user(data['groupUser'], data['groupId'])
-                db.child('groupKick').child(groupKickKey).remove
+                db.child('groupKick').child(groupKickKey).remove()
             elif data['votes'] == data['accept'] + data['reject']:
-                db.child('groupKick').child(groupKickKey).remove
+                db.child('groupKick').child(groupKickKey).remove()
             else:
                 return
 
@@ -425,3 +425,121 @@ class TasksNotifications(Screen):
                         .update({"taskAssign": taskFound, "taskComplete": taskComplete})
                 else:
                     show_popup("Error", "No Task Found")
+
+
+class VipNotifications(Screen):
+    def on_pre_enter(self, *args):
+        email = "jin@aol.com"
+        db = firebase.database()
+
+        groupNameList, groupUserList = [], []
+
+        #finds all assignVIP for email, only looks at where ticket = 0
+        groupReqDb = db.child('assignVIP').order_by_child('email').equal_to(email).get()
+        for sector in groupReqDb:
+            if sector.val()['ticket'] == 0:
+                groupNameList.append(sector.val()['groupname assigned'])
+
+        # gets info for all the groups assigned above
+        for i in range(len(groupNameList)):
+            groupDb = db.child('group').order_by_child('groupName').equal_to(groupNameList[i]).get()
+            for section in groupDb:
+                groupUserList.append(section.val()['groupUsers'])
+
+        #creates member list
+        memList1, memList2, memList3= "", "", ""
+        for i in range(len(groupUserList)):
+            for j in range(1, len(groupUserList[i])):
+                if i == 0:
+                    memList1 += "[ " + groupUserList[i][j]['email'] + " ]     Assigned: " + \
+                                str(groupUserList[i][j]['taskAssign']) + " // Completed: " + \
+                                str(groupUserList[i][j]['taskComplete']) + "\n"
+                elif i == 1:
+                    memList2 += "[ " + groupUserList[i][j]['email'] + " ]     Assigned: " + \
+                                str(groupUserList[i][j]['taskAssign']) + " // Completed: " + \
+                                str(groupUserList[i][j]['taskComplete']) + "\n"
+                elif i == 2:
+                    memList3 += "[ " + groupUserList[i][j]['email'] + " ]     Assigned: " + \
+                                str(groupUserList[i][j]['taskAssign']) + " // Completed: " + \
+                                str(groupUserList[i][j]['taskComplete']) + "\n"
+
+        # Update Labels
+        if len(groupNameList) >= 1:
+            self.titleLabel1.text = "Assign Score to Group: " + groupNameList[0]
+            self.detailLbl1.text = memList1
+
+        if len(groupNameList) >= 2:
+            self.titleLabel2.text = "Assign Score to Group: " + groupNameList[1]
+            self.detailLbl2.text = memList2
+
+        if len(groupNameList) >= 3:
+            self.titleLabel3.text = "Assign Score to Group: " + groupNameList[2]
+            self.detailLbl3.text = memList3
+
+    def assign_score(self, btnNum):
+        email = "jin@aol.com"
+        db = firebase.database()
+
+        groupKeyList, groupNameList = [], []
+
+        # finds all assignVIP for email, only looks at where ticket = 0
+        groupReqDb = db.child('assignVIP').order_by_child('email').equal_to(email).get()
+        for sector in groupReqDb:
+            if sector.val()['ticket'] == 0:
+                groupKeyList.append(sector.key())
+                groupNameList.append(sector.val()['groupname assigned'])
+
+
+        if btnNum == 1:
+            if self.inpScore1.text == "":
+                show_popup("Error", "Enter a score")
+                return
+            scoreAssigned = self.inpScore1.text
+            self.btnAce1.disabled = True
+            self.inpScore1.disabled = True
+
+        if btnNum == 2:
+            if self.inpScore1.text == "":
+                show_popup("Error", "Enter a score")
+                return
+            scoreAssigned = self.inpScore2.text
+            self.btnAce2.disabled = True
+            self.inpScore2.disabled = True
+
+        if btnNum == 3:
+            if self.inpScore1.text == "":
+                show_popup("Error", "Enter a score")
+                return
+            scoreAssigned = self.inpScore3.text
+            self.btnAce3.disabled = True
+            self.inpScore3.disabled = True
+
+        if btnNum > len(groupKeyList):
+            show_popup("Error", "No Request Found")
+            return
+
+        db.child('assignVIP').child(groupKeyList[btnNum - 1]).update({"ticket": 1, "point": int(scoreAssigned)})
+
+        self.apply_score(groupNameList[btnNum - 1], scoreAssigned)
+
+    def apply_score(self, groupName, score):
+        db = firebase.database()
+
+        groupUserList, pointsList = [], []
+
+        #find group members
+        groupDb = db.child('group').order_by_child('groupName').equal_to(groupName).get()
+        for section in groupDb:
+            groupUser = section.val()['groupUsers']
+
+        #find all members in user table
+        for i in range(1, len(groupUser)):
+            userDb = db.child('users').order_by_child('email').equal_to(groupUser[i]['email']).get()
+            for sect in userDb:
+                groupUserList.append(sect.key())
+                pointsList.append(sect.val()['points'])
+
+        #change member's scores
+        for i in range(len(groupUserList)):
+            db.child('users').child(groupUserList[i]).update({"points": int(pointsList[i])+int(score)})
+

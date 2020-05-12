@@ -24,8 +24,6 @@ class HomeWindow(Screen):
             pass
 
 
-
-
         self.manager.screens[2].ids.username.text = self.email.text
         self.manager.current = "homeOU"
 
@@ -79,9 +77,6 @@ class HomeWindow(Screen):
             return False
 
 
-
-
-
 kv = Builder.load_file("main.kv")
 
 class MyMainApp(App):
@@ -90,7 +85,4 @@ class MyMainApp(App):
 
 if __name__ == "__main__":
     MyMainApp().run()
-
-
-
 

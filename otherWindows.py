@@ -96,7 +96,6 @@ def group_popup():
         popup = PopupWindow(title= "File a Complaint\nFormat:name, group name, complaint")        
         popup.open()
 
-
         
 class PopupWindow(Popup):
     input_text = ObjectProperty()
@@ -161,7 +160,6 @@ class PopupWindow(Popup):
                     "desc": text[2] 
                 }
                 db.child("warnings").push(data)
-
         else:
             if check_valid_format(self, 2, self.input_text.text):                
                 text = self.input_text.text.replace(" ", "").split(',')
@@ -246,7 +244,7 @@ class groupNotificationSU(Screen):
     def update_notification(self):
         get_group_notifications(self, db, 1, "")
 
-
+        
 class ComplimentPage(Screen):
     def show_popup0(self):
         global token 
@@ -279,6 +277,7 @@ class ReferenceOU(Screen):
 class WarningPage(Screen):
     def update(self):
         get_complaints(self, db, 1, "", 1)
+
 
     def show_popup0(self):
         global token
@@ -360,7 +359,6 @@ class ProfileWindow(Screen):
             newList = []            
             boxedUser = db.child("whitebox_blackbox").order_by_key().get()
 
-
             try:
                 if boxedUser.val() != None: 
                     for user in boxedUser.each():
@@ -370,7 +368,6 @@ class ProfileWindow(Screen):
             except:
                 pass
 
-
             newList.reverse()
             while(len(newList) < 4):
                 newList.append("")
@@ -379,7 +376,6 @@ class ProfileWindow(Screen):
             self.b2.text = newList[1]
             self.b3.text = newList[2]
             self.b4.text = newList[3]
-
 
         def update_blackbox(self):
             newList = []            

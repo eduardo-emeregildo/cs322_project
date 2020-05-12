@@ -1,7 +1,7 @@
 #:kivy 1.0.7
 
-<TasksNotifications>:
-    name: "tasksNotifications"
+<VipNotifications>:
+    name: "vipNotifications"
     rows: 4
     cols: 1
     spacing: '20dp'
@@ -9,45 +9,47 @@
     titleLabel1: titleLabel1
     titleLabel2: titleLabel2
     titleLabel3: titleLabel3
-    titleLabel4: titleLabel4
 
     detailLbl1: detailLbl1
     detailLbl2: detailLbl2
     detailLbl3: detailLbl3
-    detailLbl4: detailLbl4
 
     btnAce1: btnAce1
     btnAce2: btnAce2
     btnAce3: btnAce3
-    btnAce4: btnAce4
 
+    inpScore1: inpScore1
+    inpScore2: inpScore2
+    inpScore3: inpScore3
 
+# join
     RelativeLayout:
 
         Label:
-            text: "Group Tasks Notifications\n"
+            text: "VIP Notifications\n"
             color: 0.2, 0.5, 0.4, 1
             font_size: "30sp"
             bold: False
             font_name: "Arial"
             pos_hint: {"center_x": 0.3, "center_y": 0.9}
 
-# Group and Task notifications
 
+# new request, compliments and warnings
         BoxLayout:
             orientation: 'horizontal'
             pos_hint: {'center_x': 0.5, 'center_y': 1.3}
 
             Button:
-                text: "Tasks Notifications"
+                text: "VIP Notifications"
                 background_color: (0.2, 0.5, 0.4, 1)
                 size_hint: (0.20, 0.08)
+                on_release: root.apply_score('first', 2)
 
             Button:
-                text: "Group Notifications"
-                background_color: (0.2, 0.5, 0.4, 0.5)
+                text: "Task/Group Requests"
+                background_color: (0.2, 0.5, 0.4, 1)
                 size_hint: (0.20, 0.08)
-                on_release: app.root.current = "kickNotifications"
+                on_release: app.root.current = "tasksNotifications"
 
 # Close Request
         BoxLayout:
@@ -58,10 +60,10 @@
                 cols: 2
                 spacing: '10dp'
                 padding: 30
-                size_hint: (0.37, 0.2)
-                pos_hint: {"center_x": 0.00, "center_y": 0.725}
+                size_hint: (0.5, 0.3)
+                pos_hint: {"center_x": 0.00, "center_y": 0.70}
                 Label:
-                    text: "No Task to Display"
+                    text: "No Group to Display"
                     color: 0.2, 0.5, 0.4, 1
                     font_size: "20sp"
                     bold: False
@@ -71,16 +73,21 @@
                 BoxLayout:
                     size_hint: (0.55, 0.1)
                     spacing: '5dp'
+                    TextInput:
+                        hint_text: "(EX: -3 or 3)"
+                        font_size: "13sp"
+                        size_hint: (0.3, .5)
+                        id: inpScore1
                     Button:
-                        text: "Click to mark as 'Complete'"
+                        text: "Submit Score"
                         font_size: "13sp"
                         background_color: (0.02, 0.024, 0.494, 1)
-                        size_hint: (0.05, 0.08)
+                        size_hint: (0.5, .5)
                         id: btnAce1
-                        on_press: root.task_complete(0)
+                        on_release: root.assign_score(1)
 
                 Label:
-                    text: "[ DETAILS ]   Claim a task on your group page!"
+                    text: "[ DETAILS ]   Wait for SU to assign a group!"
                     font_size: "12sp"
                     opacity: 1
                     id: detailLbl1
@@ -93,10 +100,10 @@
                 cols: 2
                 spacing: '10dp'
                 padding: 30
-                size_hint: (0.37, 0.2)
-                pos_hint: {"center_x": 0.00, "center_y": 0.540}
+                size_hint: (0.37, 0.3)
+                pos_hint: {"center_x": 0.00, "center_y": 0.470}
                 Label:
-                    text: "No Task to Display"
+                    text: "No Group to Display"
                     color: 0.2, 0.5, 0.4, 1
                     font_size: "20sp"
                     bold: False
@@ -104,18 +111,23 @@
                     id: titleLabel2
 
                 BoxLayout:
-                    size_hint: (0.55, 0.1)
+                    size_hint: (0.55, 0.2)
                     spacing: '5dp'
+                    TextInput:
+                        hint_text: "(EX: -3 or 3)"
+                        font_size: "13sp"
+                        size_hint: (0.3, .5)
+                        id: inpScore2
                     Button:
-                        text: "Click to mark as 'Complete'"
+                        text: "Submit Score"
                         font_size: "13sp"
                         background_color: (0.02, 0.024, 0.494, 1)
-                        size_hint: (0.05, 0.08)
+                        size_hint: (0.5, .5)
                         id: btnAce2
-                        on_press: root.task_complete(1)
+                        on_release: root.assign_score(2)
 
                 Label:
-                    text: "[ DETAILS ]   Claim a task on your group page!"
+                    text: "[ DETAILS ]   Wait for SU to assign a group!"
                     font_size: "12sp"
                     opacity: 1
                     id: detailLbl2
@@ -128,10 +140,10 @@
                 cols: 2
                 spacing: '10dp'
                 padding: 30
-                size_hint: (0.37, 0.2)
-                pos_hint: {"center_x": 0.00, "center_y": 0.340}
+                size_hint: (0.37, 0.3)
+                pos_hint: {"center_x": 0.00, "center_y": 0.230}
                 Label:
-                    text: "No Task to Display"
+                    text: "No Group to Display"
                     color: 0.2, 0.5, 0.4, 1
                     font_size: "20sp"
                     bold: False
@@ -139,57 +151,26 @@
                     id: titleLabel3
 
                 BoxLayout:
-                    size_hint: (0.55, 0.1)
+                    size_hint: (0.55, 0.2)
                     spacing: '5dp'
+                    TextInput:
+                        hint_text: "(EX: -3 or 3)"
+                        font_size: "13sp"
+                        size_hint: (0.3, .5)
+                        id: inpScore3
                     Button:
-                        text: "Click to mark as 'Complete'"
+                        text: "Submit Score"
                         font_size: "13sp"
                         background_color: (0.02, 0.024, 0.494, 1)
-                        size_hint: (0.05, 0.08)
+                        size_hint: (0.5, .5)
                         id: btnAce3
-                        on_press: root.task_complete(2)
+                        on_release: root.assign_score(3)
 
                 Label:
-                    text: "[ DETAILS ]   Claim a task on your group page!"
+                    text: "[ DETAILS ]   Wait for SU to assign a group!"
                     font_size: "12sp"
                     opacity: 1
                     id: detailLbl3
-
-
-        BoxLayout:
-            orientation: 'horizontal'
-
-            GridLayout:
-                rows: 2
-                cols: 2
-                spacing: '10dp'
-                padding: 30
-                size_hint: (0.37, 0.2)
-                pos_hint: {"center_x": 0.00, "center_y": 0.140}
-                Label:
-                    text: "No Task to Display"
-                    color: 0.2, 0.5, 0.4, 1
-                    font_size: "20sp"
-                    bold: False
-                    font_name: "Arial"
-                    id: titleLabel4
-
-                BoxLayout:
-                    size_hint: (0.55, 0.1)
-                    spacing: '5dp'
-                    Button:
-                        text: "Click to mark as 'Complete'"
-                        font_size: "13sp"
-                        background_color: (0.02, 0.024, 0.494, 1)
-                        size_hint: (0.05, 0.08)
-                        id: btnAce4
-                        on_press: root.task_complete(3)
-
-                Label:
-                    text: "[ DETAILS ]   Claim a task on your group page!"
-                    font_size: "12sp"
-                    opacity: 1
-                    id: detailLbl4
 
 
 # go back
@@ -198,4 +179,4 @@
             text: "Cancel"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
-            on_press:  app.root.current = "homeOU"
+            on_press:  app.root.current = "home"

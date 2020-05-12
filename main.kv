@@ -17,12 +17,16 @@
 
 #:include visitorViewProfile.kv
 #:include homeSUWindow.kv
+#:include groupNotificationOU.kv
+#:include warningNotificationOU.kv
 #:include referenceNotificationOU.kv
 #:include welcomeScreen.kv
 #:include visitorViewLoggedIn.kv
 
-#:include TasksNotifications.kv
+#:include tasksNotifications.kv
 #:include kickNotifications.kv
+#:include vipNotifications.kv
+
 
 
 ##### don't change the order of the screens. add only at the bottom, index starts at 0
@@ -56,7 +60,7 @@ ScreenManager:
     VisitorView:
     VisitorViewLoggedIn:
 
-
+    VipNotifications:
     
   
 
