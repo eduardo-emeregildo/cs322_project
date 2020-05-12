@@ -5,9 +5,10 @@
 
 #:include createGroupWindow.kv
 #:include groupWindow.kv
+#:include homeSUWindow.kv
 #:include homeOUWindow.kv
 #:include profileWindow.kv
-
+#:include notificationsOU.kv
 #:include notificationsSU.kv
 #:include requestDescriptionSU.kv
 #:include complimentNotificationSU.kv
@@ -29,6 +30,7 @@
 
 
 
+
 ##### don't change the order of the screens. add only at the bottom, index starts at 0
 
 
@@ -36,7 +38,7 @@ ScreenManager:
     
     WelcomeScreen:
     
-    HomeWindow: 
+    HomeWindow:
     HomeOUWindow:
     HomeSUWindow:
     ProfileWindow:
@@ -61,7 +63,5 @@ ScreenManager:
     VisitorViewLoggedIn:
 
     VipNotifications:
-    
-  
 
 
