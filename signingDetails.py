@@ -156,16 +156,16 @@ class SignupWindow(Screen):
                 db.child("possible_appeals").child(appeal_key).remove()
                 db.child("pending_users").push(data)
                 priv_of_ref = 0
-                 try:
-                     check_ref = db.child("users").order_by_child("email").equal_to(self.reference.text).get()
-                     for users  in check_ref.each():
-                         a = users.val()
-                         priv_of_ref = a['privilege']
-                         break
-                 except:
-                      priv_of_ref = 0
+                try:
+                    check_ref = db.child("users").order_by_child("email").equal_to(self.reference.text).get()
+                    for users  in check_ref.each():
+                        a = users.val()
+                        priv_of_ref = a['privilege']
+                        break
+                except:
+                    priv_of_ref = 0
 
-                #add_ref(self.email.text,self.reference.text,priv_of_ref)
+                add_ref(self.email.text,self.reference.text,priv_of_ref)
                 show_popup("Submit","Application received. This is your appeal")
 
             else:
@@ -265,8 +265,6 @@ class NotificationSU(Screen):
         if which_person_email:
             return True
         return False
-
-    
 
 
     def show_details(self,index,which_person_email):

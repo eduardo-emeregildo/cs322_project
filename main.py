@@ -69,7 +69,7 @@ def get_key_group_notifs(email):
                 show_popup("Warning","""        You have a negative score. 
 When you log out you will be banned""")
             if Store.priv == "OU" or Store.priv == "VIP":
-                #self.log_in_auto()
+                self.log_in_auto()
             elif Store.priv == "SU":
                 self.parent.current = "homeSU" #how you switch screens in python code
         except:
@@ -106,7 +106,7 @@ class DescriptionWindow(Screen):
 
     
     def update(self):
-        a = NotificationSUPage()
+        a = NotificationSU()
         a.show_details(Store.button,"not empty")
         self.desc_email = a.email
         self.desc_password = a.password
@@ -162,7 +162,7 @@ class DescriptionWindow(Screen):
                 self.parent.current = "requests"
 
 
-class GroupNotificationSU(Screen):
+class groupNotificationSU(Screen):
     close_req1 = StringProperty()
     close_req2 = StringProperty()
     close_req3 = StringProperty()
