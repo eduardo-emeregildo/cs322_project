@@ -30,10 +30,6 @@ def remove_group_user(self, email, groupId):
 
 # specifcally groupKick DB
 def kick_vote_table(groupId, kickType, kickUser):
-    #groupId = 2
-    #groupUser = "iu@aol.com"
-    #kickType = "Member"
-
     db = firebase.database()
     groupKickKey = ""
 
