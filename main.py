@@ -204,7 +204,7 @@ When you log out you will be banned""")
         return True
 
     def check_user(self):
-        #firebase = pyrebase.initialize_app(config)
+        
         db = firebase.database()
         user = db.child("users").order_by_child("email").equal_to("ggukr@aol.com").limit_to_first(1).get()
         try:
@@ -326,9 +326,9 @@ class NotificationSUPage(Screen):
                 person_password  = person_info['password']
                 try:
                     create_user = auth.create_user_with_email_and_password(which_person_email,person_password)
-                    #auth.send_email_verification(create_user['idToken']) to let them know that theyre in the system, uncomment for demo
                     db.child("pending_users").child(person_key).remove() 
                     user = extract_user_from_email(which_person_email)
+                    auth.send_email_verification(create_user['idToken'])
                     person_info.update({"name":user})
                     db.child("users").push(person_info)
                     show_popup("Success","""User was successfully added to the system. 
@@ -382,7 +382,7 @@ class NotificationSUPage(Screen):
 
 class DescriptionWindow(Screen):
     desc_email = StringProperty()
-    desc_password = StringProperty() #instead of past project
+    desc_password = StringProperty() 
     desc_birthday = StringProperty()
     desc_interest = StringProperty()
     desc_appeal = StringProperty()
@@ -421,7 +421,7 @@ class DescriptionWindow(Screen):
                 person['appeal'] = 1
                 db.child("possible_appeals").push(person)
                 db.child("pending_users").child(person_key).remove()
-                #send_rejection_email(self.desc_email) UNCOMMENT FOR THE DEMO
+                send_rejection_email(self.desc_email) 
                 self.desc_email =""
                 self.desc_password =""
                 self.desc_birthday =""
@@ -531,7 +531,7 @@ class GroupNotificationSU(Screen):
                 show_popup("Error","Did not enter correct email")
 
     def assign_vip(self,index):
-        #len(db.child("pending_users").get().val()) to get how many entries in table
+        
         db =firebase.database()
         
         
@@ -583,6 +583,7 @@ class GroupNotificationSU(Screen):
         db = firebase.database()
         vip_assigned_email = ""
         is_complete = 0
+        #checking if a vip gave out a rating for the group
         try:
             did_vip_assign = db.child("assignVIP").order_by_child("groupname assigned").equal_to(which_group).get()
             for users in did_vip_assign.each():
@@ -925,7 +926,7 @@ class GroupWindow(Screen):
         pollId = 1
 
         #user clicks option
-        #firebase = pyrebase.initialize_app(config)
+        
         db = firebase.database()
         postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
         for sect in postDb.each():
@@ -968,7 +969,7 @@ class GroupWindow(Screen):
 class CreateGroupWindow(Screen):
 
     def create_group(self):
-        #firebase = pyrebase.initialize_app(config)
+        
         db = firebase.database()
 
         groupList = []
@@ -1060,21 +1061,6 @@ class ProfileWindow(Screen):
 
 
 kv = Builder.load_file("main.kv")
-
-#len(db.child("pending_users").get().val()) to get how many entries in table
-# db = firebase.database()
-# #data = {"desc":"closegroup","group":"group","priority":1,"user":"testguy"}
-# for i in range(1,3,1):
-#     data = {"desc":"closegroup","group":"group","priority":1,"user":"testguy"}
-#     data["group"] = data["group"] + str(i)
-#     data["user"] = data["user"] + str(i)
-#     db.child("groupNotification").push(data)
-
-# db = firebase.database()
-# data = {"desc":"closegroup","group":"fifth","priority":1,"user":"bts@aol.com"}
-# db.child("groupNotification").push(data)
-
-
 
 
 
