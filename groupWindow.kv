@@ -5,47 +5,113 @@
     cols: 1
     name: "grouppage"
 
-    postContent: postContent
-    postButton: postButton
     groupDesc: groupDesc
     postTask1: postTask1
     postPoll1: postPoll1
     postPollVote1: postPollVote1
-    btnClaim: btnClaim
-    btnPoll1: btnPoll1
-    btnPoll2: btnPoll2
     user1_info: user1_info
     user2_info: user2_info
     user3_info: user3_info
     user4_info: user4_info
     user5_info: user5_info
 
+    btnClaim: btnClaim
+    btnPoll1: btnPoll1
+    btnPoll2: btnPoll2
+
+    btnPollInputs: btnPollInputs
+    btnTaskInputs: btnTaskInputs
+    btnChooseInputs: btnChooseInputs
+    inputsTask: inputsTask
+    inputsChoose: inputsChoose
+    btnCreatePoll: btnCreatePoll
+    btnCreateTask: btnCreateTask
+
+    taskInTitle: taskInTitle
+    taskInDetail: taskInDetail
+
     spacing: '20dp'
 
     RelativeLayout:
 
-        TextInput:
-            hint_text: "Write Something..."
-            multiline: True
-            size_hint: (0.60, 0.14)
-            pos_hint: {"top": .95, "x": 0.025}
-            id: postContent
+        Label:
+            text: "Create a post:"
+            font_size: "17sp"
+            pos_hint: {"y": .445, "center_x": 0.095}
+        GridLayout:
+            id: inputsChoose
+            opacity: 1
+            rows:2
+            cols:1
+            spacing: '5dp'
+            size_hint: (0.09, 0.11)
+            pos_hint: {"top": .92, "x": 0.025}
+            Button:
+                text: "Create Poll"
+                font_size: "11sp"
+                background_color: .2, .5, .4, 1
+                size_hint: (0.08, 0.01)
+                pos_hint: {"top": .78, "x": 0.545}
+                id: btnPollInputs
+                disabled: False
+                on_press: root.show_inputs('Poll')
+            Button:
+                text: "Create Task"
+                font_size: "11sp"
+                background_color: .2, .5, .4, 1
+                size_hint: (0.08, 0.01)
+                pos_hint: {"top": .78, "x": 0.545}
+                id: btnTaskInputs
+                disabled: False
+                on_press: root.show_inputs('Task')
+
+        GridLayout:
+            id: inputsTask
+            rows: 2
+            cols: 1
+            opacity: 1
+            spacing: '5dp'
+            size_hint: (0.50, 0.11)
+            pos_hint: {"top": .92, "x": 0.125}
+            TextInput:
+                hint_text: "Choose Poll to create a poll post"
+                id: taskInTitle
+                multiline: False
+                disabled: True
+                pos_hint: {"top": .95, "x": 0.025}
+            TextInput:
+                hint_text: "Choose Task to create a task post"
+                id: taskInDetail
+                multiline: False
+                disabled: True
+                pos_hint: {"top": .95, "x": 0.025}
 
         Button:
             text: "Post Task"
             font_size: "11sp"
             size_hint: (0.08, 0.01)
             pos_hint: {"top": .78, "x": 0.545}
-            id: postButton
+            opacity: 0
+            id: btnCreateTask
             on_press: root.create_post("Task", 1)
 
         Button:
             text: "Post Poll"
             font_size: "11sp"
             size_hint: (0.08, 0.01)
-            pos_hint: {"top": .78, "x": 0.455}
-            id: postButton
+            pos_hint: {"top": .78, "x": 0.125}
+            opacity: 0
+            id: btnCreatePoll
             on_press: root.create_post("Poll", 1)
+
+        Button:
+            text: "Back"
+            font_size: "11sp"
+            size_hint: (0.08, 0.01)
+            pos_hint: {"top": .78, "x": 0.025}
+            opacity: 0
+            id: btnChooseInputs
+            on_press: root.show_inputs('Back')
 
         Label:
             text: "Please vote for a time to meet up:"
@@ -72,13 +138,13 @@
                 background_color: (.2, .5, .4, 1)
                 disabled: False
                 id: btnPoll1
-                on_press: root.poll_vote('chungha@aol.com', 5, 1, 1)
+                on_press: root.poll_vote('chungha@aol.com', 5, 1, 1, 1)
             Button:
                 text: "Option 2"
                 background_color: (.2, .5, .4, 1)
                 disabled: False
                 id: btnPoll2
-                on_press: root.poll_vote('chungha@aol.com', 5, 1, 2)
+                on_press: root.poll_vote('chungha@aol.com', 5, 1, 2, 1)
 
         Label:
             text: "Function Name: create_group()\nDetails: function create group in database"
@@ -97,7 +163,7 @@
             pos_hint: {"x": .57, "y": .35}
             disabled: False
             id: btnClaim
-            on_press: root.task_claim('chungha@aol.com', 7, 4, 1)
+            on_press: root.task_claim(7, 4, 1)
 
         Label:
             text: "Group Name: groupName \nDescription: groupDesc"
@@ -109,8 +175,8 @@
                 Color:
                     rgba: .30, .5, .45, 1
                 Rectangle:
-                    pos: (540, 270)
-                    size: (230, 300)
+                    pos: (540, 240)
+                    size: (230, 330)
             Label:
                 text: "Users"
                 pos: (524, 412)
@@ -128,12 +194,10 @@
                     text: "1"
                     background_color: (.2, .5, .4, 1)
                     size_hint: (0.30, 0.3)
-                    on_press: root.show_info()
                 Button:
                     text: "2"
                     background_color: (.2, .5, .4, 1)
                     size_hint: (0.30, 0.3)
-                    on_press: root.create_post_poll("This is the Content", "Choice 1", "Choice 2", 5)
                 Button:
                     text: "3"
                     background_color: (.2, .5, .4, 1)
@@ -180,25 +244,44 @@
                     text: "x"
                     background_color: (.4, 1, .7, 1)
                     size_hint: (0.20, 0.20)
-                    on_press: root.remove_group_user('chungha@aol.com', 5)
+                    on_press: root.req_kick(1, 'Member')
                 Button:
                     text: "x"
                     background_color: (.4, 1, .7, 1)
                     size_hint: (0.20, 0.20)
-                    on_press: root.remove_group(5)
+                    on_press: root.req_kick(2, 'Member')
                 Button:
                     text: "x"
                     background_color: (.4, 1, .7, 1)
                     size_hint: (0.20, 0.20)
+                    on_press: root.req_kick(3, 'Member')
                 Button:
                     text: "x"
                     background_color: (.4, 1, .7, 1)
                     size_hint: (0.20, 0.20)
+                    on_press: root.req_kick(4, 'Member')
                 Button:
                     text: "x"
                     background_color: (.4, 1, .7, 1)
                     size_hint: (0.20, 0.20)
-                    on_press: root.task_complete('chungha@aol.com', 7, 1)
+                    on_press: root.task_complete(7, 1)
+                    on_press: root.req_kick(5, 'Member')
+        Button:
+            text: "Send Warning"
+            background_color: (0.263, 0.263, 0.263, 1)
+            font_size: "11sp"
+            pos_hint: {"x": .68, "y": .41}
+            size_hint: (0.135, 0.04)
+            on_press: root.get_popup()
+
+        Button:
+            text: "Close Group"
+            background_color: (0.263, 0.263, 0.263, 1)
+            font_size: "11sp"
+            pos_hint: {"x": .820, "y": .41}
+            size_hint: (0.135, 0.04)
+            on_press: root.req_kick(0, 'Group')
+
         BoxLayout:
             Button:
                 text: "Go Back"

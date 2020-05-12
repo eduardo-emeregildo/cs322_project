@@ -1,0 +1,201 @@
+#:kivy 1.0.7
+
+<TasksNotifications>:
+    name: "tasksNotifications"
+    rows: 4
+    cols: 1
+    spacing: '20dp'
+
+    titleLabel1: titleLabel1
+    titleLabel2: titleLabel2
+    titleLabel3: titleLabel3
+    titleLabel4: titleLabel4
+
+    detailLbl1: detailLbl1
+    detailLbl2: detailLbl2
+    detailLbl3: detailLbl3
+    detailLbl4: detailLbl4
+
+    btnAce1: btnAce1
+    btnAce2: btnAce2
+    btnAce3: btnAce3
+    btnAce4: btnAce4
+
+
+    RelativeLayout:
+
+        Label:
+            text: "Group Tasks Notifications\n"
+            color: 0.2, 0.5, 0.4, 1
+            font_size: "30sp"
+            bold: False
+            font_name: "Arial"
+            pos_hint: {"center_x": 0.3, "center_y": 0.9}
+
+# Group and Task notifications
+
+        BoxLayout:
+            orientation: 'horizontal'
+            pos_hint: {'center_x': 0.5, 'center_y': 1.3}
+
+            Button:
+                text: "Tasks Notifications"
+                background_color: (0.2, 0.5, 0.4, 1)
+                size_hint: (0.20, 0.08)
+
+            Button:
+                text: "Group Notifications"
+                background_color: (0.2, 0.5, 0.4, 0.5)
+                size_hint: (0.20, 0.08)
+                on_release: app.root.current = "kickNotifications"
+
+# Close Request
+        BoxLayout:
+            orientation: 'horizontal'
+
+            GridLayout:
+                rows: 2
+                cols: 2
+                spacing: '10dp'
+                padding: 30
+                size_hint: (0.37, 0.2)
+                pos_hint: {"center_x": 0.00, "center_y": 0.725}
+                Label:
+                    text: "No Task to Display"
+                    color: 0.2, 0.5, 0.4, 1
+                    font_size: "20sp"
+                    bold: False
+                    font_name: "Arial"
+                    id: titleLabel1
+
+                BoxLayout:
+                    size_hint: (0.55, 0.1)
+                    spacing: '5dp'
+                    Button:
+                        text: "Click to mark as 'Complete'"
+                        font_size: "13sp"
+                        background_color: (0.02, 0.024, 0.494, 1)
+                        size_hint: (0.05, 0.08)
+                        id: btnAce1
+                        on_press: root.task_complete(0)
+
+                Label:
+                    text: "[ DETAILS ]   Claim a task on your group page!"
+                    font_size: "12sp"
+                    opacity: 1
+                    id: detailLbl1
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            GridLayout:
+                rows: 2
+                cols: 2
+                spacing: '10dp'
+                padding: 30
+                size_hint: (0.37, 0.2)
+                pos_hint: {"center_x": 0.00, "center_y": 0.540}
+                Label:
+                    text: "No Task to Display"
+                    color: 0.2, 0.5, 0.4, 1
+                    font_size: "20sp"
+                    bold: False
+                    font_name: "Arial"
+                    id: titleLabel2
+
+                BoxLayout:
+                    size_hint: (0.55, 0.1)
+                    spacing: '5dp'
+                    Button:
+                        text: "Click to mark as 'Complete'"
+                        font_size: "13sp"
+                        background_color: (0.02, 0.024, 0.494, 1)
+                        size_hint: (0.05, 0.08)
+                        id: btnAce2
+                        on_press: root.task_complete(1)
+
+                Label:
+                    text: "[ DETAILS ]   Claim a task on your group page!"
+                    font_size: "12sp"
+                    opacity: 1
+                    id: detailLbl2
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            GridLayout:
+                rows: 2
+                cols: 2
+                spacing: '10dp'
+                padding: 30
+                size_hint: (0.37, 0.2)
+                pos_hint: {"center_x": 0.00, "center_y": 0.340}
+                Label:
+                    text: "No Task to Display"
+                    color: 0.2, 0.5, 0.4, 1
+                    font_size: "20sp"
+                    bold: False
+                    font_name: "Arial"
+                    id: titleLabel3
+
+                BoxLayout:
+                    size_hint: (0.55, 0.1)
+                    spacing: '5dp'
+                    Button:
+                        text: "Click to mark as 'Complete'"
+                        font_size: "13sp"
+                        background_color: (0.02, 0.024, 0.494, 1)
+                        size_hint: (0.05, 0.08)
+                        id: btnAce3
+                        on_press: root.task_complete(2)
+
+                Label:
+                    text: "[ DETAILS ]   Claim a task on your group page!"
+                    font_size: "12sp"
+                    opacity: 1
+                    id: detailLbl3
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            GridLayout:
+                rows: 2
+                cols: 2
+                spacing: '10dp'
+                padding: 30
+                size_hint: (0.37, 0.2)
+                pos_hint: {"center_x": 0.00, "center_y": 0.140}
+                Label:
+                    text: "No Task to Display"
+                    color: 0.2, 0.5, 0.4, 1
+                    font_size: "20sp"
+                    bold: False
+                    font_name: "Arial"
+                    id: titleLabel4
+
+                BoxLayout:
+                    size_hint: (0.55, 0.1)
+                    spacing: '5dp'
+                    Button:
+                        text: "Click to mark as 'Complete'"
+                        font_size: "13sp"
+                        background_color: (0.02, 0.024, 0.494, 1)
+                        size_hint: (0.05, 0.08)
+                        id: btnAce4
+                        on_press: root.task_complete(3)
+
+                Label:
+                    text: "[ DETAILS ]   Claim a task on your group page!"
+                    font_size: "12sp"
+                    opacity: 1
+                    id: detailLbl4
+
+
+# go back
+    BoxLayout:
+        Button:
+            text: "Cancel"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.20, 0.06)
+            on_press:  app.root.current = "homeOU"

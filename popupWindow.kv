@@ -1,9 +1,12 @@
 #:kivy 1.0.7
 
 <PopupWindow>:
+
+# used for popup with input text
+
     size_hint: 0.5, 0.5
     input_text: input_text
-    title_size: "25sp"
+    title_size: "15sp"
     title_color: 1, 1, 1, 1
 
 
@@ -14,10 +17,10 @@
             input_type: 'text'
             focus: True
 
-            hint_text: "Enter an integer"
-            hint_text_color: (0.2, 0.5, 0.4, 1)
+            hint_text: "Start Writing"
+            hint_text_color: (0, 0, 0, 0.3)
             multiline: False
-            font_size: "20sp"
+            font_size: "15sp"
             background_color: (1, 1, 1, 1)
             color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.8, 0.4)
@@ -30,10 +33,11 @@
                 text: "Submit"
                 background_color: (0.2, 0.5, 0.4, 1)
                 size_hint: (0.2, 0.2)
+                on_press: root.store() 
              
 
             Button:
                 text: "Dismiss"
                 background_color: (0.2, 0.5, 0.4, 1)
                 size_hint: (0.2, 0.2)
-                on_press: root.Cancel()
+                on_press: root.dismiss()

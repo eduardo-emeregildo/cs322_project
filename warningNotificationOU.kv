@@ -1,14 +1,22 @@
 #:kivy 1.0.7
 
-
-<NotificationSU>:
+<WarningPageOU>:
 
 # this page will show information about new join requests
 
     rows: 2
     cols: 1
-    name: "requests"
+    name: "WarningsOU"
 
+    w1: warning1
+    w2: warning2
+    w3: warning3
+    w4: warning4
+    w5: warning5
+    w6: warning6
+    w7: warning7
+
+    on_pre_enter: root.update()
 
     canvas.before:
         Color:
@@ -28,70 +36,58 @@
             font_name: "Arial"
             pos_hint: {"center_x": 0.2, "center_y": 0.9}
 
-# new request, compliments, complaints and group notification          
+# new request, compliments and warnings           
 
         BoxLayout:
             orientation: 'horizontal'
             pos_hint: {'center_x': 0.5, 'center_y': 1.3}
 
+
             Button:
-                id: b1
-                text: "New Requests"
+                text: "Warnings"
                 background_color: (0.2, 0.5, 0.4, 1)
                 size_hint: (0.20, 0.08)
-
-            Button:
-                text: "Compliments"
-                background_color: (0.2, 0.5, 0.4, 0.5)
-                size_hint: (0.20, 0.08)
-                on_press:  app.root.current = "compliments"
-
-            Button:
-                text: "Complaints"
-                background_color: (0.2, 0.5, 0.4, 0.5)
-                size_hint: (0.20, 0.08)
-                on_press:  app.root.current = "warnings"
 
             Button:
                 text: "Group Notifications"
                 background_color: (0.2, 0.5, 0.4, 0.5)
                 size_hint: (0.20, 0.08)
-                on_press:  app.root.current = "GroupNotificationsSU"
+                on_press:  app.root.current = "NotificationOU"
+
+            Button:
+                text: "Reference Notification"
+                background_color: (0.2, 0.5, 0.4, 0.5)
+                size_hint: (0.20, 0.08)
+                on_press:  app.root.current = "ReferenceOU"
 
 
-# name and info 1
-        
+# need a function to connect the description window with the user number with all related info
+
+# Warnings
+                
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: root.person1
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.725}
-
+                id: warning1
+            
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.15}
                 padding: 30
 
                 Button:
-                    text: "Accept"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.accept_btns(root.person1)
-                    
+                    on_press: root.w1.text = ""
 
-                Button:
-                    text: "Details"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.change_button(0,root.person1)
-                    on_press: root.show_details(0,root.person1)
-                    on_press:  if root.is_email_there(root.person1) == 1:  app.root.current = "description" 
-
+                
 
 
 # name and info 2
@@ -100,32 +96,23 @@
             orientation: 'horizontal'
 
             Label:
-                text: root.person2
+                text: "Someone is rude!"
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.625}
+                id: warning2
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.05}
                 padding: 30
 
                 Button:
-                    text: "Accept"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.accept_btns(root.person2)
-
-                Button:
-                    text: "Details"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.change_button(1,root.person2)
-                    on_press: root.show_details(1,root.person2)
-                    on_press:  if root.is_email_there(root.person2) == 1:  app.root.current = "description" 
-
+                    on_press: root.w2.text = ""
 
 
 # name and info 3
@@ -134,32 +121,23 @@
             orientation: 'horizontal'
 
             Label:
-                text: root.person3
+                text: "Someone is late for a meeting"
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.525}
+                id: warning3
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.95}
                 padding: 30
 
                 Button:
-                    text: "Accept"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.accept_btns(root.person3)
-
-                Button:
-                    text: "Details"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.change_button(2,root.person3)
-                    on_press: root.show_details(2,root.person3)
-                    on_press:  if root.is_email_there(root.person3) == 1:  app.root.current = "description" 
-                
+                    on_press: root.w3.text = ""
 
 # name and info 4
 
@@ -167,33 +145,23 @@
             orientation: 'horizontal'
 
             Label:
-                text: root.person4
+                text: "Someone is rude"
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.425}
+                id: warning4
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.85}
                 padding: 30
 
                 Button:
-                    text: "Accept"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    
-                    on_press: root.accept_btns(root.person4)
-
-                Button:
-                    text: "Details"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.change_button(3,root.person4)
-                    on_press: root.show_details(3,root.person4)
-                    on_press: if root.is_email_there(root.person4) == 1:  app.root.current = "description" 
-
+                    on_press: root.w4.text = ""
 
 # name and info 5
 
@@ -201,32 +169,23 @@
             orientation: 'horizontal'
 
             Label:
-                text: root.person5 
+                text: "Someone is rude"
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.325}
+                id: warning5
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.75}
                 padding: 30
 
                 Button:
-                    text: "Accept"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.accept_btns(root.person5)
-
-                Button:
-                    text: "Details"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.change_button(4,root.person5)
-                    on_press: root.show_details(4,root.person5)
-                    on_press:  if root.is_email_there(root.person5) == 1:  app.root.current = "description" 
-                
+                    on_press: root.w5.text = ""
 
 # name and info 6
 
@@ -234,32 +193,23 @@
             orientation: 'horizontal'
 
             Label:
-                text: root.person6 
+                text: "Someone is rude"
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.225}
+                id: warning6
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.65}
                 padding: 30
 
                 Button:
-                    text: "Accept"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.accept_btns(root.person6)
-
-                Button:
-                    text: "Details"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.change_button(5,root.person6)
-                    on_press: root.show_details(5,root.person6)
-                    on_press:  if root.is_email_there(root.person6) == 1:  app.root.current = "description" 
-
+                    on_press: root.w6.text = ""
 
 # name and info 7
 
@@ -267,42 +217,35 @@
             orientation: 'horizontal'
 
             Label:
-                text: root.person7
+                text: "Someone got a warning"
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
-                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.125}
+                id: warning7
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.55}
                 padding: 30
 
                 Button:
-                    text: "Accept"
+                    text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.accept_btns(root.person7)
-
-                Button:
-                    text: "Details"
-                    background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)
-                    on_press: root.change_button(6,root.person7)
-                    on_press: root.show_details(6,root.person7)
-                    on_press:  if root.is_email_there(root.person7) == 1:  app.root.current = "description" 
-                
-    
+                    on_press: root.w7.text = ""      
 # go back
     BoxLayout:
         Button:
-            text: "Go Back"
+            text: "Cancel"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
-            on_press: app.root.current = "homeSU"
+            on_press:  app.root.current = "homeOU"
+        
         Button:
             text: "Refresh"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
-            on_press: root.show_new_requests()
+            on_press: root.update()
+            
+        

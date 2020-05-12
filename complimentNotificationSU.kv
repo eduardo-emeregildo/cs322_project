@@ -2,11 +2,21 @@
 
 <ComplimentPage>:
 
-# this page will show information about new join requests
+# this page will show anonymous compliments about the OUs
 
     rows: 2
     cols: 1
     name: "compliments"
+
+    c1: c1
+    c2: c2
+    c3: c3
+    c4: c4
+    c5: c5
+    c6: c6
+    c7: c7
+
+    on_pre_enter: root.update()
 
     canvas.before:
         Color:
@@ -14,7 +24,8 @@
         Rectangle:
             pos: self.pos
             size: self.size
-# join
+
+# title
 
     RelativeLayout:
 
@@ -26,7 +37,7 @@
             font_name: "Arial"
             pos_hint: {"center_x": 0.2, "center_y": 0.9}
 
-# new request, compliments and warnings           
+# new request, compliments, complaints and group close requests          
 
         BoxLayout:
             orientation: 'horizontal'
@@ -44,7 +55,7 @@
                 size_hint: (0.20, 0.07)
 
             Button:
-                text: "Warnings"
+                text: "Complaints"
                 background_color: (0.2, 0.5, 0.4, 0.5)
                 size_hint: (0.20, 0.07)
                 on_press:  app.root.current = "warnings"
@@ -56,156 +67,163 @@
                 on_press:  app.root.current = "GroupNotificationsSU"
 
 
-# Compliments
+# Compliments1
                 
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Someone got a compliment"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.725}
+                id: c1
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.15}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup() 
+                    on_press: root.show_popup0() 
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c1.text = "" 
 
                 
-
-
-# name and info 2
+# Compliments2
 
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is nice!"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.625}
+                id: c2
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.05}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup() 
+                    on_press: root.show_popup0() 
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c2.text = ""
 
-
-# name and info 3
+# Compliments3
 
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is very hardworking"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.525}
+                id: c3
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.95}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup() 
+                    on_press: root.show_popup0() 
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c3.text = ""
 
-# name and info 4
+# Compliments4
 
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is nice"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.425}
+                id: c4
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.85}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup() 
+                    on_press: root.show_popup0() 
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c4.text = ""
 
-# name and info 5
+# Compliments5
 
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Someone is nice"
+                text: ""
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.325}
+                id: c5
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.75}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup() 
+                    on_press: root.show_popup0() 
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c5.text = ""
 
-# name and info 6
+# Compliments6
 
         BoxLayout:
             orientation: 'horizontal'
@@ -215,26 +233,28 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.225}
+                id: c6
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.65}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup() 
+                    on_press: root.show_popup0() 
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.c6.text = ""
 
-# name and info 7
+# Compliments7
 
         BoxLayout:
             orientation: 'horizontal'
@@ -244,8 +264,10 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.125}
+                id: c7
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.55}
@@ -255,12 +277,13 @@
                     text: "Increase Score"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
-                    on_press: root.show_popup() 
+                    on_press: root.show_popup0() 
 
                 Button:
                     text: "Dismiss"
                     background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)      
+                    size_hint: (0.05, 0.05)  
+                    on_press: root.c7.text = ""    
     
 # go back
     BoxLayout:
@@ -273,6 +296,7 @@
             text: "Refresh"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
+            on_press: root.update()
 
 
 

@@ -16,24 +16,52 @@
 #:include groupNotificationSU.kv
 #:include popupWindow.kv
 
+#:include visitorViewProfile.kv
+#:include homeSUWindow.kv
+#:include groupNotificationOU.kv
+#:include warningNotificationOU.kv
+#:include referenceNotificationOU.kv
+#:include welcomeScreen.kv
+#:include visitorViewLoggedIn.kv
 
+#:include tasksNotifications.kv
+#:include kickNotifications.kv
+#:include vipNotifications.kv
+
+
+
+
+##### don't change the order of the screens. add only at the bottom, index starts at 0
 
 
 ScreenManager:
-
+    
+    WelcomeScreen:
+    
     HomeWindow:
-    HomeSUWindow:
     HomeOUWindow:
-    SignupWindow:
+    HomeSUWindow:
     ProfileWindow:
+
+    SignupWindow:
+    DescriptionWindow:   
+    
     CreateGroupWindow:
     GroupWindow:
-    GroupNotificationSU:
+
+    NotificationSU:
+    groupNotificationSU:
     ComplimentPage:
     WarningPage:
-    NotificationSUPage:
-    NotificationOUPage:
-    DescriptionWindow:
-  
+
+    TasksNotifications:
+    KickNotifications:
+    ReferenceOU:
+    
+    
+    VisitorView:
+    VisitorViewLoggedIn:
+
+    VipNotifications:
 
 

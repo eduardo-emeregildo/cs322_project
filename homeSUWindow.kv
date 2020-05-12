@@ -1,9 +1,12 @@
 #:kivy 1.0.7
 
-<HomeOUWindow>:
-    name: "homeOU"
+<HomeSUWindow>:
+    name: "homeSU"
     rows: 4
     cols: 1
+
+    spacing: '20dp'
+
 
     pic: pic
     username: username
@@ -23,10 +26,9 @@
     user5: user5
     user6: user6
 
-
-    spacing: '20dp'
-
     on_pre_enter: root.initialize_page()
+
+# SU Info
 
     RelativeLayout:
         Button:
@@ -36,39 +38,36 @@
             id: pic
 
         Label:
-            text : "Someone" + " OU"
+            text : "Super User"
             pos_hint: {"y": .415, "x": .0}
             id: username
 
         Label:
-            text : "20"
+            text : "-----------------"
             pos_hint: {"y": .385, "x": .0}
             id: points
 
-        BoxLayout:
-            padding: [50, 10, 50, 10]
-            spacing: 10
-            pos_hint: {"y": .75, "x": .1}
-            size_hint: (0.8, 0.3)
 
-            Button:
-                text: "PROFILE"
-                background_color: (0.2, 0.5, 0.4, 1)
-                size_hint: (0.08, 0.2)
-                on_press:  root.go_to_profile()
-            Button:
-                text: "NOTIFICATIONS"
-                background_color: (0.2, 0.5, 0.4, 1)
-                size_hint: (0.08, 0.2)
-                on_press:  app.root.current = "ReferenceOU"
+        Label:
+            text : "WELCOME TO THE SYSTEM"
+            pos_hint: {"y": .3, "x": .0}
+            font: '50dp'
+            color: 1, 1, 0, 1
+            bold: True
+            font_name: "Arial"
 
-            Button:
-                text: "GROUP NOTIFICATIONS"
-                background_color: (0.2, 0.5, 0.4, 1)
-                size_hint: (0.08, 0.2)
-                on_press:  app.root.current = "tasksNotifications"
+#  notification button
+        Button:
+            text: "NOTIFICATIONS"
+            background_color: (0.2, 0.5, 0.4, 1)
+            size_hint: (0.2, 0.05)
+            pos_hint: {"x": .75, "y": .71}
+            on_press: app.root.current = "requests"
+
+# top projects within the system
 
     FloatLayout:
+
         Label:
             text : "Top Projects"
             font_size: "21sp"
@@ -112,6 +111,8 @@
             pos_hint: {"y": -.18, "x": -.20}
             id: desc3
 
+# top users within the system
+
         Label:
             text : "Top Users"
             font_size: "21sp"
@@ -133,7 +134,7 @@
         Button:
             text: "User2"
             background_color: (0.2, 0.5, 0.4, 1)
-            color: 1, 1, 1, 1
+            color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
             on_press: root.switch_screen(self.text)
             id: user2
@@ -141,7 +142,7 @@
         Button:
             text: "User3"
             background_color: (0.2, 0.5, 0.4, 1)
-            color: 1, 1, 1, 1
+            color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
             on_press: root.switch_screen(self.text)
             id: user3
@@ -149,7 +150,7 @@
         Button:
             text: "User4"
             background_color: (0.2, 0.5, 0.4, 1)
-            color: 1, 1, 1, 1
+            color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
             on_press: root.switch_screen(self.text)
             id: user4
@@ -157,7 +158,7 @@
         Button:
             text: "User5"
             background_color: (0.2, 0.5, 0.4, 1)
-            color: 1, 1, 1, 1
+            color: 1, 1, 0, 1
             size_hint: (0.20, 0.1)
             on_press: root.switch_screen(self.text)
             id: user5
@@ -175,6 +176,4 @@
             text: "Log Out"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.2, 0.06)
-            on_press:root.log_out_btn()
             on_press:  app.root.current = "home"
-            
