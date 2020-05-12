@@ -1,14 +1,6 @@
 from kickTasksNotif import *
 #inside are the details of person thats logged in. Useful for loading data to the pages
 
-class HomeWindow(Screen):
-    email = ObjectProperty(None)
-    password = ObjectProperty(None)
-
-
-    def initialize_page(self):
-        get_top_projects(self, "score", "", 1, db)
-        get_top_users(self, "name", db) 
 
 def get_key_group_notifs(email): 
     
@@ -21,8 +13,19 @@ def get_key_group_notifs(email):
             return users.key()
     return None
 
+
+class HomeWindow(Screen):
+    email = ObjectProperty(None)
+    password = ObjectProperty(None)
+
+
+    def initialize_page(self):
+        get_top_projects(self, "score", "", 1, db)
+        get_top_users(self, "name", db) 
+	
     def log_in_auto(self):               
         userinfo = db.child("users").order_by_child("name").equal_to(self.email.text).limit_to_first(1).get()
+
         try:
             for info in userinfo.each():
                 if info.val()["points"] > 30:
@@ -33,9 +36,11 @@ def get_key_group_notifs(email):
         except:
             pass
 
-        self.manager.screens[2].ids.username.text = self.email.text
-        self.manager.current = "homeOU"
+        text = self.email.text.split("@")
 
+        self.manager.screens[2].ids.username.text = text[0]
+        self.manager.current = "homeOU"
+	
     def switch_screen(self, username):
         if username != "":
             standing_update(self, username, 16)
