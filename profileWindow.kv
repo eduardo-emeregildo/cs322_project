@@ -77,26 +77,25 @@
                 background_color: (.2, .5, .4, 1)
                 size_hint: (0.20, 0.2)
                 id: g2
-                on_press:  if self.text != "" : app.root.current = "grouppage"
+                on_press:  if self.text != "" : root.get_groupname(self.text)
             Button:
                 text: ""
                 background_color: (.2, .5, .4, 1)
                 size_hint: (0.20, 0.2)
                 id: g3
-                on_press:  if self.text != "" : app.root.current = "grouppage"
+                on_press:  if self.text != "" : root.get_groupname(self.text)
             Button:
                 text: "Group4"
                 background_color: (.2, .5, .4, 1)
                 size_hint: (0.20, 0.2)
                 id: g4
-                on_press:  if self.text != "" : app.root.current = "grouppage"
+                on_press:  if self.text != "" : root.get_groupname(self.text)
             Button:
                 text: "Group5"
                 background_color: (.2, .5, .4, 1)
                 size_hint: (0.20, 0.2)
                 id: g5
-                on_press:  if self.text != "" : app.root.current = "grouppage"
-
+                on_press:  if self.text != "" : root.get_groupname(self.text)
 
         Label:
             text: "Group1Name"
