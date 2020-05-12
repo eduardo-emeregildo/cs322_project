@@ -1,32 +1,6 @@
 from kickTasksNotif import *
 #inside are the details of person thats logged in. Useful for loading data to the pages
 
-#for when person is signing up
-
-def send_rejection_email(email):
-    with smtplib.SMTP('smtp.gmail.com',587) as smtp:
-        smtp.ehlo()
-        smtp.starttls()
-        smtp.ehlo()
-        smtp.login("cs322projectd@gmail.com","cs322s20mw")
-        subject = "Rejected from teaming system"
-        body = """You have been rejected from the system. If you wish to try again, you can sign
-        up again. The second attempt will be your appeal."""
-        msg = f'Subject: {subject}\n\n{body}'
-        smtp.sendmail("cs322projectd@gmail.com",email,msg)
-    
-#for getting username from the email
-def extract_user_from_email(email):
-    count = 0
-    for char in email:
-        if char == '@':
-            break
-        else:
-            count+=1
-    return email[:count:]
-
-
-
 class HomeWindow(Screen):
     email = ObjectProperty(None)
     password = ObjectProperty(None)
@@ -120,189 +94,8 @@ When you log out you will be banned""")
         except Exception:
             print("User DNE")
             return False
-
-class SignupWindow(Screen):
-    email = ObjectProperty(None)
-    password = ObjectProperty(None) 
-    dob = ObjectProperty(None) 
-    interests = ObjectProperty(None) 
-    reference = ObjectProperty(None)
-
-    def sign_up(self):
-
-        appeal = 0
-        if is_in_appeal(self.email.text) == True:
-            appeal = 1
-
-        priv = 0
-        points = 0
-        data ={
-        "email":self.email.text,
-        "password":self.password.text,
-        "privilege":priv,
-        "points":points,
-        "appeal": appeal,
-        "date of birth":self.dob.text,
-        "interests":self.interests.text,
-        "reference email":self.reference.text
-        }
-        db = firebase.database()
-
-        if (check_email_format(self.email.text)==True) and (len(self.password.text) >=6): 
-            if is_in_blacklist(self.email.text) == True:
-                show_popup("Error","This email is banned from the system")
-
-            elif is_in_users(self.email.text) == True:
-                show_popup("Error","This email is already in the system")
-
-            elif appeal == 1:
-
-                appeal_key = get_key_appeal(self.email.text)
-                db.child("possible_appeals").child(appeal_key).remove()
-                db.child("pending_users").push(data)
-                priv_of_ref = 0
-                 try:
-                     check_ref = db.child("users").order_by_child("email").equal_to(self.reference.text).get()
-                     for users  in check_ref.each():
-                         a = users.val()
-                         priv_of_ref = a['privilege']
-                         break
-                 except:
-                      priv_of_ref = 0
-
-                #add_ref(self.email.text,self.reference.text,priv_of_ref)
-                show_popup("Submit","Application received. This is your appeal")
-
-            else:
-                db.child("pending_users").push(data)
-                priv_of_ref = 0
-                try:
-                    check_ref = db.child("users").order_by_child("email").equal_to(self.reference.text).get()
-                    for users  in check_ref.each():
-                        a = users.val()
-                        priv_of_ref = a['privilege']
-                        break
-                except:
-                     priv_of_ref = 0
-
-                add_ref(self.email.text,self.reference.text,priv_of_ref)
-                show_popup("Submit","Application received")
-            
-        else:
-            show_popup("Reject","Email or password did not meet the requirements")
-
-        self.email.text = ""
-        self.password.text = ""
-        self.dob.text = ""
-        self.interests.text = ""
-        self.reference.text = ""
-
-class NotificationSU(Screen):
-    person1 = StringProperty("")
-    person2 = StringProperty("")
-    person3 = StringProperty("")
-    person4 = StringProperty("")
-    person5 = StringProperty("")
-    person6 = StringProperty("")
-    person7 = StringProperty("")
-
-    email = StringProperty()
-    password = StringProperty() #instead of past project
-    birthday = StringProperty()
-    interest = StringProperty()
-    appeal = StringProperty()
-    reference = StringProperty()
-    #refresh button
-    def show_new_requests(self):
-        db = firebase.database()
-        email_requests = ["","","","","","",""]
-
-        all_users = db.child("pending_users").get()
-        count = 0
-        for users in all_users.each():
-            if count >=7:
-                break
-
-            a = users.val()
-            email_requests[count] = a["email"]
-            count+=1
-        self.person1 = email_requests[0]
-        self.person2 = email_requests[1]
-        self.person3 = email_requests[2]
-        self.person4 = email_requests[3]
-        self.person5 = email_requests[4]
-        self.person6 = email_requests[5]
-        self.person7 = email_requests[6]
         
-
-
-    def accept_btns(self,which_person_email):
-        try:
-            if which_person_email == "" or which_person_email == "sentinel":
-                show_popup("Error","This request is empty(No email is shown). Try refreshing")
-            else:
-
-                person_info = get_info_pending(which_person_email)
-                person_key = get_key_pending(which_person_email)
-                db = firebase.database()
-                auth = firebase.auth()
-                person_password  = person_info['password']
-                try:
-                    create_user = auth.create_user_with_email_and_password(which_person_email,person_password)
-                    db.child("pending_users").child(person_key).remove() 
-                    user = extract_user_from_email(which_person_email)
-                    auth.send_email_verification(create_user['idToken'])
-                    person_info.update({"name":user})
-                    db.child("users").push(person_info)
-                    show_popup("Success","""User was successfully added to the system. 
-            Refresh to get new requests""")
-                    which_person_email = ""
-                except:
-                    show_popup("Error","This email is already in the system, has to be rejected")
-        except:
-            show_popup("Error","Refresh to update requests")
-
-    def change_button(self,i,which_person_email):
-        if which_person_email:
-            Store.button = i
-
-    def is_email_there(self,which_person_email):
-        if which_person_email:
-            return True
-        return False
-
-    
-
-
-    def show_details(self,index,which_person_email):
-        if which_person_email == "" or which_person_email == "sentinel":
-            show_popup("Error","No details to load.(Try refreshing)")
-        else:
-
-            db = firebase.database()
-            email_requests = ["","","","","","",""]
-            
-
-            all_users = db.child("pending_users").get()
-            count = 0
-            for users in all_users.each():
-                if count >=7:
-                    break
-
-                a = users.val()
-                email_requests[count] = a["email"]
-                count+=1
-
-            user_info = get_info_pending(email_requests[index])
-            self.email = user_info['email']
-            self.password = user_info['password']
-            self.birthday = user_info['date of birth']
-            self.interest = user_info['interests']
-            self.appeal = str(user_info['appeal'])
-            self.reference = user_info['reference email']
-        
-
-
+	
 class DescriptionWindow(Screen):
     desc_email = StringProperty()
     desc_password = StringProperty() 
@@ -470,9 +263,6 @@ class GroupNotificationSU(Screen):
         close_button.bind(on_press=popup.dismiss)
         popup.open()
        
-
-
-
     
     #which_group is a StringProperty
     def close_group(self,which_group):
@@ -526,24 +316,7 @@ class GroupNotificationSU(Screen):
             
             show_popup("Success","Group has been deleted from the system")
             self.on_pre_enter() #to update requests
-
-class HomeOUWindow(Screen):
-
-    def log_out_btn(self):
-        if Store.points < 0:
-            blacklist_info = get_info_users(Store.email)
-            db = firebase.database()
-            user= db.child("users").order_by_child("email").equal_to(Store.email).get()
-            for person in user.each():
-                key = person.key()
-                db.child("users").child(key).remove()
-                break
-            db.child("blacklist").push(blacklist_info)
-
-        Store.button = 40
-        Store.points = 0
-        Store.priv = ""
-        Store.email = ""
+            
 
 kv = Builder.load_file("main.kv")
 
