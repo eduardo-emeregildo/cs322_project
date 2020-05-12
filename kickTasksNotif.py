@@ -499,7 +499,7 @@ class VipNotifications(Screen):
             self.inpScore1.disabled = True
 
         if btnNum == 2:
-            if self.inpScore1.text == "":
+            if self.inpScore2.text == "":
                 show_popup("Error", "Enter a score")
                 return
             scoreAssigned = self.inpScore2.text
@@ -507,7 +507,7 @@ class VipNotifications(Screen):
             self.inpScore2.disabled = True
 
         if btnNum == 3:
-            if self.inpScore1.text == "":
+            if self.inpScore3.text == "":
                 show_popup("Error", "Enter a score")
                 return
             scoreAssigned = self.inpScore3.text
@@ -526,6 +526,7 @@ class VipNotifications(Screen):
         db = firebase.database()
 
         groupUserList, pointsList = [], []
+        groupUser = {}
 
         #find group members
         groupDb = db.child('group').order_by_child('groupName').equal_to(groupName).get()

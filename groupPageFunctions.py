@@ -170,7 +170,6 @@ class GroupWindow(Screen):
         self.btnPoll1.text = groupPostPolls[0]['option1']['content']
         self.btnPoll2.text = groupPostPolls[0]['option2']['content']
 
-
     def req_kick(self, btnNum, kickType):
         db = firebase.database()
 
@@ -361,7 +360,6 @@ class GroupWindow(Screen):
                     postKey = sect.key()
                     db.child("posts").child(postKey).update({"claimBy": email})
 
-
     def poll_vote(self, groupId, pollId, optionNum, btnClaim):
         email = Store.email
         postInfo, votedMems = "", ""
@@ -452,7 +450,8 @@ class GroupWindow(Screen):
             self.btnPollInputs.disabled = False
             self.btnTaskInputs.disabled = False
 
-
+    def get_popup(self):
+        group_popup()
 
 
 class CreateGroupWindow(Screen):
@@ -560,6 +559,7 @@ class CreateGroupWindow(Screen):
         self.projName.text = ""
 
 
+#add_projects( "Group8", "Lighthouse", "to motivate people", {"eduardo@gmail.com", "me1@gmail.com", "idk@gmail.com", "boi@gmail.com"})
 # popup function
 
     def validate(self):

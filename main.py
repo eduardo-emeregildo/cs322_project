@@ -67,13 +67,12 @@ class HomeWindow(Screen):
 
             elif user_priv ==2:
                 Store.priv = "SU"
-        
-            self.email.text=""
-            self.password.text=""
+
             if Store.points <0:
                 show_popup("Warning","""        You have a negative score. 
 When you log out you will be banned""")
             if Store.priv == "OU" or Store.priv == "VIP":
+
                 self.log_in_auto()
             elif Store.priv == "SU":
                 self.parent.current = "homeSU" #how you switch screens in python code
@@ -82,8 +81,10 @@ When you log out you will be banned""")
                 show_popup("Error","This email is banned")
             else:
                 show_popup("Error","wrong combination of email and password")
-            self.email.text = ""
-            self.password.text = ""
+                self.email.text = ""
+                self.password.text = ""
+        self.email.text = ""
+        self.password.text = ""
         return True
 
     def check_user(self):

@@ -61,6 +61,7 @@
             size_hint: (0.55, 0.055)
             pos_hint: {"y": .82, "x": .25}
             id: password
+            password: True
 
 
         
@@ -75,7 +76,7 @@
             background_color: (0.2, 0.5, 0.4, 1)
             color: (1, 1, 1, 1)
             size_hint: (0.20, 0.08)
-            on_press:  root.log_in_auto()
+            on_press:  root.log_in()
             
 
         Button:
