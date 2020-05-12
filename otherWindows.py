@@ -75,7 +75,7 @@ def check_button_active(username):
 
 def add_ref(ref_email, user_ref, priv):
     text = ref_email.split("@", 1)
-    text2 = user_ref.split("@", 1)
+    text2 = user_ref.split("@", 1)    
 
     if priv == 0:
         str1 = "\n from 1-10"
@@ -95,6 +95,7 @@ def group_popup():
 
         popup = PopupWindow(title= "File a Complaint\nFormat:name, group name, complaint")        
         popup.open()
+
 
         
 class PopupWindow(Popup):
@@ -160,6 +161,7 @@ class PopupWindow(Popup):
                     "desc": text[2] 
                 }
                 db.child("warnings").push(data)
+
         else:
             if check_valid_format(self, 2, self.input_text.text):                
                 text = self.input_text.text.replace(" ", "").split(',')
@@ -206,10 +208,21 @@ class VisitorView(Screen):
 class HomeOUWindow(Screen):
      #clearing information of person that was logged in
     def log_out_btn(self):
-        Store.button = 40
-        Store.points = 0
-        Store.priv = ""
-        Store.email = ""
+            if Store.points < 0:
+                blacklist_info = get_info_users(Store.email)
+                db = firebase.database()
+                user= db.child("users").order_by_child("email").equal_to(Store.email).get()
+                for person in user.each():
+                    key = person.key()
+                    db.child("users").child(key).remove()
+                    break
+                db.child("blacklist").push(blacklist_info)
+
+            Store.button = 40
+            Store.points = 0
+            Store.priv = ""
+            Store.email = ""
+
         
     def initialize_page(self):
         global userOUNotifications
@@ -228,6 +241,13 @@ class HomeOUWindow(Screen):
 
 
 class HomeSUWindow(Screen):
+
+        def log_out_btn(self):
+            Store.button = 40
+            Store.points = 0
+            Store.priv = ""
+            Store.email = ""
+
         def initialize_page(self):
                 global screenToken 
                 screenToken = 1
@@ -244,7 +264,7 @@ class groupNotificationSU(Screen):
     def update_notification(self):
         get_group_notifications(self, db, 1, "")
 
-        
+
 class ComplimentPage(Screen):
     def show_popup0(self):
         global token 
@@ -277,7 +297,6 @@ class ReferenceOU(Screen):
 class WarningPage(Screen):
     def update(self):
         get_complaints(self, db, 1, "", 1)
-
 
     def show_popup0(self):
         global token
@@ -359,6 +378,7 @@ class ProfileWindow(Screen):
             newList = []            
             boxedUser = db.child("whitebox_blackbox").order_by_key().get()
 
+
             try:
                 if boxedUser.val() != None: 
                     for user in boxedUser.each():
@@ -368,6 +388,7 @@ class ProfileWindow(Screen):
             except:
                 pass
 
+
             newList.reverse()
             while(len(newList) < 4):
                 newList.append("")
@@ -376,6 +397,7 @@ class ProfileWindow(Screen):
             self.b2.text = newList[1]
             self.b3.text = newList[2]
             self.b4.text = newList[3]
+
 
         def update_blackbox(self):
             newList = []            
@@ -405,11 +427,13 @@ class ProfileWindow(Screen):
             p = ""      
             try:   
                 for user in userinfo.each():
-                    if user.val()["listed"] == self.b1.text:
-                        p = user.key()
+                    if user.val()["listed"] != "don't delete":
+                        if user.val()["listed"] == self.b1.text:
+                            p = user.key()
                 
-                db.child("whitebox_blackbox").child(p).remove()
-                        #db.child("whitebox_blackbox").child(p).update({"priv": 0})
+                #db.child("whitebox_blackbox").child(p).remove()
+                db.child("whitebox_blackbox").child(p).update({"priv": 0})
+
             except:
                 pass
             self.update()
