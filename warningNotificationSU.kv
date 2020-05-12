@@ -2,7 +2,7 @@
 
 <WarningPage>:
 
-# this page will show information about new join requests
+# this page will display complaints about the OUs
 
     rows: 2
     cols: 1
@@ -24,7 +24,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-# join
+
 
     RelativeLayout:
 
@@ -36,7 +36,7 @@
             font_name: "Arial"
             pos_hint: {"center_x": 0.2, "center_y": 0.9}
 
-# new request, compliments and warnings           
+# new request, compliments, complaints and group notification           
 
         BoxLayout:
             orientation: 'horizontal'
@@ -55,7 +55,7 @@
                 on_press:  app.root.current = "compliments"
 
             Button:
-                text: "Warnings"
+                text: "Complaints"
                 background_color: (0.2, 0.5, 0.4, 1)
                 size_hint: (0.20, 0.07)
 
@@ -66,9 +66,7 @@
                 on_press:  app.root.current = "GroupNotificationsSU"
 
 
-# need a function to connect the description window with the user number with all related info
-
-# Warnings
+# complaint1
                 
         BoxLayout:
             orientation: 'horizontal'
@@ -78,6 +76,7 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.725}
                 id: w1
@@ -85,7 +84,6 @@
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.15}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Decrease Score"
@@ -99,10 +97,8 @@
                     size_hint: (0.05, 0.05)
                     on_press: root.w1.text = "" 
 
-                
 
-
-# name and info 2
+# complaint2
 
         BoxLayout:
             orientation: 'horizontal'
@@ -112,6 +108,7 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.625}
                 id: w2
@@ -119,7 +116,6 @@
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.05}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Decrease Score"
@@ -134,7 +130,7 @@
                     on_press: root.w2.text = "" 
 
 
-# name and info 3
+# complaint3
 
         BoxLayout:
             orientation: 'horizontal'
@@ -144,6 +140,7 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.525}
                 id: w3
@@ -151,7 +148,6 @@
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.95}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Decrease Score"
@@ -165,7 +161,7 @@
                     size_hint: (0.05, 0.05)
                     on_press: root.w3.text = "" 
 
-# name and info 4
+# complaint4
 
         BoxLayout:
             orientation: 'horizontal'
@@ -175,6 +171,7 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.425}
                 id: w4
@@ -182,7 +179,6 @@
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.85}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Decrease Score"
@@ -196,7 +192,7 @@
                     size_hint: (0.05, 0.05)
                     on_press: root.w4.text = "" 
 
-# name and info 5
+# complaint5
 
         BoxLayout:
             orientation: 'horizontal'
@@ -206,6 +202,7 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.325}
                 id: w5
@@ -213,7 +210,6 @@
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.75}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Decrease Score"
@@ -227,7 +223,7 @@
                     size_hint: (0.05, 0.05)
                     on_press: root.w5.text = "" 
 
-# name and info 6
+# complaints6
 
         BoxLayout:
             orientation: 'horizontal'
@@ -237,6 +233,7 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.225}
                 id: w6
@@ -244,7 +241,6 @@
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.65}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Decrease Score"
@@ -258,7 +254,7 @@
                     size_hint: (0.05, 0.05)
                     on_press: root.w6.text = "" 
 
-# name and info 7
+# complaint7
 
         BoxLayout:
             orientation: 'horizontal'
@@ -268,6 +264,7 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.125}
                 id: w7

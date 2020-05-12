@@ -12,7 +12,7 @@
     g5: g5
 
     input_text: input_text
-
+    text_input2: text_input2
 
     priv: priv
     username: username
@@ -70,27 +70,33 @@
                 background_color: (.2, .5, .4, 1)
                 size_hint: (0.20, 0.2)
                 id: g1
-                on_press:  app.root.current = "grouppage"
+                on_press:  if self.text != "" : root.get_groupname(self.text)
+
             Button:
                 text: "Group2"
                 background_color: (.2, .5, .4, 1)
                 size_hint: (0.20, 0.2)
                 id: g2
+                on_press:  if self.text != "" : app.root.current = "grouppage"
             Button:
-                text: "Group3"
+                text: ""
                 background_color: (.2, .5, .4, 1)
                 size_hint: (0.20, 0.2)
                 id: g3
+                on_press:  if self.text != "" : app.root.current = "grouppage"
             Button:
                 text: "Group4"
                 background_color: (.2, .5, .4, 1)
                 size_hint: (0.20, 0.2)
                 id: g4
+                on_press:  if self.text != "" : app.root.current = "grouppage"
             Button:
                 text: "Group5"
                 background_color: (.2, .5, .4, 1)
                 size_hint: (0.20, 0.2)
                 id: g5
+                on_press:  if self.text != "" : app.root.current = "grouppage"
+
 
         Label:
             text: "Group1Name"
@@ -159,7 +165,7 @@
             size_hint: (0.05, 0.05)
             pos_hint: {"x": .355, "y": .17}
             id: add
-            on_press: root.add_toList("whitebox", root.username.text, root.input_text.text)
+            on_press: root.add_toList( root.username.text, root.input_text.text, 2)
 
         Button:
             text: "-"
@@ -232,6 +238,7 @@
             hint_text:'Add or Remove User'
             size_hint: (0.235, 0.05)
             pos_hint: {"x": .538, "y": .17}
+            id: text_input2
 
         Button:
             text: "+"
@@ -239,6 +246,7 @@
             size_hint: (0.05, 0.05)
             pos_hint: {"x": .780, "y": .17}
             id: addB
+            on_press: root.add_toList(root.username.text, root.text_input2.text, 1)
 
 
         Button:
@@ -247,6 +255,7 @@
             size_hint: (0.05, 0.05)
             pos_hint: {"x": .835, "y": .17}
             id: removeB
+            on_press: root.remove_last()
 
         BoxLayout:
             spacing: 10

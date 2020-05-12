@@ -118,7 +118,6 @@ def kick_req(email, groupId, notifType, notifUser):
 
     if groupReqKey.replace(" ", "") is not "":
         db.child('groupRequests').child(groupReqKey).child('notifications').push(notifData)
-        print(notifData)
 
 
 class GroupWindow(Screen):
@@ -146,22 +145,19 @@ class GroupWindow(Screen):
             elif i == 3:
                 self.user3_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
             elif i == 4:
+
                 self.user4_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
             elif i == 5:
                 self.user5_info.text = "Assigned: " + str(userAs) + "\nCompleted: " + str(userCo)
 
         groupPostTasks = []
         groupPostPolls = []
-
         postDb = db.child("posts").order_by_child("groupId").equal_to(self.groupId).get()
         for sect in postDb:
             if sect.val()['postType'] == 'Task':
                 groupPostTasks.append(sect.val())
             if sect.val()['postType'] == 'Poll':
                 groupPostPolls.append(sect.val())
-
-        print(groupPostPolls)
-        print(groupPostTasks)
 
         if groupPostPolls[0]['postVoted'] == "":
             pollVoted1 = []
@@ -173,6 +169,7 @@ class GroupWindow(Screen):
         self.postPollVote1.text = "[ " + str(len(pollVoted1)) + "/5 members have voted ] "
         self.btnPoll1.text = groupPostPolls[0]['option1']['content']
         self.btnPoll2.text = groupPostPolls[0]['option2']['content']
+
 
     def req_kick(self, btnNum, kickType):
         db = firebase.database()
@@ -188,14 +185,12 @@ class GroupWindow(Screen):
             kick_vote_table(self.groupId, kickType, "")
 
     def create_post_task(self, postContent, taskId):
+
         lastPostX = 190
 
         with self.canvas:
             Color(.2, .5, .4, 1)  # set the colour
             # Seting the size and position of canvas
-            self.rect = Rectangle(pos=(20, lastPostX - 100),
-                                  size=(500, 80))
-
         self.add_widget(
             Label(
                 text="Task: " + postContent,
@@ -223,6 +218,7 @@ class GroupWindow(Screen):
         with self.canvas:
             Color(.2, .5, .4, 1)  # set the colour
             # Seting the size and position of canvas
+
             self.rect = Rectangle(pos=(20, lastPostX - 150),
                                   size=(500, 130))
 
@@ -261,6 +257,7 @@ class GroupWindow(Screen):
             on_press=lambda *args: self.poll_vote(self.groupId, pollId, 2, 2)
         )
 
+
         btnOpt1.bind(on_release=partial(self.foo, btnOpt1))
         btnOpt1.bind(on_release=partial(self.foo, btnOpt2))
         btnOpt2.bind(on_release=partial(self.foo, btnOpt1))
@@ -283,7 +280,6 @@ class GroupWindow(Screen):
         if postType == "Task":
 
             taskContent = self.taskInTitle.text + ": \n" + self.taskInDetail.text
-
             taskIdList = []
             postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
             for sector in postDb.each():
@@ -342,6 +338,7 @@ class GroupWindow(Screen):
         email = Store.email
         # when user clicks claim button send postContent to user's request page
 
+
         if btnClaimNum == 1:
             self.btnClaim.disabled = 'True'
 
@@ -363,6 +360,7 @@ class GroupWindow(Screen):
                 if 999 == sect.val()['claimBy'] and taskId == sect.val()['taskId']:
                     postKey = sect.key()
                     db.child("posts").child(postKey).update({"claimBy": email})
+
 
     def poll_vote(self, groupId, pollId, optionNum, btnClaim):
         email = Store.email
@@ -456,6 +454,7 @@ class GroupWindow(Screen):
 
 
 
+
 class CreateGroupWindow(Screen):
 
     def create_group(self):
@@ -487,22 +486,25 @@ class CreateGroupWindow(Screen):
                     "taskComplete": 0
                 },
                 "2": {
-                    "email": groupUsers[1],
+
+                    "email": groupUsers[0],
                     "taskAssign": -1,
                     "taskComplete": -1
                 },
                 "3": {
-                    "email": groupUsers[2],
+
+                    "email": groupUsers[1],
                     "taskAssign": -1,
                     "taskComplete": -1
                 },
                 "4": {
-                    "email": groupUsers[3],
+
+                    "email": groupUsers[2],
                     "taskAssign": -1,
                     "taskComplete": -1
                 },
                 "5": {
-                    "email": groupUsers[4],
+                    "email": groupUsers[3],
                     "taskAssign": -1,
                     "taskComplete": -1
                 }
@@ -523,22 +525,23 @@ class CreateGroupWindow(Screen):
                     "taskComplete": 0
                 },
                 "2": {
-                    "email": groupUsers[1],
+                    "email": groupUsers[0],
                     "taskAssign": 0,
                     "taskComplete": 0
                 },
                 "3": {
-                    "email": groupUsers[2],
+
+                    "email": groupUsers[1],
                     "taskAssign": 0,
                     "taskComplete": 0
                 },
                 "4": {
-                    "email": groupUsers[3],
+                    "email": groupUsers[2],
                     "taskAssign": 0,
                     "taskComplete": 0
                 },
                 "5": {
-                    "email": groupUsers[4],
+                    "email": groupUsers[3],
                     "taskAssign": 0,
                     "taskComplete": 0
                 }

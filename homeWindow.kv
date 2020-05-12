@@ -156,7 +156,7 @@
             text: "User1"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
-            on_release: app.root.current = "grouppage"
+            on_release: root.switch_screen(self.text)
             color: 1, 1, 0, 1
             id: user1
 
@@ -164,7 +164,7 @@
             text: "User2"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
-            on_release: app.root.current = "kickNotifications"
+            on_release: root.switch_screen(self.text)
             color: 1, 1, 1, 1
             id: user2
 
@@ -172,7 +172,7 @@
             text: "User3"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
-            on_release: app.root.current = "tasksNotifications"
+            on_release: root.switch_screen(self.text)
             color: 1, 1, 1, 1
             id: user3
 
@@ -180,7 +180,7 @@
             text: "User4"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.1)
-            on_release: app.root.current = "vipNotifications"
+            on_press: root.switch_screen(self.text)
             color: 1, 1, 1, 1
             id: user4
 

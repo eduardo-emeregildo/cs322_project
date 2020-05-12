@@ -11,20 +11,25 @@ class HomeWindow(Screen):
         get_top_users(self, "name", db) 
 
     def log_in_auto(self):               
-        userinfo = db.child("new_users").order_by_child("name").equal_to(self.email.text).limit_to_first(1).get()
+        userinfo = db.child("users").order_by_child("name").equal_to(self.email.text).limit_to_first(1).get()
 
-        for info in userinfo.each():
-            if info.val()["score"] > 30:
-                rank = "VIP"
-            else:
-                rank = "OU"
-            self.manager.screens[2].ids.points.text = rank
+        try:
+            for info in userinfo.each():
+                if info.val()["points"] > 30:
+                    rank = "VIP"
+                else:
+                    rank = "OU"
+                self.manager.screens[2].ids.points.text = rank
+        except:
+            pass
+
 
         self.manager.screens[2].ids.username.text = self.email.text
         self.manager.current = "homeOU"
 
     def switch_screen(self, username):
-        standing_update(self, username, 16)
+        if username != "":
+            standing_update(self, username, 16)
 
 
 # Actual login function
@@ -72,9 +77,6 @@ class HomeWindow(Screen):
             return False
 
 
-
-
-
 kv = Builder.load_file("main.kv")
 
 class MyMainApp(App):
@@ -83,7 +85,4 @@ class MyMainApp(App):
 
 if __name__ == "__main__":
     MyMainApp().run()
-
-
-
 

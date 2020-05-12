@@ -28,7 +28,7 @@
             font_name: "Arial"
             pos_hint: {"center_x": 0.2, "center_y": 0.9}
 
-# new request, compliments and warnings           
+# new request, compliments, complaints and group notification          
 
         BoxLayout:
             orientation: 'horizontal'
@@ -47,7 +47,7 @@
                 on_press:  app.root.current = "compliments"
 
             Button:
-                text: "Warnings"
+                text: "Complaints"
                 background_color: (0.2, 0.5, 0.4, 0.5)
                 size_hint: (0.20, 0.08)
                 on_press:  app.root.current = "warnings"
@@ -58,7 +58,6 @@
                 size_hint: (0.20, 0.08)
                 on_press:  app.root.current = "GroupNotificationsSU"
 
-# need a function to connect the description window with the user number with all related info
 
 # name and info 1
         
@@ -70,6 +69,7 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.725}
 
@@ -104,13 +104,13 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.625}
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 1.05}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Accept"
@@ -138,13 +138,13 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.525}
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.95}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Accept"
@@ -171,13 +171,13 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.425}
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.85}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Accept"
@@ -205,13 +205,13 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.325}
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.75}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Accept"
@@ -238,13 +238,13 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.225}
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.65}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Accept"
@@ -271,13 +271,13 @@
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.125}
 
             BoxLayout:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.55}
                 padding: 30
-                #spacing: 4
 
                 Button:
                     text: "Accept"

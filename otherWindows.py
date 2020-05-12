@@ -12,13 +12,42 @@ userOUNotifications = ""
 screenToken = 0
 
 
+# taboo words
+
+tabooWords = {"idiot", "useless", "stupid"}
+
+# taboo word remove function
+
+def remove_taboo_words(line):
+    for word in tabooWords:
+        line = line.replace(word, "*****")
+    return line
+
+# check whether the info exists in the database
 
 def data_exist(self, tableName, name):
     all_data = db.child(tableName).get()
-    for data in all_data.each():
-        if data.val()["name"] == name:
-            return True
+    try:
+        for data in all_data.each():
+            if data.val()["name"] == name:
+                return True
+    except:
+        return False
+
     return False
+
+def data_exist2(self, tableName, name):
+    all_data = db.child(tableName).get()
+    try:
+        for data in all_data.each():
+            if data.val()["listed"] == name:
+                return True
+    except:
+        return False
+
+    return False
+
+# check if the popup input text format is correct
 
 def check_valid_format(self, num, text):
     if num == 1:
@@ -35,6 +64,37 @@ def check_valid_format(self, num, text):
 
     return True
 
+# initiate a button that has a link
+
+def check_button_active(username):
+    if username != "":
+        return True
+    return False
+
+# get reference from the signup page
+
+def add_ref(ref_email, user_ref, priv):
+    text = ref_email.split("@", 1)
+    text2 = user_ref.split("@", 1)
+
+    if priv == 0:
+        str1 = "\n from 1-10"
+    else:
+        str1 = "\n from 1-20" 
+
+    data ={
+        "user": text2[0],
+        "desc": "Rate " + text[0] + str1
+    }
+    db.child("references").push(data)
+
+
+def group_popup():
+        global token 
+        token = 6
+
+        popup = PopupWindow(title= "File a Complaint\nFormat:name, group name, complaint")        
+        popup.open()
 
         
 class PopupWindow(Popup):
@@ -46,13 +106,13 @@ class PopupWindow(Popup):
         self.auto_dismiss = False
 
     def change_score(self, username, score):
-        if data_exist(self, "new_users", username):
-            userinfo = db.child("new_users").order_by_child("name").equal_to(username).get()           
+        if data_exist(self, "users", username):
+            userinfo = db.child("users").order_by_child("name").equal_to(username).get()           
             for user in userinfo.each():
-                s = user.val()["score"]
+                s = user.val()["points"]
                 p = user.key()
             s = s + score
-            db.child("new_users").child(p).update({"score": s })
+            db.child("users").child(p).update({"points": s })
         
         else:
             show_popup("Error", "User doesn't exist")
@@ -73,20 +133,33 @@ class PopupWindow(Popup):
             show_popup("Error", "Please use the correct format\n and make sure the value exists")
             self.dismiss()
         
-        elif token == 1:       
+        elif token == 1:    
+            text = remove_taboo_words(self.input_text.text)   
             data = {
                 "user" : userCallingPopup,
-                "desc" : self.input_text.text
+                "desc" : text
             }
             db.child("complaints").push(data)
 
         elif token == 2:
+            text = remove_taboo_words(self.input_text.text)
             data = {
                 "user" : userCallingPopup,
-                "desc" : self.input_text.text
+                "desc" : text
             }
             db.child("compliments").push(data)
-
+        
+        elif token == 6:
+            text = self.input_text.text.split(',', 3)
+            if len(text)<3:
+                show_popup("Error", "Please use the correct format")
+            else:
+                data = {
+                    "user": text[0],
+                    "group": text[1],
+                    "desc": text[2] 
+                }
+                db.child("warnings").push(data)
         else:
             if check_valid_format(self, 2, self.input_text.text):                
                 text = self.input_text.text.replace(" ", "").split(',')
@@ -146,7 +219,8 @@ class HomeOUWindow(Screen):
         get_top_users(self, "name", db)
 
     def switch_screen(self, username):
-        standing_update(self, username, 17)
+        if username != "":
+            standing_update(self, username, 17)
 
     def go_to_profile(self):
         standing_update(self, self.username.text, 4)
@@ -161,7 +235,8 @@ class HomeSUWindow(Screen):
                 get_top_users(self, "name", db)
     
         def switch_screen(self, username):
-            standing_update(self, username, 16)
+            if username != "":
+                standing_update(self, username, 16)
 
 
 
@@ -169,16 +244,7 @@ class groupNotificationSU(Screen):
     def update_notification(self):
         get_group_notifications(self, db, 1, "")
 
-
-class groupNotificationOU(Screen):
-    def update_notification(self):
-        get_group_notifications(self, db, 0, userOUNotifications)
-
-class WarningPageOU(Screen):
-    def update(self):
-        get_warnings(self, db, 0, userOUNotifications, 1)
-
-
+        
 class ComplimentPage(Screen):
     def show_popup0(self):
         global token 
@@ -210,7 +276,8 @@ class ReferenceOU(Screen):
 
 class WarningPage(Screen):
     def update(self):
-        get_warnings(self, db, 1, "", 1)
+        get_complaints(self, db, 1, "", 1)
+
 
     def show_popup0(self):
         global token
@@ -256,28 +323,50 @@ class ProfileWindow(Screen):
                 get_warnings(self, db, 0, userOUNotifications, 0)
                 get_groups(self, self.username.text)
                 self.update_whitebox()
+                self.update_blackbox()
+                
+        def get_groupname(self, name):
+            self.manager.screens[8].ids.groupDesc.text = name
+            self.parent.current = "grouppage"
         
-        def add_toList(self, table, user, addUser):
-            self.input_text.text =""
+        def add_toList(self, user, addUser, priv):
+            
+            if priv == 1:
+                name = self.text_input2.text
+                self.text_input2.text = ""
+            else:
+                name = self.input_text.text
+                self.input_text.text =""
+            
+            if data_exist(self, "users", addUser):
+                if data_exist2(self, "whitebox_blackbox", addUser) == False:
+                    print(addUser)
+                    data = {
+                        "name": self.username.text,
+                        "listed": name,
+                        "priv": priv
+                    }
+                    db.child("whitebox_blackbox").push(data)
+                    self.update()
+            else:
+                show_popup("Error", "User doesn't exist")
 
-            data = {
-                "name": self.username.text,
-                "listed": addUser,
-                "priv": 2
-            }
 
-            db.child("whitebox_blackbox").push(data)
-            self.update()
 
+# privilege 2 for whitebox, 1 for blackbox
+            
         def update_whitebox(self):
             newList = []            
             boxedUser = db.child("whitebox_blackbox").order_by_key().get()
 
-            if boxedUser.val() != None: 
-                for user in boxedUser.each():
-                    if user.val()["name"] == self.username.text:
-                        if user.val()["priv"] == 2:
-                            newList.append(user.val()["listed"])
+            try:
+                if boxedUser.val() != None: 
+                    for user in boxedUser.each():
+                        if user.val()["name"] == self.username.text:
+                            if user.val()["priv"] == 2:
+                                newList.append(user.val()["listed"])
+            except:
+                pass
 
             newList.reverse()
             while(len(newList) < 4):
@@ -288,12 +377,42 @@ class ProfileWindow(Screen):
             self.b3.text = newList[2]
             self.b4.text = newList[3]
 
+        def update_blackbox(self):
+            newList = []            
+            boxedUser = db.child("whitebox_blackbox").order_by_key().get()
+
+            try:
+                if boxedUser.val() != None: 
+                    for user in boxedUser.each():
+                        if user.val()["name"] == self.username.text:
+                            if user.val()["priv"] == 1:
+                                newList.append(user.val()["listed"])
+            except:
+                pass
+
+
+            newList.reverse()
+            while(len(newList) < 4):
+                newList.append("")
+
+            self.b5.text = newList[0]
+            self.b6.text = newList[1]
+            self.b7.text = newList[2]
+            self.b8.text = newList[3]
+
         def remove_last(self):
             userinfo = db.child("whitebox_blackbox").get() 
-            p = ""         
-            for user in userinfo.each():
-                if user.val()["listed"] == self.b1.text:
-                    p = user.key()
-                    db.child("whitebox_blackbox").child(p).update({"priv": 0})
-
+            p = ""      
+            try:   
+                for user in userinfo.each():
+                    if user.val()["listed"] == self.b1.text:
+                        p = user.key()
+                
+                db.child("whitebox_blackbox").child(p).remove()
+                        #db.child("whitebox_blackbox").child(p).update({"priv": 0})
+            except:
+                pass
             self.update()
+
+
+#add_ref("mm@gmail.com", "ss@ymm.com", 1)

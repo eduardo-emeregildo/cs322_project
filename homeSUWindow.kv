@@ -28,6 +28,8 @@
 
     on_pre_enter: root.initialize_page()
 
+# SU Info
+
     RelativeLayout:
         Button:
             text: "Pic"
@@ -41,7 +43,7 @@
             id: username
 
         Label:
-            text : "**********"
+            text : "-----------------"
             pos_hint: {"y": .385, "x": .0}
             id: points
 
@@ -54,13 +56,15 @@
             bold: True
             font_name: "Arial"
 
-
+#  notification button
         Button:
             text: "NOTIFICATIONS"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.2, 0.05)
             pos_hint: {"x": .75, "y": .71}
             on_press: app.root.current = "requests"
+
+# top projects within the system
 
     FloatLayout:
 
@@ -106,6 +110,8 @@
             text: ""
             pos_hint: {"y": -.18, "x": -.20}
             id: desc3
+
+# top users within the system
 
         Label:
             text : "Top Users"

@@ -1,6 +1,8 @@
 #:kivy 1.0.7
 
 <VisitorViewLoggedIn>:
+# all visitors who are logged in (system users) will see this view of the OU homepage
+
     name: "VisitorViewLoggedIn"
     rows: 4
     cols: 1
@@ -26,15 +28,16 @@
             id: pic
 
         Label:
-            text : "USERNAME"
+            text : ""
             pos_hint: {"y": .415, "x": .0}
             id: username
 
         Label:
-            text : "OU/SU"
+            text : ""
             pos_hint: {"y": .385, "x": .0}
             id: priv
 
+# options to send compliments, complain to the SU and rate a project
 
     BoxLayout:
         orientation: 'horizontal'
@@ -63,6 +66,7 @@
             pos_hint: { "x": .75, "y": .71 }
             on_press:  root.show_popup2()
 
+# user's top projects will be displayed here
 
     FloatLayout:
         Label:
@@ -72,12 +76,12 @@
             
 
         Label:
-            text: "Project Name // Group Name"
+            text: ""
             pos_hint: {"y": .12, "x": -.25}
             id: project1
 
         Label:
-            text: "Description desc desc desc desc \ndesc desc desc desc desc desc desc"
+            text: ""
             halign: 'left'
             pos_hint: {"y": .06, "x": -.20}
             id: desc1
@@ -85,30 +89,30 @@
 
         
         Label:
-            text: "Project Name 2 // Group Name 2"
+            text: ""
             pos_hint: {"y": -.05, "x": -.238}
             id: project2
 
         Label:
-            text: "Description desc desc desc desc \ndesc desc desc desc desc desc desc"
+            text: ""
             pos_hint: {"y": -.11, "x": -.20}
             id: desc2
 
 
         Label:
-            text: "Project Name 3 // Group Name 3"
+            text: ""
             pos_hint: {"y": -.22, "x": -.238}
             id: project3
 
         Label:
-            text: "Description desc desc desc desc \ndesc desc desc desc desc desc desc"
+            text: ""
             pos_hint: {"y": -.28, "x": -.20}
             id: desc3
 
+# return
     BoxLayout:
         Button:
             text: "Return"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.2, 0.06)
             on_press: app.root.current = "homeOU"
-            #on_release: root.manager.current = root.manager.previous()

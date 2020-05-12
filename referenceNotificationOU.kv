@@ -2,7 +2,7 @@
 
 <ReferenceOU>:
 
-# this page will show information about new join requests
+# this page will display all reference requests
 
     rows: 2
     cols: 1
@@ -24,7 +24,8 @@
         Rectangle:
             pos: self.pos
             size: self.size
-# join
+
+# title
 
     RelativeLayout:
 
@@ -35,43 +36,36 @@
             bold: False
             font_name: "Arial"
             pos_hint: {"center_x": 0.2, "center_y": 0.9}
-
-# new request, compliments and warnings           
+            
+# references          
 
         BoxLayout:
             orientation: 'horizontal'
             pos_hint: {'center_x': 0.5, 'center_y': 1.3}
 
             Button:
-                text: "Warnings"
-                background_color: (0.2, 0.5, 0.4, 0.5)
-                size_hint: (0.20, 0.08)
-                on_press:  app.root.current = "WarningsOU"
-
-            Button:
-                text: "Group Notifications"
-                background_color: (0.2, 0.5, 0.4, 0.5)
-                size_hint: (0.20, 0.08)
-                on_press:  app.root.current = "NotificationOU"
-            
-            Button:
                 text: "Reference Notification"
                 background_color: (0.2, 0.5, 0.4, 1)
                 size_hint: (0.20, 0.08)
-                
 
-# need a function to connect the description window with the user number with all related info
+            Button:
+                text: "VIP Notifications"
+                background_color: (0.2, 0.5, 0.4, 0.5)
+                size_hint: (0.20, 0.08)
+                #on_press:  app.root.current = "NotificationOU"
+            
 
-# Warnings
-                
+            
+
+# Reference1              
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
-                #color: 1, 1, 0, 1
+                font_size: "15sp"
+                halign: 'center'
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.725}
@@ -86,20 +80,16 @@
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
                     on_press: root.show_popup2()
-
-                
-
-
-# name and info 2
-
+                    
+# Reference2
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
-                #color: 1, 1, 0, 1
+                font_size: "15sp"
+                halign: 'center'
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.625}
@@ -114,9 +104,8 @@
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
                     on_press: root.show_popup2()
-
-
-# name and info 3
+                    
+# Reference3
 
         BoxLayout:
             orientation: 'horizontal'
@@ -124,8 +113,8 @@
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
-                #color: 1, 1, 0, 1
+                font_size: "15sp"
+                halign: 'center'
                 bold: False
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.525}
@@ -141,17 +130,16 @@
                     size_hint: (0.05, 0.05)
                     on_press: root.show_popup2()
 
-# name and info 4
-
+# Reference4
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
+                font_size: "15sp"
                 bold: False
-                #color: 1, 1, 0, 1
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.425}
                 id: g4
@@ -165,18 +153,16 @@
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
                     on_press: root.show_popup2()
-
-# name and info 5
-
+# Reference5
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
+                font_size: "15sp"
                 bold: False
-                #color: 1, 1, 0, 1
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.325}
                 id: g5
@@ -191,17 +177,16 @@
                     size_hint: (0.05, 0.05)
                     on_press: root.show_popup2()
 
-# name and info 6
-
+# Reference6
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
+                font_size: "15sp"
                 bold: False
-                #color: 1, 1, 0, 1
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.225}
                 id: g6
@@ -215,8 +200,7 @@
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
                     on_press: root.show_popup2()
-
-# name and info 7
+# Reference7
 
         BoxLayout:
             orientation: 'horizontal'
@@ -224,9 +208,9 @@
             Label:
                 text: ""
                 color: 0.2, 0.5, 0.4, 1
-                font_size: "20sp"
-                #color: 1, 1, 0, 1
+                font_size: "15sp"
                 bold: False
+                halign: 'center'
                 font_name: "Arial"
                 pos_hint: {"center_x": 0.25, "center_y": 0.125}
                 id: g7
@@ -246,7 +230,7 @@
             text: "Cancel"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
-            on_press:  app.root.current = "WarningsOU"
+            on_press:  app.root.current = "homeOU"
         
         Button:
             text: "Refresh"

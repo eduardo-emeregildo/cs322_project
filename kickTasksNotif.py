@@ -543,7 +543,3 @@ class VipNotifications(Screen):
         for i in range(len(groupUserList)):
             db.child('users').child(groupUserList[i]).update({"points": int(pointsList[i])+int(score)})
 
-
-
-
-

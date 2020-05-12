@@ -1,6 +1,9 @@
 #:kivy 1.0.7
 
 <VisitorView>:
+
+# a random visitor will see this page as an OU homepage 
+
     name: "VisitorView"
     rows: 3
     cols: 1
@@ -36,7 +39,7 @@
             pos_hint: {"y": .385, "x": .0}
             id: priv
 
-
+# visitor can complain about an OU
 
         Button:
             text: "Complain"
@@ -45,6 +48,7 @@
             pos_hint: {"x": .75, "y": .71}
             on_press:  root.show_popup0()
 
+# top projects of the OU will be shown here
 
     FloatLayout:
         Label:

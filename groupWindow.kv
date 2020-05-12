@@ -267,11 +267,19 @@
                     on_press: root.task_complete(7, 1)
                     on_press: root.req_kick(5, 'Member')
         Button:
-            text: "Close Group"
+            text: "Send Warning"
             background_color: (0.263, 0.263, 0.263, 1)
             font_size: "11sp"
             pos_hint: {"x": .68, "y": .41}
-            size_hint: (0.275, 0.04)
+            size_hint: (0.135, 0.04)
+            on_press: root.get_popup()
+
+        Button:
+            text: "Close Group"
+            background_color: (0.263, 0.263, 0.263, 1)
+            font_size: "11sp"
+            pos_hint: {"x": .820, "y": .41}
+            size_hint: (0.135, 0.04)
             on_press: root.req_kick(0, 'Group')
 
         BoxLayout:
