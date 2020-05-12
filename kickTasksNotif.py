@@ -480,25 +480,36 @@ class VipNotifications(Screen):
         email = "jin@aol.com"
         db = firebase.database()
 
-        groupKeyList = []
+        groupKeyList, groupNameList = [], []
 
         # finds all assignVIP for email, only looks at where ticket = 0
         groupReqDb = db.child('assignVIP').order_by_child('email').equal_to(email).get()
         for sector in groupReqDb:
             if sector.val()['ticket'] == 0:
                 groupKeyList.append(sector.key())
+                groupNameList.append(sector.val()['groupname assigned'])
+
 
         if btnNum == 1:
+            if self.inpScore1.text == "":
+                show_popup("Error", "Enter a score")
+                return
             scoreAssigned = self.inpScore1.text
             self.btnAce1.disabled = True
             self.inpScore1.disabled = True
 
         if btnNum == 2:
+            if self.inpScore1.text == "":
+                show_popup("Error", "Enter a score")
+                return
             scoreAssigned = self.inpScore2.text
             self.btnAce2.disabled = True
             self.inpScore2.disabled = True
 
         if btnNum == 3:
+            if self.inpScore1.text == "":
+                show_popup("Error", "Enter a score")
+                return
             scoreAssigned = self.inpScore3.text
             self.btnAce3.disabled = True
             self.inpScore3.disabled = True
@@ -508,3 +519,31 @@ class VipNotifications(Screen):
             return
 
         db.child('assignVIP').child(groupKeyList[btnNum - 1]).update({"ticket": 1, "point": int(scoreAssigned)})
+
+        self.apply_score(groupNameList[btnNum - 1], scoreAssigned)
+
+    def apply_score(self, groupName, score):
+        db = firebase.database()
+
+        groupUserList, pointsList = [], []
+
+        #find group members
+        groupDb = db.child('group').order_by_child('groupName').equal_to(groupName).get()
+        for section in groupDb:
+            groupUser = section.val()['groupUsers']
+
+        #find all members in user table
+        for i in range(1, len(groupUser)):
+            userDb = db.child('users').order_by_child('email').equal_to(groupUser[i]['email']).get()
+            for sect in userDb:
+                groupUserList.append(sect.key())
+                pointsList.append(sect.val()['points'])
+
+        #change member's scores
+        for i in range(len(groupUserList)):
+            db.child('users').child(groupUserList[i]).update({"points": int(pointsList[i])+int(score)})
+
+
+
+
+
