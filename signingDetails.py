@@ -293,3 +293,159 @@ class NotificationSU(Screen):
             self.interest = user_info['interests']
             self.appeal = str(user_info['appeal'])
             self.reference = user_info['reference email']
+
+
+class groupNotificationSU(Screen):
+    close_req1 = StringProperty()
+    close_req2 = StringProperty()
+    close_req3 = StringProperty()
+    close_req4 = StringProperty()
+    close_req5 = StringProperty()
+    close_req6 = StringProperty()
+
+    # loads the close group requests when you enter page
+    def on_pre_enter(self):
+        db = firebase.database()
+        close_requests = db.child("groupNotification").order_by_child("desc").equal_to("closegroup").get()
+        count = 0
+        groups = ["", "", "", "", "", ""]
+        for request in close_requests.each():
+            if count > 5:
+                break
+            else:
+                a = request.val()
+                # print(a['user'])
+                groups[count] = str(a['group'])
+                count += 1
+
+        self.close_req1 = groups[0]
+        self.close_req2 = groups[1]
+        self.close_req3 = groups[2]
+        self.close_req4 = groups[3]
+        self.close_req5 = groups[4]
+        self.close_req6 = groups[5]
+        return groups
+
+    def validate_email(self, email, popup, email_list, groupname):
+        db = firebase.database()
+        # check if a vip was assigned to this group
+        try:
+            is_group_assigned = len(
+                db.child("assignVIP").order_by_child("groupname assigned").equal_to(groupname).get().val())
+        except:
+            is_group_assigned = 0
+
+        if is_group_assigned > 0:
+            show_popup("Error", "VIP is already assigned for this group")
+            popup.dismiss()
+        else:
+            if email == "":
+                show_popup("Error", "Please enter an email.")
+            elif groupname == "":
+                show_popup("Error", "No requests here.Refresh to get new close group requests")
+                popup.dismiss()
+            elif email == email_list[0] or email == email_list[1] or email == email_list[2] or email == email_list[
+                3] or email == email_list[4] or email_list[5]:
+                data = {"email": email, "groupname assigned": str(groupname), "ticket": 0}
+                db.child("assignVIP").push(data)
+                popup.dismiss()
+                # self.on_pre_enter()
+
+            else:
+                show_popup("Error", "Did not enter correct email")
+
+    def assign_vip(self, index):
+
+        db = firebase.database()
+
+        vips = db.child("users").order_by_child("privilege").equal_to(1).get()
+        count = 0
+        vip_emails = ["", "", "", "", "", ""]
+        for users in vips.each():
+            if count > 5:
+                break
+            else:
+                a = users.val()
+                vip_emails[count] = a['email']
+                count += 1
+        layout = FloatLayout()
+        title = Label(text="Choose one of the following emails to assign them to close the group", size_hint=(0.6, 0.2),
+                      pos_hint={"x": 0.2, "top": 1})
+        layout.add_widget(title)
+        email1 = Label(text=vip_emails[0], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.7})
+        email2 = Label(text=vip_emails[1], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.65})
+        email3 = Label(text=vip_emails[2], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.60})
+        email4 = Label(text=vip_emails[3], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.55})
+        email5 = Label(text=vip_emails[4], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.50})
+        email6 = Label(text=vip_emails[5], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.45})
+        layout.add_widget(email1)
+        layout.add_widget(email2)
+        layout.add_widget(email3)
+        layout.add_widget(email4)
+        layout.add_widget(email5)
+        layout.add_widget(email6)
+        textinput = TextInput(hint_text='Enter email of VIP you want to assign this group to', multiline=False,
+                              size_hint=(0.8, 0.15), pos_hint={"x": 0.1, "y": 0.35})
+        layout.add_widget(textinput)
+
+        assign_button = Button(text="Assign the VIP", size_hint=(0.8, 0.1), pos_hint={"x": 0.1, "y": 0.20})
+        close_button = Button(text="close", size_hint=(0.8, 0.1), pos_hint={"x": 0.1, "y": 0.1})
+        layout.add_widget(close_button)
+        layout.add_widget(assign_button)
+        popup = Popup(title="Assign VIP", content=layout, size_hint=(None, None), size=(500, 500), auto_dismiss=False)
+        a = self.on_pre_enter()
+        assign_button.bind(on_press=lambda x: self.validate_email(textinput.text, popup, vip_emails, a[index]))
+        close_button.bind(on_press=popup.dismiss)
+        popup.open()
+
+    # which_group is a StringProperty
+    def close_group(self, which_group):
+
+        db = firebase.database()
+        vip_assigned_email = ""
+        is_complete = 0
+        # checking if a vip gave out a rating for the group
+        try:
+            did_vip_assign = db.child("assignVIP").order_by_child("groupname assigned").equal_to(which_group).get()
+            for users in did_vip_assign.each():
+                a = users.val()
+                if a["ticket"] == 1:
+                    is_complete += 1
+                    vip_assigned_email = a["email"]
+                    break
+        except:
+            is_complete = 0
+
+        if which_group == "":
+            show_popup("Error", "Can't close. Refresh to get new requests")
+
+        elif is_complete == 0:
+            show_popup("Error", """  VIP has not yet assigned a score
+    for the members of this group""")
+        elif is_complete == 1:
+            # deleting assigned VIP from the assign VIP table
+            for users in did_vip_assign.each():
+                a = users.val()
+                if a['groupname assigned'] == which_group:
+                    # print(a['email'],get_key_assignVIP(a['email']))
+                    key = users.key()
+                    db.child("assignVIP").child(key).remove()
+
+            # deleting all closegroup requests for the group
+            groupnotif = db.child("groupNotification").order_by_child("group").equal_to(which_group).get()
+            for users in groupnotif.each():
+                a = users.val()
+                if a['desc'] == "closegroup":
+                    key = users.key()
+                    db.child("groupNotification").child(key).remove()
+
+            # deleting the group itself
+            group = db.child("group").order_by_child("groupName").equal_to(which_group).get()
+
+            for sect in group.each():
+                key = sect.key()
+                db.child("group").child(key).remove()
+                break
+
+            show_popup("Success", "Group has been deleted from the system")
+            self.on_pre_enter()  # to update requests
