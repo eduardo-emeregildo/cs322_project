@@ -6,6 +6,7 @@
     rows: 2
     cols: 1
     name: "GroupNotificationsSU"
+    
 
     canvas.before:
         Color:
@@ -67,7 +68,7 @@
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: root.close_req1
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -83,17 +84,19 @@
                     text: "Assign VIP"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press:root.assign_vip(0)
                 
                 Button:
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press: root.close_group(root.close_req1)
             
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: root.close_req2
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -109,18 +112,20 @@
                     text: "Assign VIP"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press:root.assign_vip(1)
                 
                 Button:
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press:root.close_group(root.close_req2)
 
         
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: root.close_req3
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -136,18 +141,20 @@
                     text: "Assign VIP"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press:root.assign_vip(2)
                 
                 Button:
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press:root.close_group(root.close_req3)
         
         
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: root.close_req4
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -163,18 +170,20 @@
                     text: "Assign VIP"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press:root.assign_vip(3)
                 
                 Button:
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)   
+                    size_hint: (0.05, 0.05)
+                    on_press:root.close_group(root.close_req4)  
 
         
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: root.close_req5
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -190,18 +199,20 @@
                     text: "Assign VIP"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press:root.assign_vip(4)
                 
                 Button:
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
-                    size_hint: (0.05, 0.05)     
+                    size_hint: (0.05, 0.05)
+                    on_press:root.close_group(root.close_req5)     
     
         
         BoxLayout:
             orientation: 'horizontal'
 
             Label:
-                text: "Group Close Request"
+                text: root.close_req6
                 color: 0.2, 0.5, 0.4, 1
                 font_size: "20sp"
                 bold: False
@@ -217,11 +228,13 @@
                     text: "Assign VIP"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press:root.assign_vip(5)
                 
                 Button:
                     text: "Close"
                     background_color: (0.2, 0.5, 0.4, 1)
                     size_hint: (0.05, 0.05)
+                    on_press:root.close_group(root.close_req6)
 # go back
     BoxLayout:
         Button:
@@ -233,4 +246,5 @@
             text: "Refresh"
             background_color: (0.2, 0.5, 0.4, 1)
             size_hint: (0.20, 0.06)
+            on_press: root.on_pre_enter()
 

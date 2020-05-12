@@ -1,5 +1,4 @@
 from functools import partial
-
 from kivy.app import App
 from kivy.graphics.vertex_instructions import Rectangle
 from kivy.lang import Builder
@@ -13,6 +12,7 @@ from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.properties import ObjectProperty,StringProperty,NumericProperty,DictProperty
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.dropdown import DropDown
 import smtplib #emails
 import pyrebase
 import requests
@@ -46,6 +46,16 @@ def check_email_format(email):
         return True
     else:
         return False
+
+#for getting username from the email
+def extract_user_from_email(email):
+    count = 0
+    for char in email:
+        if char == '@':
+            break
+        else:
+            count+=1
+    return email[:count:]
 
 
 #returns dictionary of person in the pending users table given their email
@@ -87,6 +97,17 @@ def get_key_pending(email):
         if a['email'] == email:
             return users.key()
     return None
+def get_key_group_notifs(email): 
+    
+    db = firebase.database()
+    all_users = db.child("groupNotification").get() 
+    for users in all_users.each():
+        a=users.val()
+        
+        if a['user'] == email:
+            return users.key()
+    return None
+
 
 def is_in_blacklist(email):
     db = firebase.database()
@@ -141,6 +162,7 @@ class HomeWindow(Screen):
             person_info = get_info_users(self.email.text)
             Store.email = person_info['email']
             Store.points = person_info['points']
+
             user_priv = person_info['privilege']
             if user_priv == 0:
                 Store.priv = "OU"
@@ -153,15 +175,24 @@ class HomeWindow(Screen):
         
             self.email.text=""
             self.password.text=""
-            self.parent.current = "homeOU" #how you switch screens in python code
+            if Store.points <0:
+                show_popup("Warning","""        You have a negative score. 
+When you log out you will be banned""")
+            if Store.priv == "OU" or Store.priv == "VIP":
+                self.parent.current = "homeOU"
+            elif Store.priv == "SU":
+                self.parent.current = "homeSU" #how you switch screens in python code
         except:
-            show_popup("Error","wrong combination of email and password")
+            if is_in_blacklist(self.email.text) == True:
+                show_popup("Error","This email is banned")
+            else:
+                show_popup("Error","wrong combination of email and password")
             self.email.text = ""
             self.password.text = ""
         return True
 
     def check_user(self):
-        firebase = pyrebase.initialize_app(config)
+        #firebase = pyrebase.initialize_app(config)
         db = firebase.database()
         user = db.child("users").order_by_child("email").equal_to("ggukr@aol.com").limit_to_first(1).get()
         try:
@@ -228,8 +259,10 @@ class SignupWindow(Screen):
         self.interests.text = ""
         self.reference.text = ""
         
+class NotificationOUPage(Screen):
+    pass
 
-class NotificationPage(Screen):
+class NotificationSUPage(Screen):
     person1 = StringProperty("")
     person2 = StringProperty("")
     person3 = StringProperty("")
@@ -283,9 +316,11 @@ class NotificationPage(Screen):
                     create_user = auth.create_user_with_email_and_password(which_person_email,person_password)
                     #auth.send_email_verification(create_user['idToken']) to let them know that theyre in the system, uncomment for demo
                     db.child("pending_users").child(person_key).remove() 
+                    user = extract_user_from_email(which_person_email)
+                    person_info.update({"name":user})
                     db.child("users").push(person_info)
                     show_popup("Success","""User was successfully added to the system. 
-                        Refresh to get new requests""")
+            Refresh to get new requests""")
                     which_person_email = ""
                 except:
                     show_popup("Error","This email is already in the system, has to be rejected")
@@ -343,7 +378,7 @@ class DescriptionWindow(Screen):
 
     
     def update(self):
-        a = NotificationPage()
+        a = NotificationSUPage()
         a.show_details(Store.button,"not empty")
         self.desc_email = a.email
         self.desc_password = a.password
@@ -426,9 +461,162 @@ class WarningPage(Screen):
 
 
 class GroupNotificationSU(Screen):
-    pass
+    close_req1 = StringProperty()
+    close_req2 = StringProperty()
+    close_req3 = StringProperty()
+    close_req4 = StringProperty()
+    close_req5 = StringProperty()
+    close_req6 = StringProperty()
+    
+
+    #loads the close group requests when you enter page
+    def on_pre_enter(self):
+        db = firebase.database()
+        close_requests = db.child("groupNotification").order_by_child("desc").equal_to("closegroup").get()
+        count = 0
+        groups = ["","","","","",""]
+        for request in close_requests.each():
+            if count > 5:
+                break
+            else:
+                a = request.val()
+                #print(a['user'])
+                groups[count] = str(a['group'])
+                count+=1
+
+        self.close_req1 = groups[0]
+        self.close_req2 = groups[1]
+        self.close_req3 = groups[2]
+        self.close_req4 = groups[3]
+        self.close_req5 = groups[4]
+        self.close_req6 = groups[5]
+        return groups
+
+    def validate_email(self,email,popup,email_list,groupname):
+        db = firebase.database()
+        #check if a vip was assigned to this group
+        try:
+            is_group_assigned = len(db.child("assignVIP").order_by_child("groupname assigned").equal_to(groupname).get().val())
+        except:
+            is_group_assigned = 0
+
+        if is_group_assigned > 0:
+            show_popup("Error","VIP is already assigned for this group")
+            popup.dismiss()
+        else:
+            if email == "":
+                show_popup("Error","Please enter an email.")
+            elif groupname == "":
+                show_popup("Error","No requests here.Refresh to get new close group requests")
+                popup.dismiss()
+            elif email == email_list[0] or email == email_list[1] or email == email_list[2] or email == email_list[3] or email == email_list[4] or email_list[5]:
+                data = {"email":email,"groupname assigned": str(groupname),"ticket":0}
+                db.child("assignVIP").push(data)
+                popup.dismiss()
+                #self.on_pre_enter()
+
+            else:
+                show_popup("Error","Did not enter correct email")
+
+    def assign_vip(self,index):
+        #len(db.child("pending_users").get().val()) to get how many entries in table
+        db =firebase.database()
+        
+        
+        vips = db.child("users").order_by_child("privilege").equal_to(1).get()
+        count = 0 
+        vip_emails = ["","","","","",""]
+        for users in vips.each():
+            if count > 5:
+                break
+            else:
+                a = users.val()
+                vip_emails[count] = a['email']
+                count+=1
+        layout = FloatLayout()
+        title = Label(text="Choose one of the following emails to assign them to close the group", size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "top": 1})
+        layout.add_widget(title)
+        email1 = Label(text=vip_emails[0], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.7})
+        email2 = Label(text=vip_emails[1], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.65})
+        email3 = Label(text=vip_emails[2], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.60})
+        email4 = Label(text=vip_emails[3], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.55})
+        email5 = Label(text=vip_emails[4], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.50})
+        email6 = Label(text=vip_emails[5], size_hint=(0.6, 0.2), pos_hint={"x": 0.2, "y": 0.45})
+        layout.add_widget(email1)
+        layout.add_widget(email2)
+        layout.add_widget(email3)
+        layout.add_widget(email4)
+        layout.add_widget(email5)
+        layout.add_widget(email6)
+        textinput = TextInput(hint_text = 'Enter email of VIP you want to assign this group to',multiline = False,size_hint=(0.8,0.15),pos_hint ={"x":0.1,"y":0.35})
+        layout.add_widget(textinput)
+
+        assign_button = Button(text= "Assign the VIP", size_hint=(0.8, 0.1), pos_hint={"x": 0.1, "y": 0.20})
+        close_button = Button(text="close", size_hint=(0.8, 0.1), pos_hint={"x": 0.1, "y": 0.1})
+        layout.add_widget(close_button)
+        layout.add_widget(assign_button)
+        popup = Popup(title="Assign VIP", content=layout, size_hint=(None, None), size=(500, 500), auto_dismiss=False)
+        a = self.on_pre_enter()
+        assign_button.bind(on_press= lambda x: self.validate_email(textinput.text,popup,vip_emails,a[index]))
+        close_button.bind(on_press=popup.dismiss)
+        popup.open()
+       
 
 
+
+    
+    #which_group is a StringProperty
+    def close_group(self,which_group):
+        
+        db = firebase.database()
+        vip_assigned_email = ""
+        is_complete = 0
+        try:
+            did_vip_assign = db.child("assignVIP").order_by_child("groupname assigned").equal_to(which_group).get()
+            for users in did_vip_assign.each():
+                a = users.val()
+                if a["ticket"] == 1:
+                    is_complete+=1
+                    vip_assigned_email = a["email"]
+                    break   
+        except:
+            is_complete = 0
+
+        if which_group == "":
+            show_popup("Error","Can't close. Refresh to get new requests")
+        
+        elif is_complete == 0:
+            show_popup("Error","""  VIP has not yet assigned a score
+    for the members of this group""")
+        elif is_complete == 1:
+            #deleting assigned VIP from the assign VIP table
+            for users in did_vip_assign.each():
+                a = users.val()
+                if a['groupname assigned'] == which_group:
+                   # print(a['email'],get_key_assignVIP(a['email']))
+                   key = users.key()
+                   db.child("assignVIP").child(key).remove()
+
+            #deleting all closegroup requests for the group
+            groupnotif = db.child("groupNotification").order_by_child("group").equal_to(which_group).get()
+            for users in groupnotif.each():
+                a = users.val()
+                if a['desc'] == "closegroup":
+                    key = users.key()
+                    db.child("groupNotification").child(key).remove()
+
+
+            #deleting the group itself
+            group = db.child("group").order_by_child("groupName").equal_to(which_group).get()
+
+            for sect in group.each():
+                key = sect.key()
+                db.child("group").child(key).remove()
+                break
+            
+            show_popup("Success","Group has been deleted from the system")
+            self.on_pre_enter() #to update requests
+       
 class GroupWindow(Screen):
 
     def on_start(self, *args): #change to on_enter later
@@ -437,7 +625,7 @@ class GroupWindow(Screen):
         pollId = 1
         taskId = 4
 
-        firebase = pyrebase.initialize_app(config)
+        #firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
         #specify group to pull info from
@@ -576,7 +764,7 @@ class GroupWindow(Screen):
             show_popup("Group Post", "Cannot have empty post")
             return
 
-        firebase = pyrebase.initialize_app(config)
+        #firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
         if postType == "Task":
@@ -635,7 +823,7 @@ class GroupWindow(Screen):
     def remove_group(self, groupId):
         groupId = 5
 
-        firebase = pyrebase.initialize_app(config)
+        #firebase = pyrebase.initialize_app(config)
         db = firebase.database()
         groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
@@ -646,7 +834,7 @@ class GroupWindow(Screen):
     def remove_group_user(self, email, groupId):
         groupId = 5
 
-        firebase = pyrebase.initialize_app(config)
+        #firebase = pyrebase.initialize_app(config)
         db = firebase.database()
         groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
@@ -666,7 +854,7 @@ class GroupWindow(Screen):
         if btnClaimNum == 1:
             self.btnClaim.disabled = 'True'
 
-        firebase = pyrebase.initialize_app(config)
+        #firebase = pyrebase.initialize_app(config)
         db = firebase.database()
         groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
@@ -692,7 +880,7 @@ class GroupWindow(Screen):
         taskId = 1
         groupId = 5
 
-        firebase = pyrebase.initialize_app(config)
+        #firebase = pyrebase.initialize_app(config)
         db = firebase.database()
         groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
         for sect in groupDb.each():
@@ -725,7 +913,7 @@ class GroupWindow(Screen):
         pollId = 1
 
         #user clicks option
-        firebase = pyrebase.initialize_app(config)
+        #firebase = pyrebase.initialize_app(config)
         db = firebase.database()
         postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
         for sect in postDb.each():
@@ -768,7 +956,7 @@ class GroupWindow(Screen):
 class CreateGroupWindow(Screen):
 
     def create_group(self):
-        firebase = pyrebase.initialize_app(config)
+        #firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
         groupList = []
@@ -828,9 +1016,27 @@ class CreateGroupWindow(Screen):
             show_popup("Error", "An error occurred")
 
 
-class HomeOUWindow(Screen):
+class HomeSUWindow(Screen):
     #clearing information of person that was logged in
     def log_out_btn(self):
+        Store.button = 40
+        Store.points = 0
+        Store.priv = ""
+        Store.email = ""
+
+class HomeOUWindow(Screen):
+
+    def log_out_btn(self):
+        if Store.points < 0:
+            blacklist_info = get_info_users(Store.email)
+            db = firebase.database()
+            user= db.child("users").order_by_child("email").equal_to(Store.email).get()
+            for person in user.each():
+                key = person.key()
+                db.child("users").child(key).remove()
+                break
+            db.child("blacklist").push(blacklist_info)
+
         Store.button = 40
         Store.points = 0
         Store.priv = ""
@@ -844,6 +1050,22 @@ class ProfileWindow(Screen):
 kv = Builder.load_file("main.kv")
 
 #len(db.child("pending_users").get().val()) to get how many entries in table
+# db = firebase.database()
+# #data = {"desc":"closegroup","group":"group","priority":1,"user":"testguy"}
+# for i in range(1,3,1):
+#     data = {"desc":"closegroup","group":"group","priority":1,"user":"testguy"}
+#     data["group"] = data["group"] + str(i)
+#     data["user"] = data["user"] + str(i)
+#     db.child("groupNotification").push(data)
+
+# db = firebase.database()
+# data = {"desc":"closegroup","group":"fifth","priority":1,"user":"bts@aol.com"}
+# db.child("groupNotification").push(data)
+
+
+
+
+
 class MyMainApp(App):
     
     def build(self):

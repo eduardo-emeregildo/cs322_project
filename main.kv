@@ -5,9 +5,10 @@
 
 #:include createGroupWindow.kv
 #:include groupWindow.kv
+#:include homeSUWindow.kv
 #:include homeOUWindow.kv
 #:include profileWindow.kv
-
+#:include notificationsOU.kv
 #:include notificationsSU.kv
 #:include requestDescriptionSU.kv
 #:include complimentNotificationSU.kv
@@ -21,6 +22,7 @@
 ScreenManager:
 
     HomeWindow:
+    HomeSUWindow:
     HomeOUWindow:
     SignupWindow:
     ProfileWindow:
@@ -29,7 +31,8 @@ ScreenManager:
     GroupNotificationSU:
     ComplimentPage:
     WarningPage:
-    NotificationPage:
+    NotificationSUPage:
+    NotificationOUPage:
     DescriptionWindow:
   
 
