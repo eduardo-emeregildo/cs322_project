@@ -37,7 +37,6 @@ def get_info_users(email):
     return None
 
 def get_key_appeal(email):
-
     all_users = db.child("possible_appeals").get()
     for users in all_users.each():
         a = users.val()
@@ -77,7 +76,6 @@ def is_in_appeal(email):
 
 
 def is_in_users(email):
-
     all_users = db.child("users").get()
     for users in all_users.each():
         a = users.val()
@@ -97,9 +95,27 @@ def show_popup(title_popup, text_label):
     button.bind(on_press=popup.dismiss)
     popup.open()
 
+def send_rejection_email(email):
+    with smtplib.SMTP('smtp.gmail.com',587) as smtp:
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.ehlo()
+        smtp.login("cs322projectd@gmail.com","cs322s20mw")
+        subject = "Rejected from teaming system"
+        body = """You have been rejected from the system. If you wish to try again, you can sign
+        up again. The second attempt will be your appeal."""
+        msg = f'Subject: {subject}\n\n{body}'
+        smtp.sendmail("cs322projectd@gmail.com",email,msg)
 
-
-
+def extract_user_from_email(email):
+    count = 0
+    for char in email:
+        if char == '@':
+            break
+        else:
+            count+=1
+    return email[:count:]
+	
 class SignupWindow(Screen):
     email = ObjectProperty(None)
     password = ObjectProperty(None) 
@@ -125,6 +141,7 @@ class SignupWindow(Screen):
         "interests":self.interests.text,
         "reference email":self.reference.text
         }
+        db = firebase.database()
 
         if (check_email_format(self.email.text)==True) and (len(self.password.text) >=6): 
             if is_in_blacklist(self.email.text) == True:
@@ -138,10 +155,32 @@ class SignupWindow(Screen):
                 appeal_key = get_key_appeal(self.email.text)
                 db.child("possible_appeals").child(appeal_key).remove()
                 db.child("pending_users").push(data)
+                priv_of_ref = 0
+                 try:
+                     check_ref = db.child("users").order_by_child("email").equal_to(self.reference.text).get()
+                     for users  in check_ref.each():
+                         a = users.val()
+                         priv_of_ref = a['privilege']
+                         break
+                 except:
+                      priv_of_ref = 0
+
+                #add_ref(self.email.text,self.reference.text,priv_of_ref)
                 show_popup("Submit","Application received. This is your appeal")
 
             else:
                 db.child("pending_users").push(data)
+                priv_of_ref = 0
+                try:
+                    check_ref = db.child("users").order_by_child("email").equal_to(self.reference.text).get()
+                    for users  in check_ref.each():
+                        a = users.val()
+                        priv_of_ref = a['privilege']
+                        break
+                except:
+                     priv_of_ref = 0
+
+                add_ref(self.email.text,self.reference.text,priv_of_ref)
                 show_popup("Submit","Application received")
             
         else:
@@ -152,7 +191,6 @@ class SignupWindow(Screen):
         self.dob.text = ""
         self.interests.text = ""
         self.reference.text = ""
-        
 
 class NotificationSU(Screen):
     person1 = StringProperty("")
@@ -171,7 +209,7 @@ class NotificationSU(Screen):
     reference = StringProperty()
     #refresh button
     def show_new_requests(self):
-
+        db = firebase.database()
         email_requests = ["","","","","","",""]
 
         all_users = db.child("pending_users").get()
@@ -206,11 +244,13 @@ class NotificationSU(Screen):
                 person_password  = person_info['password']
                 try:
                     create_user = auth.create_user_with_email_and_password(which_person_email,person_password)
-                    #auth.send_email_verification(create_user['idToken']) to let them know that theyre in the system, uncomment for demo
                     db.child("pending_users").child(person_key).remove() 
+                    user = extract_user_from_email(which_person_email)
+                    auth.send_email_verification(create_user['idToken'])
+                    person_info.update({"name":user})
                     db.child("users").push(person_info)
                     show_popup("Success","""User was successfully added to the system. 
-                        Refresh to get new requests""")
+            Refresh to get new requests""")
                     which_person_email = ""
                 except:
                     show_popup("Error","This email is already in the system, has to be rejected")
@@ -234,6 +274,7 @@ class NotificationSU(Screen):
             show_popup("Error","No details to load.(Try refreshing)")
         else:
 
+            db = firebase.database()
             email_requests = ["","","","","","",""]
             
 
@@ -254,69 +295,3 @@ class NotificationSU(Screen):
             self.interest = user_info['interests']
             self.appeal = str(user_info['appeal'])
             self.reference = user_info['reference email']
-        
-
-
-class DescriptionWindow(Screen):
-    desc_email = StringProperty()
-    desc_password = StringProperty() #instead of past project
-    desc_birthday = StringProperty()
-    desc_interest = StringProperty()
-    desc_appeal = StringProperty()
-    desc_reference = StringProperty()
-
-    
-    def update(self):
-        a = NotificationSU()
-        a.show_details(Store.button,"not empty")
-        self.desc_email = a.email
-        self.desc_password = a.password
-        self.desc_birthday = a.birthday
-        self.desc_interest = a.interest
-        self.desc_appeal = a.appeal
-        self.desc_reference = a.reference
-
-    def return_btn(self):
-        self.desc_email =""
-        self.desc_password =""
-        self.desc_birthday =""
-        self.desc_interest =""
-        self.desc_appeal =""
-        self.desc_reference =""
-
-    def reject_btn(self):
-        if self.desc_email == "":
-            show_popup("Error","Press load info to view details before rejecting")
-
-        
-        else:
-            person = get_info_pending(self.desc_email)
-            person_key = get_key_pending(self.desc_email)
-            if person['appeal'] ==0:
-                
-                person['appeal'] = 1
-                db.child("possible_appeals").push(person)
-                db.child("pending_users").child(person_key).remove()
-                #send email here
-                self.desc_email =""
-                self.desc_password =""
-                self.desc_birthday =""
-                self.desc_interest =""
-                self.desc_appeal =""
-                self.desc_reference =""
-
-                show_popup("Success","""User was rejected from the system.
-        Refresh to get new requests""")
-                self.parent.current = "requests"
-            elif person['appeal'] ==1:
-                db.child("pending_users").child(person_key).remove()
-                db.child("blacklist").push(person)
-                self.desc_email =""
-                self.desc_password =""
-                self.desc_birthday =""
-                self.desc_interest =""
-                self.desc_appeal =""
-                self.desc_reference =""
-                show_popup("Blacklisted","""This is the second time they have
-    applied. User was added to blacklist""")
-                self.parent.current = "requests"
