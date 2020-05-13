@@ -4,7 +4,7 @@ from groupPageFunctions import *
 class KickNotifications(Screen):
 
     def on_pre_enter(self):
-        email = "jin@aol.com"
+        email = Store.email
         db = firebase.database()
 
         notifTypeList, groupIdList, notifUserList = [], [], []
@@ -337,7 +337,7 @@ class KickNotifications(Screen):
 class TasksNotifications(Screen):
 
     def on_pre_enter(self, *args):
-        email = "jin@aol.com"
+        email = Store.email
         db = firebase.database()
 
         groupIdList, taskDetList, taskIdList, groupNameList = [], [], [], []
