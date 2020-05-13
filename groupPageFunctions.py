@@ -116,7 +116,6 @@ def kick_req(email, groupId, notifType, notifUser):
     if groupReqKey.replace(" ", "") is not "":
         db.child('groupRequests').child(groupReqKey).child('notifications').push(notifData)
 
-
 class GroupWindow(Screen):
     groupId = 2
     pollId = 1
@@ -168,6 +167,9 @@ class GroupWindow(Screen):
             if sect.val()['postType'] == 'Poll':
                 groupPostPolls.append(sect.val())
 
+        print(groupPostTasks)
+        print(groupPostPolls)
+
         try:
             if groupPostPolls[0]['postVoted'] == "":
                 pollVoted1 = []
@@ -175,9 +177,7 @@ class GroupWindow(Screen):
                 pollVoted1 = groupPostPolls[0]['postVoted'].split(',')
 
             GroupWindow.pollId = groupPostPolls[0]['pollId']
-            GroupWindow.taskId = groupPostTasks[0]['taskId']
 
-            self.postTask1.text = "Function Name: " + groupPostTasks[0]['postContent']
             self.postPoll1.text = "Poll: " + groupPostPolls[0]['postContent']
             self.postPollVote1.text = "[ " + str(len(pollVoted1)) + "/5 members have voted ] "
             self.btnPoll1.text = groupPostPolls[0]['option1']['content']
@@ -185,6 +185,20 @@ class GroupWindow(Screen):
         
         except Exception:
             pass
+
+        try:
+            GroupWindow.taskId = groupPostTasks[0]['taskId']
+            self.postTask1.text = "Function Name: " + groupPostTasks[0]['postContent']
+
+        except Exception:
+            pass
+
+    def on_leave(self):
+        self.postTask1.text = "No Task to Display "
+        self.postPoll1.text = "No Post to Display "
+        self.postPollVote1.text = "[ 0/5 members have voted ] "
+        self.btnPoll1.text = "Option 1"
+        self.btnPoll2.text = "Option 2"
 
     def req_kick(self, btnNum, kickType):
         db = firebase.database()
@@ -302,7 +316,11 @@ class GroupWindow(Screen):
                 if 'Task' == sector.val()['postType']:
                     postsInfo = sector.val()['taskId']
                     taskIdList.append(postsInfo)
-            taskId = max(taskIdList) + 1
+
+            try:
+                taskId = max(taskIdList) + 1
+            except Exception:
+                taskId = 1
 
             data = {
                 "groupId": self.groupId,
@@ -324,7 +342,11 @@ class GroupWindow(Screen):
                 if 'Poll' == sect.val()['postType']:
                     pollInfo = sect.val()['pollId']
                     pollIdList.append(pollInfo)
-            pollId = max(pollIdList) + 1
+            try:
+                pollId = max(pollIdList) + 1
+            except Exception:
+                pollId = 1
+
 
             data = {
                 "groupId": self.groupId,
