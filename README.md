@@ -1,92 +1,44 @@
-## cs322_project
-## all windows
+## REQUIREMENTS FOR THIS APPLICATION: ##
+
+1. Python Interpreter version 3.7 or 3.6. Python 3.8 **will not work**)
+2. Pip package manager for python(installs itself when you install python interpreter) 
+2.kivy python Library
+3.Pyrebase4 python module
 
 
-## WelcomeScreen: (welcomeScreen.kv)
-just a dummy screen to initialize the home window
 
-## HomeWindow: (homeWindow.kv)
-system home window visible to everyone
+### How to install kivy ##
+Enter the following commands into the command line:
+1. to update pip:
+python -m pip install --upgrade pip wheel setuptools virtualenv
 
-## HomeOUWindow: (homeOUWindow.kv)
-when an OU logs in, this window will open, has 'notification' button
+2. Install Kivy dependencies using pip:
 
-## HomeSUWindow: (homeSUWindow.kv)
-when an SU logs in, this window will open, has 'profile' and 'notification' buttons
+python -m pip install docutils pygments pypiwin32 kivy_deps.sdl2==0.1.* kivy_deps.glew==0.1.*
 
-## ProfileWindow: (profileWindow.kv)
-for the OU. they can see the blackbox whitebox, top three warnings, their groups and '+create group' button
+python -m pip install kivy_deps.gstreamer==0.1.*
 
-# NotificationSU: (notificationsSU.kv)
-SU notification page. all new join requests will appear here
+For python 3.5+:
 
-## ComplimentPage: (complimentNotificationSU.kv)
-SU compliments notification page, all compliments will appear here
+python -m pip install kivy_deps.angle==0.1.*
 
-## groupNotificationSU: (groupNotificationSU.kv)
-SU group notification page. all group closing requests will appear here
+3. Install kivy:
 
-## WarningPage: (warningNotificationSU.kv)
-SU warning notifications page. all warnings will appear here
+python -m pip install kivy==1.11.1
 
 
-## groupNotificationOU: (groupNotificationOU.kv)
-OU group notification page. Only the groups they are part of will appear here
-
-## WarningPageOU: (warningNotificationOU.kv)
-all warnings for the OU will appear here
-
-## ReferenceOU: (referenceNotificationOU.kv)
-If an OU or VIP is listed as a reference for a signup, it will appear here
-
-## SignupWindow: (signupWindow.kv)
-a visitor can signup here
-
-## DescriptionWindow: (requestDescriptionSU.kv)
-an SU can see the request details here
-
-## CreateGroupWindow: (createGroupWindow.kv)
-new groups can be created here
-
-## GroupWindow: (groupWindow.kv)
-once a group is created, this will be the group page
-
-## VisitorView: (visitorViewProfile.kv)
-a random visitor will see this view of the OU profile. they can only complain from this page
-
-## VisitorViewLoggedIn: (visitorViewLoggedIn.kv)
-a logged in OU will see this page as another OU's profile. they can complain, send compliment and rate the projects from here  
-    
-    
-    
-## Additional Files
-
-## popupWindow.kv
-popup with textinput
-
-## main.kv
-all screens are listed here (except popup)
-
-## importModules.py
-most of the modules, the database and configuration are stored here
-
-## signingDetails.py
-all functions and classes Eduardo is working on can be found here except the 'HomeWindow' class
-
-## groupPageFunctions.py
-all classes and functions Diana is working on can be found here
-
-## homepageOUmain.py
-most of the functions that can be used for both SU and OU (Maliha is working on) can be found here
-
-## otherWindows.py
-all functions and classes Maliha is working on can be found here
-
-## main.py
-the 'HomeWindow' class can be found here. also contains the main functions
 
 
-## Please feel free to keep everything in the main if you want. Just copy paste everything in the main from all the .py files. Should work
+## How to install pyrebase4 ##
+Run the command on pip:
+pip3 install pyrebase4
+
+If that gives an error, run the command below **before** the above command:
+pip install pycryptodome
+
+
+
+
 
 
 
