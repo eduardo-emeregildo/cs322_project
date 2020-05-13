@@ -1,9 +1,12 @@
 ## REQUIREMENTS FOR THIS APPLICATION: ##
 
 1. Python Interpreter version 3.7 or 3.6. Python 3.8 **will not work**)
+
 2. Pip package manager for python(installs itself when you install python interpreter) 
-2.kivy python Library
-3.Pyrebase4 python module
+
+3.kivy python Library
+
+4.Pyrebase4 python module
 
 
 
