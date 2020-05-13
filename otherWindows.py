@@ -1,5 +1,5 @@
 from homepageOUmain import *
-from signingDetails import Store, show_popup,add_ref
+from signingDetails import Store, add_ref, get_info_users, show_popup
 
 
 
@@ -73,23 +73,6 @@ def check_button_active(username):
     if username != "":
         return True
     return False
-
-# get reference from the signup page
-
-def add_ref(ref_email, user_ref, priv):
-    text = ref_email.split("@", 1)
-    text2 = user_ref.split("@", 1)    
-
-    if priv == 0:
-        str1 = "\n from 1-10"
-    else:
-        str1 = "\n from 1-20" 
-
-    data ={
-        "user": text2[0],
-        "desc": "Rate " + text[0] + str1
-    }
-    db.child("references").push(data)
 
 
 def group_popup():
@@ -362,7 +345,6 @@ class ProfileWindow(Screen):
             
             if data_exist(self, "users", addUser):
                 if data_exist2(self, "whitebox_blackbox", addUser) == False:
-                    print(addUser)
                     data = {
                         "name": self.username.text,
                         "listed": name,
@@ -425,17 +407,17 @@ class ProfileWindow(Screen):
             self.b7.text = newList[2]
             self.b8.text = newList[3]
 
-        def remove_last(self):
+        def remove_last(self, name):
             userinfo = db.child("whitebox_blackbox").get() 
             p = ""      
             try:   
                 for user in userinfo.each():
                     if user.val()["listed"] != "don't delete":
-                        if user.val()["listed"] == self.b1.text:
+                        if user.val()["listed"] == name:
                             p = user.key()
                 
-                #db.child("whitebox_blackbox").child(p).remove()
-                db.child("whitebox_blackbox").child(p).update({"priv": 0})
+                db.child("whitebox_blackbox").child(p).remove()
+                #db.child("whitebox_blackbox").child(p).update({"priv": 0})
 
             except:
                 pass

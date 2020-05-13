@@ -168,19 +168,23 @@ class GroupWindow(Screen):
             if sect.val()['postType'] == 'Poll':
                 groupPostPolls.append(sect.val())
 
-        if groupPostPolls[0]['postVoted'] == "":
-            pollVoted1 = []
-        else:
-            pollVoted1 = groupPostPolls[0]['postVoted'].split(',')
+        try:
+            if groupPostPolls[0]['postVoted'] == "":
+                pollVoted1 = []
+            else:
+                pollVoted1 = groupPostPolls[0]['postVoted'].split(',')
 
-        GroupWindow.pollId = groupPostPolls[0]['pollId']
-        GroupWindow.taskId = groupPostTasks[0]['taskId']
+            GroupWindow.pollId = groupPostPolls[0]['pollId']
+            GroupWindow.taskId = groupPostTasks[0]['taskId']
 
-        self.postTask1.text = "Function Name: " + groupPostTasks[0]['postContent']
-        self.postPoll1.text = "Poll: " + groupPostPolls[0]['postContent']
-        self.postPollVote1.text = "[ " + str(len(pollVoted1)) + "/5 members have voted ] "
-        self.btnPoll1.text = groupPostPolls[0]['option1']['content']
-        self.btnPoll2.text = groupPostPolls[0]['option2']['content']
+            self.postTask1.text = "Function Name: " + groupPostTasks[0]['postContent']
+            self.postPoll1.text = "Poll: " + groupPostPolls[0]['postContent']
+            self.postPollVote1.text = "[ " + str(len(pollVoted1)) + "/5 members have voted ] "
+            self.btnPoll1.text = groupPostPolls[0]['option1']['content']
+            self.btnPoll2.text = groupPostPolls[0]['option2']['content']
+        
+        except Exception:
+            pass
 
     def req_kick(self, btnNum, kickType):
         db = firebase.database()

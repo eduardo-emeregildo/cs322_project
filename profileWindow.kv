@@ -172,7 +172,7 @@
             size_hint: (0.05, 0.05)
             pos_hint: {"x": .41, "y": .17}
             id: remove
-            on_press: root.remove_last()
+            on_press: root.remove_last(root.b1.text)
 
         BoxLayout:
             spacing: 10
@@ -254,7 +254,7 @@
             size_hint: (0.05, 0.05)
             pos_hint: {"x": .835, "y": .17}
             id: removeB
-            on_press: root.remove_last()
+            on_press: root.remove_last(root.b5.text)
 
         BoxLayout:
             spacing: 10

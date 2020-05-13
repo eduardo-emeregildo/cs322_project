@@ -373,16 +373,17 @@ def add_projects(groupName, projectName, groupDesc, groupUsers):
         try:
                for u in userNames.each():
                 name = u.val()["name"]
+
+                data = {
+                    "desc": groupDesc,
+                    "group": groupName,
+                    "name": projectName,
+                    "score": 0,
+                    "user": name
+                }
+                db.child("projects").push(data)
+
         except:
             pass
-
-        data = {
-            "desc": groupDesc,
-            "group": groupName,
-            "name": projectName,
-            "score": 0,
-            "user": name
-        }
-        db.child("projects").push(data)
 
 #add_projects( "Group8", "Lighthouse", "to motivate people", {"eduardo@gmail.com", "me1@gmail.com", "idk@gmail.com", "boi@gmail.com"})
