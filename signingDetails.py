@@ -2,6 +2,25 @@ from importModules import *
 from kivy.properties import ObjectProperty, StringProperty
 from homepageOUmain import get_group_notifications
 
+
+# get reference from the signup page
+
+def add_ref(ref_email, user_ref, priv):
+    text = ref_email.split("@", 1)
+    text2 = user_ref.split("@", 1)    
+
+    if priv == 0:
+        str1 = "\n from 1-10"
+    else:
+        str1 = "\n from 1-20" 
+
+    data ={
+        "user": text2[0],
+        "desc": "Rate " + text[0] + str1
+    }
+    db.child("references").push(data)
+
+
 #inside are the details of person thats logged in. Useful for loading data to the pages
 class Store:
     button = 40
@@ -155,32 +174,10 @@ class SignupWindow(Screen):
                 appeal_key = get_key_appeal(self.email.text)
                 db.child("possible_appeals").child(appeal_key).remove()
                 db.child("pending_users").push(data)
-                priv_of_ref = 0
-                try:
-                    check_ref = db.child("users").order_by_child("email").equal_to(self.reference.text).get()
-                    for users  in check_ref.each():
-                        a = users.val()
-                        priv_of_ref = a['privilege']
-                        break
-                except:
-                    priv_of_ref = 0
-
-                add_ref(self.email.text,self.reference.text,priv_of_ref)
                 show_popup("Submit","Application received. This is your appeal")
 
             else:
                 db.child("pending_users").push(data)
-                priv_of_ref = 0
-                try:
-                    check_ref = db.child("users").order_by_child("email").equal_to(self.reference.text).get()
-                    for users  in check_ref.each():
-                        a = users.val()
-                        priv_of_ref = a['privilege']
-                        break
-                except:
-                     priv_of_ref = 0
-
-                add_ref(self.email.text,self.reference.text,priv_of_ref)
                 show_popup("Submit","Application received")
             
         else:
@@ -242,6 +239,17 @@ class NotificationSU(Screen):
                 db = firebase.database()
                 auth = firebase.auth()
                 person_password  = person_info['password']
+                priv_reference = 0
+                try:
+                    ref_info = db.child("users").order_by_child("email").equal_to(person_info['reference email']).get()
+                    for users in ref_info.each():
+                        a = users.val()
+                        priv_reference = a['privilege']
+                        break
+                except:
+                    #enter the value maliha wants when ref email doesnt exist
+                    priv_reference = 0
+
                 try:
                     create_user = auth.create_user_with_email_and_password(which_person_email,person_password)
                     db.child("pending_users").child(person_key).remove() 
@@ -249,6 +257,7 @@ class NotificationSU(Screen):
                     auth.send_email_verification(create_user['idToken'])
                     person_info.update({"name":user})
                     db.child("users").push(person_info)
+                    add_ref(which_person_email,person_info['reference email'],priv_reference)
                     show_popup("Success","""User was successfully added to the system. 
             Refresh to get new requests""")
                     which_person_email = ""
@@ -268,31 +277,34 @@ class NotificationSU(Screen):
 
 
     def show_details(self,index,which_person_email):
-        if which_person_email == "" or which_person_email == "sentinel":
-            show_popup("Error","No details to load.(Try refreshing)")
-        else:
+        try:
+            if which_person_email == "" or which_person_email == "sentinel":
+                show_popup("Error","No details to load.(Try refreshing)")
+            else:
 
-            db = firebase.database()
-            email_requests = ["","","","","","",""]
-            
+                db = firebase.database()
+                email_requests = ["","","","","","",""]
+                
 
-            all_users = db.child("pending_users").get()
-            count = 0
-            for users in all_users.each():
-                if count >=7:
-                    break
+                all_users = db.child("pending_users").get()
+                count = 0
+                for users in all_users.each():
+                    if count >=7:
+                        break
 
-                a = users.val()
-                email_requests[count] = a["email"]
-                count+=1
+                    a = users.val()
+                    email_requests[count] = a["email"]
+                    count+=1
 
-            user_info = get_info_pending(email_requests[index])
-            self.email = user_info['email']
-            self.password = user_info['password']
-            self.birthday = user_info['date of birth']
-            self.interest = user_info['interests']
-            self.appeal = str(user_info['appeal'])
-            self.reference = user_info['reference email']
+                user_info = get_info_pending(email_requests[index])
+                self.email = user_info['email']
+                self.password = user_info['password']
+                self.birthday = user_info['date of birth']
+                self.interest = user_info['interests']
+                self.appeal = str(user_info['appeal'])
+                self.reference = user_info['reference email']
+        except:
+            show_popup("Error","Please refresh to update requests")
 
 
 class groupNotificationSU(Screen):
@@ -346,7 +358,7 @@ class groupNotificationSU(Screen):
                 popup.dismiss()
             elif email == email_list[0] or email == email_list[1] or email == email_list[2] or email == email_list[
                 3] or email == email_list[4] or email_list[5]:
-                data = {"email": email, "groupname assigned": str(groupname), "ticket": 0}
+                data = {"email": email, "groupname assigned": str(groupname), "ticket": 0,"point":0}
                 db.child("assignVIP").push(data)
                 popup.dismiss()
                 # self.on_pre_enter()

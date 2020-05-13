@@ -26,6 +26,7 @@ class HomeWindow(Screen):
     def log_in_auto(self):               
         userinfo = db.child("users").order_by_child("name").equal_to(self.email.text).limit_to_first(1).get()
 
+
         try:
             for info in userinfo.each():
                 if info.val()["points"] > 30:
@@ -74,6 +75,7 @@ When you log out you will be banned""")
             if Store.priv == "OU" or Store.priv == "VIP":
 
                 self.log_in_auto()
+                
             elif Store.priv == "SU":
                 self.parent.current = "homeSU" #how you switch screens in python code
         except:
