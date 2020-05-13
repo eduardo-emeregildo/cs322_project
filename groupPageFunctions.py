@@ -167,9 +167,6 @@ class GroupWindow(Screen):
             if sect.val()['postType'] == 'Poll':
                 groupPostPolls.append(sect.val())
 
-        print(groupPostTasks)
-        print(groupPostPolls)
-
         try:
             if groupPostPolls[0]['postVoted'] == "":
                 pollVoted1 = []
