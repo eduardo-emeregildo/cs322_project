@@ -3,9 +3,7 @@ from otherWindows import *
 from kivy.graphics.vertex_instructions import Rectangle
 
 
-def remove_group(self, groupId):
-    groupId = 5
-
+def remove_group(groupId):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
     groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
@@ -14,15 +12,12 @@ def remove_group(self, groupId):
 
     db.child("group").child(groupKey).remove()
 
-
-def remove_group_user(self, email, groupId):
-    groupId = 5
-
+def remove_group_user(email, groupId):
     groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
-    for sect in groupDb.each():
+    for sect in groupDb:
         groupKey = sect.key()
-    for sections in groupDb.each():
-        groupUsers = sections.val()['groupUsers']
+        groupUsers = sect.val()['groupUsers']
+
     for i in range(1, len(groupUsers)):
         if email in groupUsers[i].values():
             db.child("group").child(groupKey).child("groupUsers").child(i).remove()
@@ -49,7 +44,10 @@ def kick_vote_table(groupId, kickType, kickUser):
     for sect in groupDb:
         groupUsers = sect.val()['groupUsers']
 
-    kickVotes = len(groupUsers) - 2
+    if kickType == 'Member':
+        kickVotes = len(groupUsers) - 2
+    if kickType == 'Group':
+        kickVotes = len(groupUsers) - 1
 
     data = {
         "groupId": groupId,
@@ -67,9 +65,8 @@ def kick_vote_table(groupId, kickType, kickUser):
         if kickType == 'Group':
             kick_req(groupUsers[i]['email'], groupId, kickType, "")
         elif kickType == 'Member':
-            if groupUsers[i]['email'] is not kickUser:
+            if groupUsers[i]['email'] != kickUser:
                 kick_req(groupUsers[i]['email'], groupId, kickType, kickUser)
-
 
 # connect requests to group page
 # specifically groupRequest DB
@@ -122,18 +119,29 @@ def kick_req(email, groupId, notifType, notifUser):
 
 class GroupWindow(Screen):
     groupId = 2
+    pollId = 1
+    taskId = 4
 
     def on_pre_enter(self, *args):
         db = firebase.database()
 
+        # self.groupDesc.text = "Group Name: " + groupName + "\nDescription: " + group_desc
+        # get self.groupDesc.text and find group ID that way and assign it above ;;
+
         # specify group to pull info from
-        info = db.child("group").order_by_child("groupId").equal_to(self.groupId).get()
+        info = db.child("group").order_by_child("groupName").equal_to(self.groupDesc.text).get()
         for sections in info.each():
             group_desc = sections.val()['groupDesc']
-            groupName = sections.val()['groupName']
+            groupIdHere = sections.val()['groupId']
             groupUsers = sections.val()['groupUsers']
 
-        self.groupDesc.text = "Group Name: " + groupName + "\nDescription: " + group_desc
+        if groupIdHere is not self.groupId:
+            self.btnClaim.disabled = False
+            self.btnPoll1.disabled = False
+            self.btnPoll2.disabled = False
+            GroupWindow.groupId = groupIdHere
+
+        self.groupDesc2.text = group_desc
 
         for i in range(1, len(groupUsers)):
             userAs = groupUsers[i]['taskAssign']
@@ -155,7 +163,8 @@ class GroupWindow(Screen):
         postDb = db.child("posts").order_by_child("groupId").equal_to(self.groupId).get()
         for sect in postDb:
             if sect.val()['postType'] == 'Task':
-                groupPostTasks.append(sect.val())
+                if sect.val()['claimBy'] == 999:
+                    groupPostTasks.append(sect.val())
             if sect.val()['postType'] == 'Poll':
                 groupPostPolls.append(sect.val())
 
@@ -164,7 +173,10 @@ class GroupWindow(Screen):
         else:
             pollVoted1 = groupPostPolls[0]['postVoted'].split(',')
 
-        self.postTask1.text = "Function Name: " + groupPostTasks[0]['postContent'] + "\nDetails:               "
+        GroupWindow.pollId = groupPostPolls[0]['pollId']
+        GroupWindow.taskId = groupPostTasks[0]['taskId']
+
+        self.postTask1.text = "Function Name: " + groupPostTasks[0]['postContent']
         self.postPoll1.text = "Poll: " + groupPostPolls[0]['postContent']
         self.postPollVote1.text = "[ " + str(len(pollVoted1)) + "/5 members have voted ] "
         self.btnPoll1.text = groupPostPolls[0]['option1']['content']
@@ -190,11 +202,12 @@ class GroupWindow(Screen):
         with self.canvas:
             Color(.2, .5, .4, 1)  # set the colour
             # Seting the size and position of canvas
+            self.rect = Rectangle(pos=(20, lastPostX - 100), size=(500, 80))
         self.add_widget(
             Label(
                 text="Task: " + postContent,
                 size_hint=(.5, .5),
-                pos_hint={"center_y": .24, "center_x": .215},
+                pos_hint={"center_y": .22, "center_x": .315},
                 id='postTask2'
             )
         )
@@ -206,7 +219,7 @@ class GroupWindow(Screen):
             background_color=(.2, .5, .4, 1),
             disabled=False,
             id='btnClaim2',
-            on_press=lambda *args: self.task_claim(self.groupId, taskId, 2)
+            on_press=lambda *args: self.task_claim(2, taskId)
         )
         btnClaim2.bind(on_release=partial(self.foo, btnClaim2))
         self.add_widget(btnClaim2)
@@ -225,7 +238,7 @@ class GroupWindow(Screen):
             Label(
                 text="Poll: " + postContent,
                 size_hint=(.5, .5),
-                pos_hint={"center_y": .25, "center_x": .215},
+                pos_hint={"center_y": .25, "center_x": .330},
                 id='postTask2'
             )
         )
@@ -245,7 +258,7 @@ class GroupWindow(Screen):
             disabled=False,
             size_hint=(0.295, 0.1),
             pos_hint={"top": .18, "x": 0.036},
-            on_press=lambda *args: self.poll_vote(self.groupId, pollId, 1, 2)
+            on_press=lambda *args: self.poll_vote(1, 2, pollId)
         )
         btnOpt2 = Button(
             text=option2,
@@ -253,7 +266,7 @@ class GroupWindow(Screen):
             disabled=False,
             size_hint=(0.295, 0.1),
             pos_hint={"top": .18, "x": 0.342},
-            on_press=lambda *args: self.poll_vote(self.groupId, pollId, 2, 2)
+            on_press=lambda *args: self.poll_vote(2, 2, pollId)
         )
 
 
@@ -268,7 +281,7 @@ class GroupWindow(Screen):
     def foo(self, instance, *args):
         instance.disabled = True
 
-    def create_post(self, postType, groupId):
+    def create_post(self, postType):
 
         if self.taskInDetail.text.replace(" ", "") == "" or self.taskInTitle.text.replace(" ", "") == "":
             show_popup("Group Post", "Cannot have empty post")
@@ -280,7 +293,7 @@ class GroupWindow(Screen):
 
             taskContent = self.taskInTitle.text + ": \n" + self.taskInDetail.text
             taskIdList = []
-            postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
+            postDb = db.child("posts").order_by_child("groupId").equal_to(self.groupId).get()
             for sector in postDb.each():
                 if 'Task' == sector.val()['postType']:
                     postsInfo = sector.val()['taskId']
@@ -288,7 +301,7 @@ class GroupWindow(Screen):
             taskId = max(taskIdList) + 1
 
             data = {
-                "groupId": groupId,
+                "groupId": self.groupId,
                 "postContent": taskContent,
                 "claimBy": 999,
                 "taskId": taskId,
@@ -310,7 +323,7 @@ class GroupWindow(Screen):
             pollId = max(pollIdList) + 1
 
             data = {
-                "groupId": groupId,
+                "groupId": self.groupId,
                 "postContent": self.taskInTitle.text,
                 "postDeadline": "05/13/20",
                 "pollId": pollId,
@@ -333,16 +346,18 @@ class GroupWindow(Screen):
         self.taskInDetail.text = ""
         self.taskInTitle.text = ""
 
-    def task_claim(self, groupId, taskId, btnClaimNum):
+    def task_claim(self, btnClaimNum, taskId):
         email = Store.email
         # when user clicks claim button send postContent to user's request page
 
-
         if btnClaimNum == 1:
-            self.btnClaim.disabled = 'True'
+            self.btnClaim.disabled = True
+            taskUsed = self.taskId
+        if btnClaimNum == 2:
+            taskUsed = taskId
 
         db = firebase.database()
-        groupDb = db.child("group").order_by_child("groupId").equal_to(groupId).get()
+        groupDb = db.child("group").order_by_child("groupId").equal_to(self.groupId).get()
         for sect in groupDb.each():
             groupKey = sect.key()
         for sections in groupDb.each():
@@ -353,24 +368,32 @@ class GroupWindow(Screen):
                 db.child("group").child(groupKey).child("groupUsers").child(i) \
                     .update({"taskAssign": taskFound})
 
-        postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
+        postDb = db.child("posts").order_by_child("groupId").equal_to(self.groupId).get()
         for sect in postDb.each():
             if 'Task' == sect.val()['postType']:
-                if 999 == sect.val()['claimBy'] and taskId == sect.val()['taskId']:
+                if 999 == sect.val()['claimBy'] and taskUsed == sect.val()['taskId']:
                     postKey = sect.key()
                     db.child("posts").child(postKey).update({"claimBy": email})
 
-    def poll_vote(self, groupId, pollId, optionNum, btnClaim):
+    def poll_vote(self, optionNum, btnClaim, pollId):
         email = Store.email
         postInfo, votedMems = "", ""
         option1Count, option1Content, option2Count, option2Content = 0, 0, 0, 0
 
+        if btnClaim == 1:
+            pollUsed = self.pollId
+            self.btnPoll1.disabled = True
+            self.btnPoll2.disabled = True
+        elif btnClaim == 2:
+            pollUsed = pollId
+
+
         # user clicks option
         db = firebase.database()
-        postDb = db.child("posts").order_by_child("groupId").equal_to(groupId).get()
+        postDb = db.child("posts").order_by_child("groupId").equal_to(self.groupId).get()
         for sect in postDb.each():
             if sect.val()['postType'] == 'Poll':
-                if sect.val()['pollId'] == pollId:
+                if sect.val()['pollId'] == pollUsed:
                     postInfo = sect.val()
                     postKey = sect.key()
                     option1Count = sect.val()['option1']['vote'] + 1
@@ -402,9 +425,6 @@ class GroupWindow(Screen):
 
             db.child("posts").child(postKey).update(data)
 
-            if btnClaim == 1:
-                self.btnPoll1.disabled = 'True'
-                self.btnPoll2.disabled = 'True'
 
         # if everyone voted, delete post and send notifications to everyone
 
@@ -512,42 +532,8 @@ class CreateGroupWindow(Screen):
 
         db.child("group").push(data)
 
-        projdata = {
-            "group": self.groupName.text,
-            "name": self.projName.text,
-            "desc": self.groupDesc.text,
-            "score": 0,
-            "users": {
-                "1": {
-                    "email": Store.email,
-                    "taskAssign": 0,
-                    "taskComplete": 0
-                },
-                "2": {
-                    "email": groupUsers[0],
-                    "taskAssign": 0,
-                    "taskComplete": 0
-                },
-                "3": {
-
-                    "email": groupUsers[1],
-                    "taskAssign": 0,
-                    "taskComplete": 0
-                },
-                "4": {
-                    "email": groupUsers[2],
-                    "taskAssign": 0,
-                    "taskComplete": 0
-                },
-                "5": {
-                    "email": groupUsers[3],
-                    "taskAssign": 0,
-                    "taskComplete": 0
-                }
-            }
-        }
-
-        db.child("projects").push(projdata)
+        members = {Store.email, groupUsers[0], groupUsers[1], groupUsers[2], groupUsers[3]}
+        add_projects(self.groupName.text, self.projName.text, self.groupDesc.text, members)
 
         for i in range(len(groupUsers)):
             kick_req(groupUsers[i], groupTotal, 'Join', "")
@@ -560,8 +546,8 @@ class CreateGroupWindow(Screen):
 
 
 #add_projects( "Group8", "Lighthouse", "to motivate people", {"eduardo@gmail.com", "me1@gmail.com", "idk@gmail.com", "boi@gmail.com"})
-# popup function
 
+# popup function
     def validate(self):
 
         if self.groupName.text == "":

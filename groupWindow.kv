@@ -6,6 +6,7 @@
     name: "grouppage"
 
     groupDesc: groupDesc
+    groupDesc2: groupDesc2
     postTask1: postTask1
     postPoll1: postPoll1
     postPollVote1: postPollVote1
@@ -93,7 +94,7 @@
             pos_hint: {"top": .78, "x": 0.545}
             opacity: 0
             id: btnCreateTask
-            on_press: root.create_post("Task", 1)
+            on_press: root.create_post("Task")
 
         Button:
             text: "Post Poll"
@@ -102,7 +103,7 @@
             pos_hint: {"top": .78, "x": 0.125}
             opacity: 0
             id: btnCreatePoll
-            on_press: root.create_post("Poll", 1)
+            on_press: root.create_post("Poll")
 
         Button:
             text: "Back"
@@ -115,7 +116,7 @@
 
         Label:
             text: "Please vote for a time to meet up:"
-            pos_hint: {"y": .20, "x": -.315}
+            pos_hint: {"y": .20, "center_x": .34}
             id: postPoll1
             canvas.before:
                 Color:
@@ -138,17 +139,17 @@
                 background_color: (.2, .5, .4, 1)
                 disabled: False
                 id: btnPoll1
-                on_press: root.poll_vote('chungha@aol.com', 5, 1, 1, 1)
+                on_press: root.poll_vote(1, 1, 0)
             Button:
                 text: "Option 2"
                 background_color: (.2, .5, .4, 1)
                 disabled: False
                 id: btnPoll2
-                on_press: root.poll_vote('chungha@aol.com', 5, 1, 2, 1)
+                on_press: root.poll_vote(2, 1, 0)
 
         Label:
             text: "Function Name: create_group()\nDetails: function create group in database"
-            pos_hint: {"center_y": .4, "center_x": .215}
+            pos_hint: {"center_y": .39, "center_x": .315}
             id: postTask1
             canvas.before:
                 Color:
@@ -163,11 +164,11 @@
             pos_hint: {"x": .57, "y": .35}
             disabled: False
             id: btnClaim
-            on_press: root.task_claim(7, 4, 1)
+            on_press: root.task_claim(1, 0)
 
         Label:
             text: "Group Name: groupName \nDescription: groupDesc"
-            pos_hint: {"y": .39, "x": .315}
+            pos_hint: {"y": .41, "x": .315}
             id: groupDesc
             name: groupDesc
 
@@ -177,6 +178,7 @@
                 Rectangle:
                     pos: (540, 240)
                     size: (230, 330)
+
             Label:
                 text: "Users"
                 pos: (524, 412)
@@ -266,6 +268,13 @@
                     size_hint: (0.20, 0.20)
                     on_press: root.task_complete(7, 1)
                     on_press: root.req_kick(5, 'Member')
+        Label:
+            text: "Description:"
+            pos_hint: {"y": .338, "center_x": .82}
+            font_size: "14sp"
+            color: .8, .8, .8, 1
+            id: groupDesc2
+
         Button:
             text: "Send Warning"
             background_color: (0.263, 0.263, 0.263, 1)

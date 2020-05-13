@@ -316,7 +316,6 @@ class KickNotifications(Screen):
         if data['kickType'] == 'Group':
             if data['votes'] <= data['accept'] + data['reject']:
                 if data['accept'] > data['reject']:
-                    # do not remove group yet, make sure to pass to SU first
                     groupDb = db.child('group').order_by_child('groupId').equal_to(data['groupId']).get()
                     for section in groupDb:
                         groupUsers = section.val()['groupUsers']
@@ -424,7 +423,7 @@ class TasksNotifications(Screen):
                     db.child("group").child(groupKey).child("groupUsers").child(i) \
                         .update({"taskAssign": taskFound, "taskComplete": taskComplete})
                 else:
-                    show_popup("Error", "No Task Found")
+                    pass
 
 
 class VipNotifications(Screen):
