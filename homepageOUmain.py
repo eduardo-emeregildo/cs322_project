@@ -13,7 +13,7 @@ def get_top_projects(self, name, username, tok, database):
     projectDesc = []
 
     if tok == 1:
-        projects = database.child("projects").order_by_child(name).limit_to_first(3).get()
+        projects = database.child("projects").order_by_child("user").equal_to("SU").get()
         
     else:
         projects = database.child("projects").order_by_child(name).equal_to(username).get()
@@ -367,23 +367,32 @@ def get_complaints(self, database, tok, name, callerId):
 
 
 def add_projects(groupName, projectName, groupDesc, groupUsers):
-    for groupUser in groupUsers:
-        userNames = db.child("users").order_by_child("email").equal_to(groupUser).limit_to_first(1).get()
+
+    try:
+        for u in groupUsers:
+            name = u.split("@",1)
+
+            data = {
+                "desc": groupDesc,
+                "group": groupName,
+                "name": projectName,
+                "score": 0,
+                "user": name[0]
+            }
         
-        try:
-               for u in userNames.each():
-                name = u.val()["name"]
+            db.child("projects").push(data)
 
-                data = {
-                    "desc": groupDesc,
-                    "group": groupName,
-                    "name": projectName,
-                    "score": 0,
-                    "user": name
+        data = {
+            "desc": groupDesc,
+            "group": groupName,
+            "name": projectName,
+            "score": 0,
+            "user": "SU"
                 }
-                db.child("projects").push(data)
+        db.child("projects").push(data)
 
-        except:
-            pass
+
+    except:
+        pass
 
 #add_projects( "Group8", "Lighthouse", "to motivate people", {"eduardo@gmail.com", "me1@gmail.com", "idk@gmail.com", "boi@gmail.com"})
