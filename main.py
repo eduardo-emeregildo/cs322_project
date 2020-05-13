@@ -20,7 +20,7 @@ class HomeWindow(Screen):
 
 
     def initialize_page(self):
-        get_top_projects(self, "score", "", 1, db)
+        get_top_projects(self, "", "", 1, db)
         get_top_users(self, "name", db) 
 	
     def log_in_auto(self):               
